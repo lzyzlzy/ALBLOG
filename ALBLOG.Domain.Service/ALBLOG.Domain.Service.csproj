@@ -4,4 +4,11 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ALBLOG.Domain.Model\ALBLOG.Domain.Model.csproj" />
+    <ProjectReference Include="..\ALBLOG.Domain.Repository\ALBLOG.Domain.Repository.csproj" />
+    <ProjectReference Include="..\Common.Utility\Common.Utility.csproj" />
+    <ProjectReference Include="..\Constant\ALBLOG.Constant.csproj" />
+  </ItemGroup>
+
 </Project>
