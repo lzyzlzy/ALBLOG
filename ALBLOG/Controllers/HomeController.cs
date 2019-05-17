@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ALBLOG.Models;
 using ALBLOG.Domain.Service;
+using System.Text;
 
 namespace ALBLOG.Controllers
 {
@@ -15,7 +16,7 @@ namespace ALBLOG.Controllers
         public IActionResult Test(string userName)
         {
             UserService userService = new UserService();
-            if (userName==null)
+            if (userName == null)
             {
                 return Content("null");
             }
