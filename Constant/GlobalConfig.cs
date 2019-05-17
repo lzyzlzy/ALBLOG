@@ -18,12 +18,10 @@ namespace ALBLOG.Constant
         public static readonly string RedisRequestMessageQueueName = "RequestMessage";
         public static readonly string RedisResponseMessageDictionaryName = "ResponseMessage";
         public static readonly int CognitiveGetResponseRetryCount = 6;
-        public static bool IsWebApplication = true;
 
         static GlobalConfig()
         {
-            MongoDbConfigFilePath = AppDomain.CurrentDomain.BaseDirectory +
-                (IsWebApplication ? @"bin\Config\mongodb.config" : @"Config\mongodb.config");
+            MongoDbConfigFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Config\mongodb.config";
         }
 
 

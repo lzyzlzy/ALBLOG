@@ -5,11 +5,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ALBLOG.Models;
+using ALBLOG.Domain.Service;
 
 namespace ALBLOG.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpPost]
+        public IActionResult Test(string userName)
+        {
+            UserService userService = new UserService();
+            if (userName==null)
+            {
+                return Content("null");
+            }
+            var user = userService.GetOne(i => i.UserName == userName);
+            return Json(user.Password);
+        }
+
         public IActionResult Index()
         {
             return View();

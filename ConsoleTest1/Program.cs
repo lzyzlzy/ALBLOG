@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using ALBLOG.Domain.Model;
+using ALBLOG.Domain.Service;
 
 namespace ConsoleTest1
 {
@@ -6,7 +9,14 @@ namespace ConsoleTest1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            UserService userService = new UserService();
+            User user = new User
+            {
+                UserName = "test",
+                Password = "123"
+            };
+            Console.ReadLine();
         }
+
     }
 }

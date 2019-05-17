@@ -6,7 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="mongodb.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="mongodb.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ALBLOG.Domain.Model\ALBLOG.Domain.Model.csproj" />
+    <ProjectReference Include="..\ALBLOG.Domain.Service\ALBLOG.Domain.Service.csproj" />
+    <ProjectReference Include="..\Constant\ALBLOG.Constant.csproj" />
   </ItemGroup>
 
 </Project>
