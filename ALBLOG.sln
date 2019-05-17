@@ -29,8 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ALBLOG.Api", "ALBLOG.Api\AL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.MongoDBClient", "Common.MongoDBClient\Common.MongoDBClient.csproj", "{C8D42675-7CA9-46CE-8A0E-2CB106D52C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coon.MongoDBClient", "Comn.MongoDBClient\Coon.MongoDBClient.csproj", "{15A4DFBD-7462-4860-B661-C5F7BF13893F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,10 +71,6 @@ Global
 		{C8D42675-7CA9-46CE-8A0E-2CB106D52C0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8D42675-7CA9-46CE-8A0E-2CB106D52C0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8D42675-7CA9-46CE-8A0E-2CB106D52C0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15A4DFBD-7462-4860-B661-C5F7BF13893F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15A4DFBD-7462-4860-B661-C5F7BF13893F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15A4DFBD-7462-4860-B661-C5F7BF13893F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15A4DFBD-7462-4860-B661-C5F7BF13893F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,7 +85,6 @@ Global
 		{F09B6BCB-555A-431F-9F26-D37F6919D8F3} = {27731154-7A2E-4B1E-8113-D1D1F6952810}
 		{881161E9-2000-4BA4-863E-6905F0CD0EA2} = {E0FA5C3E-3EAB-4C28-87A9-318DB605BA3D}
 		{C8D42675-7CA9-46CE-8A0E-2CB106D52C0D} = {58FA450C-5AFC-4F26-A29A-E9675D3DC632}
-		{15A4DFBD-7462-4860-B661-C5F7BF13893F} = {58FA450C-5AFC-4F26-A29A-E9675D3DC632}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E5A7F1BA-4F4E-4932-A10C-C0FD91ABB69E}
