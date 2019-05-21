@@ -47,6 +47,40 @@ namespace ALBLOG.Web.Controllers
             return Json(new ReturnMessage { Message = "ok" });
         }
 
+        [HttpGet]
+        public IActionResult CreatePost()
+        {
+            HttpContext.Session.TryGetValue("username", out byte[] value);
+            if (value == null)
+                return View("Login");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreatePost(string title, string tags, string context)
+        {
+            HttpContext.Session.TryGetValue("username", out byte[] value);
+            if (value == null)
+                return Json(new ReturnMessage { Message = "Login Timeout!" });
+            PostService postService = new PostService();
+            var post = postService.GetPost(i => i.Title == title);
+            if (post != null)
+                return Json(new ReturnMessage { Message = "this title already exists" });
+            List<string> _tags = tags.Split(',', '，')
+                                   .Where(i => i != "")
+                                   .ToList();
+            post = new Post
+            {
+                Title = title,
+                UserName = Encoding.Default.GetString(value),
+                Tags = _tags,
+                Date = DateTime.Now,
+                Context = context
+            };
+            postService.AddPost(post);
+            return Json(new ReturnMessage { Message = "ok" });
+        }
+
 
     }
 }

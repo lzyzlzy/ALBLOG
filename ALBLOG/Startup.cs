@@ -32,7 +32,10 @@ namespace ALBLOG
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSession();
+            services.AddSession(i=> 
+            {
+                i.IdleTimeout = TimeSpan.FromHours(4);
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

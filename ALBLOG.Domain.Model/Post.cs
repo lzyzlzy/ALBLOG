@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ALBLOG.Domain.Model
 {
-    [Collection("ALBlOG_Posts")]
+    [Collection("ALBLOG_Posts")]
     public class Post : DomainModel
     {
         public string Title { get; set; }
@@ -15,5 +15,7 @@ namespace ALBLOG.Domain.Model
         public DateTime Date { get; set; }
 
         public List<string> Tags { get; set; }
+
+        public string UserName { get; set; }
     }
 }

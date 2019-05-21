@@ -42,7 +42,36 @@ $('#btnLogin').click(() => {
 //-------END-------
 
 
-//~/admin/index
+//~/admin/CreatePost
+var E = window.wangEditor;
+var editor = new E('#editor');
+editor.create();
+
+
+$('#btnSubmitPost').click(() => {
+    var title = $('#txtTitle').val();
+    var tags = $('#txtTags').val();
+    var context = editor.txt.html();
+    if (title == "" || tags == "" || context == "") {
+        alert("title,tags can't be empty!");
+    }
+    else {
+        var dto = {
+            title: title,
+            tags: tags,
+            context: context
+        }
+        $.post("/admin/createpost", dto, data => {
+            if (data.message == "ok") {
+                alert("ok");
+                $(location).attr('href', '/admin/index');
+            }
+            else {
+                alert(dto.message);
+            }
+        });
+    }
+});
 //-------END-------
 
 

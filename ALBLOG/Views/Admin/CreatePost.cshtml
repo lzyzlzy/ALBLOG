@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "CreatePost";
+}
+
+<h2>CreatePost</h2>
+<div>
+    <div id="postDemo"></div>
+    <div>
+        <div>
+            <div>
+                <label for="txtTitle">Title</label>
+                <input type="text" class="form-control" id="txtTitle" value="" />
+            </div>
+            <div class="margin-top-10">
+                <label for="txtTags">Tags(',')</label>
+                <input type="text" class="form-control" id="txtTags" value="" />
+            </div>
+        </div>
+        <div class="margin-top-10">
+            <div>
+                <span class="form-group">
+                    <label>Context</label>
+                    <button class="btn btn-link float-right" style="text-align:right" id="btnSubmitPost">Submit</button>
+                </span>
+            </div>
+            <div class="margin-top-10" id="editor">
+            </div>
+        </div>
+    </div>
+</div>
+
