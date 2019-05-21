@@ -8,21 +8,22 @@
     <div>
         @foreach (var item in posts)
         {
-        <div>
-            <a style="color:black" href="/post/getpost?title=@item.Title">
-                <h3>
-                    @item.Title
-                    <small>
-                        @item.Date
-                    </small>
-                </h3>
-            </a>
-            @foreach (var tag in item.Tags)
-            {
-                <span>@tag</span>
-            }
-        </div>
-        <hr />
-    }
+            <div>
+                <a style="color:black" href="/post/getpost?title=@item.Title">
+                    <h3>
+                        @item.Title
+                        <br />
+                        <small>
+                            @item.Date
+                        </small>
+                    </h3>
+                </a>
+                @foreach (var tag in item.Tags)
+                {
+                    <span>@tag</span>
+                }
+            </div>
+            <hr />
+        }
     </div>
 </div>
