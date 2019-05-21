@@ -35,3 +35,163 @@ body {
         display: none;
     }
 }
+
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+    ul li {
+        margin: 0;
+        padding: 0;
+    }
+
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.margin-top-8 {
+    margin-top: 8px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-25 {
+    margin-top: 25px;
+}
+
+.margin-left-5 {
+    margin-left: 5px;
+}
+
+.margin-left-8 {
+    margin-left: 8px;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+.margin-left-15 {
+    margin-left: 15px;
+}
+
+.margin-left-18 {
+    margin-left: 18px;
+}
+
+.margin-left-20 {
+    margin-left: 20px;
+}
+
+.padding-25 {
+    padding: 25px;
+}
+
+.font-normal {
+    color: #333333;
+    font-family: Segoe UI;
+    font-size: 13px !important;
+}
+
+.font-link {
+    color: #1c8cff;
+    font-family: Segoe UI;
+    font-size: 13px;
+}
+
+.font-bold {
+    color: #333333;
+    font-family: Segoe UI Semibold, Segoe UI;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.color-white {
+    color: #ffffff !important;
+}
+
+.color-red {
+    color: red;
+}
+
+.text-ellipsis {
+    -moz-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+
+.display-inline {
+    display: inline !important;
+}
+
+.display-inline-block {
+    display: inline-block !important;
+}
+
+.border-solid {
+    border: 1px solid #dedede;
+}
+
+.vertical-align-middle {
+    vertical-align: middle;
+}
+
+/*header style*/
+.bootstrap-table-thread, .fixed-table-header {
+    background-color: #eeeeee;
+}
+
+.fixed-table-container thead th .th-inner, .fixed-table-container tbody td .th-inner {
+    color: #777777;
+    font-size: 13px;
+    font-weight: normal;
+}
+/*header style end*/
+
+.fixed-table-container tbody a {
+    margin-left: 0px;
+}
+
+/*table style*/
+.fixed-table-container table {
+    border: none !important;
+}
+
+    .fixed-table-container table tr td {
+        border-left: none !important;
+    }
+
+    .fixed-table-container table th {
+        border-left: none !important;
+    }
+/*table style end*/
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.clear-both {
+    clear: both;
+}
