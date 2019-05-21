@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ALBLOG.Models;
 using ALBLOG.Domain.Service;
 using System.Text;
+using ALBLOG.Domain.Model;
 
 namespace ALBLOG.Controllers
 {
@@ -14,6 +15,9 @@ namespace ALBLOG.Controllers
     {
         public IActionResult Index()
         {
+            PostService postService = new PostService();
+            List<Post> posts = postService.GetAllPosts().ToList();
+            ViewData.Add("posts", posts);
             return View();
         }
 

@@ -1,9 +1,28 @@
-﻿@{
+﻿@using ALBLOG.Domain.Model
+@{
     ViewData["Title"] = "All Posts";
+    List<Post> posts = ViewData["posts"] as List<Post>;
 }
 <div>
     <h1>所有文章</h1>
     <div>
-        
+        @foreach (var item in posts)
+        {
+        <div>
+            <a style="color:black" href="/post/getpost?title=@item.Title">
+                <h3>
+                    @item.Title
+                    <small>
+                        @item.Date
+                    </small>
+                </h3>
+            </a>
+            @foreach (var tag in item.Tags)
+            {
+                <span>@tag</span>
+            }
+        </div>
+        <hr />
+    }
     </div>
 </div>
