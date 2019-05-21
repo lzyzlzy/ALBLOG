@@ -1,0 +1,25 @@
+﻿<div>
+    <div>
+        <div class="modal-title">
+            <h3> @ViewData["title"]</h3>
+            <hr />
+        </div>
+        <div>
+            <h4>
+                <small>
+                    @ViewData["date"] Author: @ViewData["name"]
+                </small>
+            </h4>
+            <h4>
+                <small>
+                    Tags：@ViewData["tags"]
+                </small>
+            </h4>
+        </div>
+    </div>
+    <div class="modal-body">
+        @Html.Raw(ViewData["context"])
+    </div>
+</div>
+
+

@@ -8,6 +8,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/lib/wangEditer/css/wangEditor.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap-table/css/bootstrap-table.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -15,6 +16,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/lib/wangEditer/css/wangEditor.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/bootstrap-table/css/bootstrap-table.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     <style type="text/css">
@@ -40,7 +42,7 @@
             <div class="navbar-collapse collapse navbar-right">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">主页</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">关于我</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">关于</a></li>
                     <li>
                         <a id="gitlogo" href="https://github.com/AndrewLiuZY" target="_blank">
                             <img src="~/images/GIthubLogo.png" />
@@ -66,6 +68,7 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/lib/wangEditer/js/wangEditor.js"></script>
+        <script src="~/lib/bootstrap-table/js/bootstrap-table.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -82,6 +85,7 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/lib/wangEditer/js/wangEditor.min.js"></script>
+        <script src="~/lib/bootstrap-table/js/bootstrap-table.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 

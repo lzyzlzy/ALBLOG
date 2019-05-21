@@ -66,9 +66,7 @@ namespace ALBLOG.Web.Controllers
             var post = postService.GetPost(i => i.Title == title);
             if (post != null)
                 return Json(new ReturnMessage { Message = "this title already exists" });
-            List<string> _tags = tags.Split(',', '，')
-                                   .Where(i => i != "")
-                                   .ToList();
+            List<string> _tags = tags.Split(',', '，').Where(i => i != "").ToList();
             post = new Post
             {
                 Title = title,
@@ -80,7 +78,6 @@ namespace ALBLOG.Web.Controllers
             postService.AddPost(post);
             return Json(new ReturnMessage { Message = "ok" });
         }
-
 
     }
 }

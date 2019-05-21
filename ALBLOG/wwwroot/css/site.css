@@ -129,15 +129,6 @@ ul {
     color: red;
 }
 
-.text-ellipsis {
-    -moz-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-wrap: normal;
-}
-
 .display-inline {
     display: inline !important;
 }
