@@ -13,11 +13,22 @@ namespace ALBLOG.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(int index = 1)
         {
+            int postNumOfOnePage = 10;
             PostService postService = new PostService();
-            List<Post> posts = postService.GetAllPosts().ToList();
+            var allPosts = postService.GetAllPosts();
+            var posts = allPosts.Skip((index - 1) * 10).Take(postNumOfOnePage).ToList();
+            if (posts.Count == 0)
+            {
+                posts = allPosts.Take(10).ToList();
+                index = 1;
+            }
+            ViewData.Add("haveNext", allPosts.Count() > index * postNumOfOnePage ? "true" : "false");
+            ViewData.Add("haveLast", index > 1 ? "true" : "false");
             ViewData.Add("posts", posts);
+            ViewData.Add("sum", allPosts.Count() % postNumOfOnePage != 0 ? allPosts.Count() / postNumOfOnePage + 1 : allPosts.Count() / postNumOfOnePage);
+            ViewData.Add("page", index);
             return View();
         }
 

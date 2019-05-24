@@ -2,9 +2,10 @@
 @{
     ViewData["Title"] = "All Posts";
     List<Post> posts = ViewData["posts"] as List<Post>;
+    int page = Convert.ToInt32(ViewData["page"]);
 }
 <div>
-    <h1>所有文章</h1>
+    <h1> <small>所有文章</small> </h1>
     <div>
         @foreach (var item in posts)
         {
@@ -14,10 +15,11 @@
                         @item.Title
                         <br />
                         <small>
-                            @item.Date
+                            @item.Date.AddHours(8)
                         </small>
                     </h3>
                 </a>
+                <span>标签：</span>
                 @foreach (var tag in item.Tags)
                 {
                     <span>@tag</span>
@@ -25,5 +27,31 @@
             </div>
             <hr />
         }
+    </div>
+    <div>
+        <span>
+            第 @ViewData["page"] 页，
+        </span>
+        <span>
+            共 @ViewData["sum"] 页
+        </span>
+
+        @if (ViewData["haveLast"] as string == "true")
+        {
+            <span>
+                <a href="~/home/index/ @(page-1)">
+                    上一页
+                </a>
+            </span>
+        }
+        @if (ViewData["haveNext"] as string == "true")
+        {
+            <span>
+                <a href="~/home/index/ @(page+1)">
+                    下一页
+                </a>
+            </span>
+        }
+
     </div>
 </div>

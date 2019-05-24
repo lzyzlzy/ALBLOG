@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ALBLOG.Domain.Dto\ALBLOG.Domain.Dto.csproj" />
     <ProjectReference Include="..\ALBLOG.Domain.Model\ALBLOG.Domain.Model.csproj" />
     <ProjectReference Include="..\ALBLOG.Domain.Service\ALBLOG.Domain.Service.csproj" />
     <ProjectReference Include="..\Common.Utility\Common.Utility.csproj" />
