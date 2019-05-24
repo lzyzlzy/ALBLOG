@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ALBLOG.Domain.Model
+namespace ALBLOG.Domain.Dto
 {
-    public class ReturnMessage
+    public class ReturnDto
     {
         public string State { get; set; }
         public string Message { get; set; }

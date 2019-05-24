@@ -3,6 +3,7 @@ using ALBLOG.Domain.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
 
 namespace ALBLOG.Domain.Service
 {
@@ -15,7 +16,7 @@ namespace ALBLOG.Domain.Service
             this.repository = new PostRepository();
         }
 
-        public IEnumerable<Post> GetAllPosts() => this.repository.GetAll();
+        public IEnumerable<Post> GetAllPosts() => this.repository.GetAll().Reverse();
 
         public Post GetPost(Expression<Func<Post, bool>> expression) => this.repository.GetOne(expression);
 

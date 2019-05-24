@@ -42,24 +42,42 @@ namespace ALBLOG.Web.Controllers
             return View();
         }
 
+        public IActionResult DeletePost(string title)
+        {
+            PostService postService = new PostService();
+            postService.Delete(title.Trim());
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         public IActionResult Login(UserDto userDto)
         {
             UserService userService = new UserService();
             var user = userService.GetOne(i => i.UserName == userDto.userName.Trim());
             if (user == null)
-                return Json(new ReturnMessage { Message = "Invalid username." });
+                return Json(new ReturnDto { Message = "Invalid username." });
             if (user.Password != userDto.password.Trim())
-                return Json(new ReturnMessage { Message = "Invalid password." });
+                return Json(new ReturnDto { Message = "Invalid password." });
             HttpContext.Session.Set("username", Encoding.Default.GetBytes(userDto.userName));
-            return Json(new ReturnMessage { Message = "ok" });
+            return Json(new ReturnDto { Message = "ok" });
         }
 
         [HttpPost]
         public IActionResult LogOut()
         {
             HttpContext.Session.Remove("username");
-            return Json(new ReturnMessage { Message = "ok" });
+            return Json(new ReturnDto { Message = "ok" });
+        }
+
+        public IActionResult EditPost(string title)
+        {
+            ViewData["Title"] = "Edit";
+            PostService postService = new PostService();
+            var post = postService.GetPost(i => i.Title == title.Trim());
+            ViewData.Add("postTitle", post.Title);
+            ViewData.Add("tags", post.Tags);
+            ViewData.Add("context", post.Context);
+            return View("CreatePost");
         }
 
         [HttpGet]
@@ -74,15 +92,17 @@ namespace ALBLOG.Web.Controllers
         [HttpPost]
         public IActionResult CreatePost(PostDto postDto)
         {
+            ViewData["Title"] = "Create";
             HttpContext.Session.TryGetValue("username", out byte[] value);
             if (value == null)
-                return Json(new ReturnMessage { Message = "Login Timeout!" });
+                return Json(new ReturnDto { Message = "Login Timeout!" });
             PostService postService = new PostService();
+            postService.Delete(postDto.title.Trim());
             var post = postService.GetPost(i => i.Title == postDto.title);
             if (post != null)
-                return Json(new ReturnMessage { Message = "this title already exists" });
+                postService.Delete(postDto.title.Trim());
             List<string> _tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
-            post = new Post
+            var _post = new Post
             {
                 Title = postDto.title,
                 UserName = Encoding.Default.GetString(value),
@@ -90,8 +110,8 @@ namespace ALBLOG.Web.Controllers
                 Date = DateTime.Now,
                 Context = postDto.context
             };
-            postService.AddPost(post);
-            return Json(new ReturnMessage { Message = "ok" });
+            postService.AddPost(_post);
+            return Json(new ReturnDto { Message = "ok" });
         }
 
     }

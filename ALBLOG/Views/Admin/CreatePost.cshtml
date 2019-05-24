@@ -1,20 +1,26 @@
 ﻿
 @{
-    ViewData["Title"] = "CreatePost";
+    string tags = "";
+    if (ViewData["tags"] != null)
+    {
+        (ViewData["tags"] as List<string>).ForEach(i => tags += i + ",");
+    }
+    string title = ViewData["postTitle"] as string ?? "";
+    ViewBag.isEdit = ViewData["Title"] as string == "Edit" ? true : false;
 }
 
-<h2>CreatePost</h2>
+<h2>@ViewData["Title"]</h2>
 <div>
     <div id="postDemo"></div>
     <div>
         <div>
             <div>
                 <label for="txtTitle">Title</label>
-                <input type="text" class="form-control" id="txtTitle" value="" />
+                <input type="text" class="form-control" id="txtTitle" value="@title" />
             </div>
             <div class="margin-top-10">
                 <label for="txtTags">Tags(',')</label>
-                <input type="text" class="form-control" id="txtTags" value="" />
+                <input type="text" class="form-control" id="txtTags" value="@tags" />
             </div>
         </div>
         <div class="margin-top-10">
@@ -25,6 +31,7 @@
                 </span>
             </div>
             <div class="margin-top-10" id="editor">
+                @Html.Raw(ViewData["context"])
             </div>
         </div>
     </div>

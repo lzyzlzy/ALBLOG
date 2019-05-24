@@ -32,6 +32,11 @@ namespace ALBLOG.Controllers
             return View();
         }
 
+        public IActionResult CV()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

@@ -1,16 +1,17 @@
 ﻿@using ALBLOG.Domain.Model
 @{
-    ViewData["Title"] = "All Posts";
+    ViewData["Title"] = "首页";
     List<Post> posts = ViewData["posts"] as List<Post>;
     int page = Convert.ToInt32(ViewData["page"]);
 }
 <div>
-    <h1> <small>所有文章</small> </h1>
+    <h1> 所有文章 <small>all posts</small> </h1>
+    <hr />
     <div>
         @foreach (var item in posts)
         {
             <div>
-                <a style="color:black" href="/post/getpost?title=@item.Title">
+                <a style="color:black" href="~/post/getpost?title=@item.Title">
                     <h3>
                         @item.Title
                         <br />
@@ -39,7 +40,7 @@
         @if (ViewData["haveLast"] as string == "true")
         {
             <span>
-                <a href="~/home/index/ @(page-1)">
+                <a href="~/home/index?index= @(page-1)">
                     上一页
                 </a>
             </span>
@@ -47,7 +48,7 @@
         @if (ViewData["haveNext"] as string == "true")
         {
             <span>
-                <a href="~/home/index/ @(page+1)">
+                <a href="~/home/index?index= @(page+1)">
                     下一页
                 </a>
             </span>

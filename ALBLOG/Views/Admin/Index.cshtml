@@ -20,9 +20,11 @@
             {
                 <div>
                     <div>
-                        <a style="color:black" href="/post/getpost?title=@item.Title">
+                        <a style="color:black" href="~/post/getpost?title=@item.Title">
                             <text>
-                                @item.Title
+                                <strong>
+                                    @item.Title
+                                </strong>
                                 <small>
                                     @item.Date.AddHours(8)
                                 </small>
@@ -36,14 +38,14 @@
                     </div>
                     <div>
                         <span>
-                            <a href="#">Edit</a>
+                            <a href="~/admin/editpost?title= @item.Title">Edit</a>
                         </span>
                         <span>
-                            <a href="#" style="color:red">Delete</a>
+                            <a href="~/admin/deletepost?title= @item.Title" style="color:red">Delete</a>
                         </span>
                     </div>
                 </div>
-                <hr />
+                <br/>
             }
         </div>
         <div>
@@ -57,7 +59,7 @@
             @if (ViewData["haveLast"] as string == "true")
             {
                 <span>
-                    <a href="~/admin/index/ @(page-1)">
+                    <a href="~/admin/index?index= @(page-1)">
                         上一页
                     </a>
                 </span>
@@ -65,7 +67,7 @@
             @if (ViewData["haveNext"] as string == "true")
             {
                 <span>
-                    <a href="~/admin/index/ @(page+1)">
+                    <a href="~/admin/index?index= @(page+1)">
                         下一页
                     </a>
                 </span>
