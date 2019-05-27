@@ -7,11 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using ALBLOG.Domain.Service;
 using ALBLOG.Domain.Model;
 using ALBLOG.Domain.Dto;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using System.Net.Http.Headers;
 
 namespace ALBLOG.Web.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+        public AdminController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         public IActionResult Index(int index = 1)
         {
             HttpContext.Session.TryGetValue("username", out byte[] value);
@@ -23,7 +31,7 @@ namespace ALBLOG.Web.Controllers
             PostService postService = new PostService();
             var allPosts = postService.GetAllPosts(i => i.IsDraft == false);
             var posts = allPosts.Skip((index - 1) * 10).Take(postNumOfOnePage).ToList();
-            var draftCount= postService.GetAllPosts(i => i.IsDraft == true).Count();
+            var draftCount = postService.GetAllPosts(i => i.IsDraft == true).Count();
             if (posts.Count == 0)
             {
                 posts = allPosts.Take(10).ToList();
@@ -174,6 +182,27 @@ namespace ALBLOG.Web.Controllers
             post.IsDraft = true;
             postService.Update(post);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult UpLoad(UpLoadImgDto imgDto)
+        {
+            List<string> pathList = new List<string>();
+            var fileDir = Path.Combine(_hostingEnvironment.WebRootPath, "images") + $@"/{DateTime.Now.ToString("yyyy-MM-dd")}";
+            var showDir = $@"/images/{DateTime.Now.ToString("yyyy-MM-dd")}/";
+            if (!Directory.Exists(fileDir))
+                Directory.CreateDirectory(fileDir);
+            foreach (var file in Request.Form.Files)
+            {
+                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).Name.Trim('"');
+                var filePath = fileDir + "/" + fileName;
+                using (FileStream fileStream = System.IO.File.Create(filePath))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+                pathList.Add(showDir + fileName);
+            }
+            return Json(new UpLoadImgDto { Errno = 0, Data = pathList });
         }
     }
 }

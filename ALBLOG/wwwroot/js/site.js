@@ -46,6 +46,7 @@ $('#btnLogin').click(() => {
 //~/admin/CreatePost
 var E = window.wangEditor;
 var editor = new E('#editor');
+editor.customConfig.uploadImgServer = '/admin/upload';
 editor.create();
 $('pre code').each(function (i, block) {
     hljs.highlightBlock(block)
