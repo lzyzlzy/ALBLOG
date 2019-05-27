@@ -21,7 +21,7 @@ namespace ALBLOG.Constant
 
         static GlobalConfig()
         {
-            MongoDbConfigFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Config\mongodb.config";
+            MongoDbConfigFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Config/mongodb.config";
         }
 
 

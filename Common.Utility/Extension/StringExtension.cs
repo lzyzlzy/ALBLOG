@@ -229,68 +229,7 @@ namespace System
             var temp = currentValue.Remove(offset, oldValue.Length);
             return temp.Insert(offset, newValue);
         }
-
-
-
-        /// <summary>
-        ///     Get hashcode in 64-bit
-        /// </summary>
-        /// <param name="value">the string need get hashcode </param>
-        /// <returns>hashcode in 64-bit</returns>
-        public static Int32 GetHashCodeIn64BitProcess(this String value)
-        {
-            unsafe
-            {
-                fixed (char* src = value)
-                {
-                    var hash1 = 5381;
-                    var hash2 = hash1;
-                    int c;
-                    var s = src;
-                    while ((c = s[0]) != 0)
-                    {
-                        hash1 = ((hash1 << 5) + hash1) ^ c;
-                        c = s[1];
-                        if (c == 0)
-                            break;
-                        hash2 = ((hash2 << 5) + hash2) ^ c;
-                        s += 2;
-                    }
-                    return hash1 + (hash2 * 1566083941);
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Get hashcode in 32-bit
-        /// </summary>
-        /// <param name="value">the string need get hashcode </param>
-        /// <returns>hashcode in 32-bit</returns>
-        public static Int32 GetHashCodeIn32BitProcess(this String value)
-        {
-            unsafe
-            {
-                fixed (char* src = value)
-                {
-                    var hash1 = (5381 << 16) + 5381;
-                    var hash2 = hash1;
-                    var pint = (int*)src;
-                    var len = value.Length;
-                    while (len > 0)
-                    {
-                        hash1 = ((hash1 << 5) + hash1 + (hash1 >> 27)) ^ pint[0];
-                        if (len <= 2)
-                        {
-                            break;
-                        }
-                        hash2 = ((hash2 << 5) + hash2 + (hash2 >> 27)) ^ pint[1];
-                        pint += 2;
-                        len -= 4;
-                    }
-                    return hash1 + (hash2 * 1566083941);
-                }
-            }
-        }
+     
         public static string ToJobNumberString(this string value)
         {
             var str = value.ToString();

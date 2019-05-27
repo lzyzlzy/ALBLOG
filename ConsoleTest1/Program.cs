@@ -12,8 +12,6 @@ namespace ConsoleTest1
             UserService userService = new UserService();
             User user = new User
             {
-                UserName = "test",
-                Password = "123"
             };
             Console.ReadLine();
         }
