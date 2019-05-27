@@ -8,6 +8,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/font-awesome.css" />
+        <link rel="stylesheet" href="~/lib/highlight/css/atom-one-dark.css" />
         <link rel="stylesheet" href="~/lib/wangEditer/css/wangEditor.css" />
         <link rel="stylesheet" href="~/lib/bootstrap-table/css/bootstrap-table.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -17,6 +18,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/lib/font-awesome/font-awesome.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/lib/highlight/css/atom-one-dark.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/wangEditer/css/wangEditor.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/bootstrap-table/css/bootstrap-table.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
@@ -60,17 +62,18 @@
 
     <div class="container body-content">
         <div class="row">
-            <section class="col-xs-9">
+            <section class="col-md-9">
                 @RenderBody()
                 <hr />
             </section>
-            <aside class="col-xs-3 hidden-xs" id="Myself">
+            <aside class="col-md-3 hidden-xs" id="Myself">
                 <section class="margin-top-25">
                     <img src="~/images/myPic1.jpg" width="300" alt="Alternate Text" />
                     <div>
                         <div>
                             <h3>刘震宇 <small>Andrew Liu</small></h3>
-                            <p>一个即将大学毕业的.net开发者</p>
+                            <p>一个即将大学毕业的.net开发者。</p>
+                            <p>爱好打代码，摄影，健身，打游戏。</p>
                         </div>
                         <div>
                             <a href="~/home/cv">我的简历</a>
@@ -92,6 +95,7 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/highlight/js/highlight.pack.js"></script>
         <script src="~/lib/wangEditer/js/wangEditor.js"></script>
         <script src="~/lib/bootstrap-table/js/bootstrap-table.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
@@ -109,6 +113,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
+        <script src="~/lib/highlight/js/highlight.pack.js"></script>
         <script src="~/lib/wangEditer/js/wangEditor.min.js"></script>
         <script src="~/lib/bootstrap-table/js/bootstrap-table.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>

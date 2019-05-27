@@ -165,7 +165,7 @@ namespace ALBLOG.Web.Controllers
             var post = postService.GetPost(i => i.Title == title.Trim());
             post.IsDraft = false;
             postService.Update(post);
-            return RedirectToAction("Index");
+            return RedirectToAction("Drafts");
         }
         public IActionResult GoToDraftBox(string title)
         {
@@ -173,7 +173,7 @@ namespace ALBLOG.Web.Controllers
             var post = postService.GetPost(i => i.Title == title.Trim());
             post.IsDraft = true;
             postService.Update(post);
-            return RedirectToAction("Drafts");
+            return RedirectToAction("Index");
         }
     }
 }

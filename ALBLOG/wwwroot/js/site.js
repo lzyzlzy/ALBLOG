@@ -47,6 +47,9 @@ $('#btnLogin').click(() => {
 var E = window.wangEditor;
 var editor = new E('#editor');
 editor.create();
+$('pre code').each(function (i, block) {
+    hljs.highlightBlock(block)
+});
 
 
 $('#btnSubmitPost').click(() => {
