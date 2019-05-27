@@ -11,7 +11,10 @@
 <div>
     <div>
         <h3>Post Manage</h3>
-        <a href="~/admin/CreatePost">create a post</a>
+        <div class="form-group row">
+            <a class="col-md-2" href="~/admin/CreatePost">Create a post</a>
+            <a class="col-md-1" href="~/admin/Drafts">Drafts(@ViewData["draftCount"])</a>
+        </div>
     </div>
     <hr />
     <div>
@@ -43,9 +46,12 @@
                         <span>
                             <a href="~/admin/deletepost?title= @item.Title" style="color:red">Delete</a>
                         </span>
+                        <span>
+                            <a href="~/admin/GoToDraftBox?title= @item.Title" style="color:forestgreen">To Draft Box</a>
+                        </span>
                     </div>
                 </div>
-                <br/>
+                <br />
             }
         </div>
         <div>
@@ -75,3 +81,8 @@
         </div>
     </div>
 </div>
+<style>
+    #Myself {
+        visibility: hidden
+    }
+</style>

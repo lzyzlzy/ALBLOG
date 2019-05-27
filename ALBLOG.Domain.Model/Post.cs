@@ -17,5 +17,7 @@ namespace ALBLOG.Domain.Model
         public List<string> Tags { get; set; }
 
         public string UserName { get; set; }
+
+        public bool IsDraft { get; set; }
     }
 }

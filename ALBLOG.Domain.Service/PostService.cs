@@ -17,6 +17,7 @@ namespace ALBLOG.Domain.Service
         }
 
         public IEnumerable<Post> GetAllPosts() => this.repository.GetAll().Reverse();
+        public IEnumerable<Post> GetAllPosts(Expression<Func<Post, bool>> expression) => this.repository.GetAll(expression).Reverse();
 
         public Post GetPost(Expression<Func<Post, bool>> expression) => this.repository.GetOne(expression);
 
@@ -32,6 +33,11 @@ namespace ALBLOG.Domain.Service
         public void AddPost(Post post)
         {
             this.repository.Add(post);
+        }
+
+        public void Update(Post post)
+        {
+            repository.Update(post);
         }
 
         public long DeleteMany(Expression<Func<Post, bool>> expression) => this.repository.DeleteMany(expression);

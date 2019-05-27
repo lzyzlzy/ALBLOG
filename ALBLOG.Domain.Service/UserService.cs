@@ -36,20 +36,6 @@ namespace ALBLOG.Domain.Service
             return true;
         }
 
-
-
-        public bool ChangePassword(ChangeUserPasswordModel model)
-        {
-            if (!IsUserExist(model.UserName))
-                return false;
-            var user = GetOne(i => i.UserName == model.UserName);
-            if (user.Password != model.Password)
-                return false;
-            DeleteOne(model.UserName);
-            AddUser(new User { UserName = model.UserName, Password = model.NewPassword });
-            return true;
-        }
-
         private bool IsUserExist(string userName) => GetOne(i => i.UserName == userName) != null ? true : false;
 
     }

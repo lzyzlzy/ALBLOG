@@ -21,7 +21,33 @@ namespace ALBLOG.Web.Controllers
                 ViewBag.Name = Encoding.Default.GetString(value);
             int postNumOfOnePage = 10;
             PostService postService = new PostService();
-            var allPosts = postService.GetAllPosts();
+            var allPosts = postService.GetAllPosts(i => i.IsDraft == false);
+            var posts = allPosts.Skip((index - 1) * 10).Take(postNumOfOnePage).ToList();
+            var draftCount= postService.GetAllPosts(i => i.IsDraft == true).Count();
+            if (posts.Count == 0)
+            {
+                posts = allPosts.Take(10).ToList();
+                index = 1;
+            }
+            ViewData.Add("haveNext", allPosts.Count() > index * postNumOfOnePage ? "true" : "false");
+            ViewData.Add("haveLast", index > 1 ? "true" : "false");
+            ViewData.Add("posts", posts);
+            ViewData.Add("sum", allPosts.Count() % postNumOfOnePage != 0 ? allPosts.Count() / postNumOfOnePage + 1 : allPosts.Count() / postNumOfOnePage);
+            ViewData.Add("page", index);
+            ViewData.Add("draftCount", draftCount);
+            return View();
+        }
+
+        public IActionResult Drafts(int index = 1)
+        {
+            HttpContext.Session.TryGetValue("username", out byte[] value);
+            if (value == null)
+                return View("Login");
+            else
+                ViewBag.Name = Encoding.Default.GetString(value);
+            int postNumOfOnePage = 10;
+            PostService postService = new PostService();
+            var allPosts = postService.GetAllPosts(i => i.IsDraft == true);
             var posts = allPosts.Skip((index - 1) * 10).Take(postNumOfOnePage).ToList();
             if (posts.Count == 0)
             {
@@ -83,6 +109,7 @@ namespace ALBLOG.Web.Controllers
         [HttpGet]
         public IActionResult CreatePost()
         {
+            ViewData["Title"] = "Create";
             HttpContext.Session.TryGetValue("username", out byte[] value);
             if (value == null)
                 return View("Login");
@@ -92,15 +119,11 @@ namespace ALBLOG.Web.Controllers
         [HttpPost]
         public IActionResult CreatePost(PostDto postDto)
         {
-            ViewData["Title"] = "Create";
             HttpContext.Session.TryGetValue("username", out byte[] value);
             if (value == null)
                 return Json(new ReturnDto { Message = "Login Timeout!" });
             PostService postService = new PostService();
             postService.Delete(postDto.title.Trim());
-            var post = postService.GetPost(i => i.Title == postDto.title);
-            if (post != null)
-                postService.Delete(postDto.title.Trim());
             List<string> _tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
             var _post = new Post
             {
@@ -108,11 +131,49 @@ namespace ALBLOG.Web.Controllers
                 UserName = Encoding.Default.GetString(value),
                 Tags = _tags,
                 Date = DateTime.Now,
-                Context = postDto.context
+                Context = postDto.context,
+                IsDraft = false
+            };
+            postService.AddPost(_post);
+            return Json(new ReturnDto { Message = "ok" });
+        }
+        [HttpPost]
+        public IActionResult CreateDraft(PostDto postDto)
+        {
+            HttpContext.Session.TryGetValue("username", out byte[] value);
+            if (value == null)
+                return Json(new ReturnDto { Message = "Login Timeout!" });
+            PostService postService = new PostService();
+            postService.Delete(postDto.title.Trim());
+            List<string> _tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
+            var _post = new Post
+            {
+                Title = postDto.title,
+                UserName = Encoding.Default.GetString(value),
+                Tags = _tags,
+                Date = DateTime.Now,
+                Context = postDto.context,
+                IsDraft = true
             };
             postService.AddPost(_post);
             return Json(new ReturnDto { Message = "ok" });
         }
 
+        public IActionResult PostDraft(string title)
+        {
+            PostService postService = new PostService();
+            var post = postService.GetPost(i => i.Title == title.Trim());
+            post.IsDraft = false;
+            postService.Update(post);
+            return RedirectToAction("Index");
+        }
+        public IActionResult GoToDraftBox(string title)
+        {
+            PostService postService = new PostService();
+            var post = postService.GetPost(i => i.Title == title.Trim());
+            post.IsDraft = true;
+            postService.Update(post);
+            return RedirectToAction("Drafts");
+        }
     }
 }

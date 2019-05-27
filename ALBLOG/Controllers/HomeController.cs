@@ -17,7 +17,7 @@ namespace ALBLOG.Controllers
         {
             int postNumOfOnePage = 10;
             PostService postService = new PostService();
-            var allPosts = postService.GetAllPosts();
+            var allPosts = postService.GetAllPosts(i => i.IsDraft == false);
             var posts = allPosts.Skip((index - 1) * 10).Take(postNumOfOnePage).ToList();
             if (posts.Count == 0)
             {
