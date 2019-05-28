@@ -1,2 +1,2 @@
 # ALBLOG
-A blog system developed by asp.net core
+A asp.net core blog system.
