@@ -1,0 +1,62 @@
+﻿
+@using ALBLOG.Domain.Model
+@{
+    List<Post> posts = ViewData["posts"] as List<Post>;
+    int page = Convert.ToInt32(ViewData["page"]);
+    string name = ViewData["Title"] as string;
+}
+
+<div>
+    <h1>标签：@name</h1>
+    <hr />
+    <div>
+        @foreach (var item in posts)
+        {
+            <div>
+                <a style="color:black" href="~/home/post?title=@item.Title">
+                    <h3>
+                        @item.Title
+                        <br />
+                        <small>
+                            @item.Date.AddHours(8)
+                        </small>
+                    </h3>
+                </a>
+                <span>标签：</span>
+                @foreach (var tag in item.Tags)
+                {
+                    <a href="~/home/tag?name=@tag">@tag </a>
+                }
+            </div>
+            <hr />
+        }
+    </div>
+    <div>
+        <span>
+            第 @ViewData["page"] 页，
+        </span>
+        <span>
+            共 @ViewData["sum"] 页
+        </span>
+
+        @if (ViewData["haveLast"] as string == "true")
+        {
+            <span>
+                <a href="~/home/tag?name=@name&index=@(page-1)">
+                    上一页
+                </a>
+            </span>
+        }
+        @if (ViewData["haveNext"] as string == "true")
+        {
+            <span>
+                <a href="~/home/index?name=@name&index=@(page+1)">
+                    下一页
+                </a>
+            </span>
+        }
+
+    </div>
+</div>
+
+

@@ -10,22 +10,22 @@
     <div>
         @foreach (var item in posts)
         {
-            <div>
-                <a style="color:black" href="~/post/getpost?title=@item.Title">
-                    <h3>
-                        @item.Title
-                        <br />
-                        <small>
-                            @item.Date.AddHours(8)
-                        </small>
-                    </h3>
-                </a>
-                <span>标签：</span>
-                @foreach (var tag in item.Tags)
-                {
-                    <span>@tag</span>
-                }
-            </div>
+        <div>
+            <a style="color:black" href="~/home/post?title=@item.Title">
+                <h3>
+                    @item.Title
+                    <br />
+                    <small>
+                        @item.Date.AddHours(8)
+                    </small>
+                </h3>
+            </a>
+            <span>标签：</span>
+            @foreach (var tag in item.Tags)
+            {
+                <a href="~/home/tag?name=@tag">@tag </a>
+            }
+        </div>
             <hr />
         }
     </div>
