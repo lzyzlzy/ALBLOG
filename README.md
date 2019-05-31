@@ -1,2 +1,2 @@
 # ALBLOG
-A asp.net core blog system.
+A .net core blog system.
