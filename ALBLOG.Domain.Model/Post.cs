@@ -19,5 +19,7 @@ namespace ALBLOG.Domain.Model
         public string UserName { get; set; }
 
         public bool IsDraft { get; set; }
+
+        public int? PageViews { get; set; }
     }
 }

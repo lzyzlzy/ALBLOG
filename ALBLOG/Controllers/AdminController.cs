@@ -107,7 +107,7 @@ namespace ALBLOG.Web.Controllers
         {
             ViewData["Title"] = "Edit";
             PostService postService = new PostService();
-            var post = postService.GetPost(i => i.Title == title.Trim());
+            var post = postService.GetPost(i => i.Title == title.Trim(), false);
             ViewData.Add("postTitle", post.Title);
             ViewData.Add("tags", post.Tags);
             ViewData.Add("context", post.Context);
@@ -170,7 +170,7 @@ namespace ALBLOG.Web.Controllers
         public IActionResult PostDraft(string title)
         {
             PostService postService = new PostService();
-            var post = postService.GetPost(i => i.Title == title.Trim());
+            var post = postService.GetPost(i => i.Title == title.Trim(), false);
             post.IsDraft = false;
             postService.Update(post);
             return RedirectToAction("Drafts");
@@ -178,7 +178,7 @@ namespace ALBLOG.Web.Controllers
         public IActionResult GoToDraftBox(string title)
         {
             PostService postService = new PostService();
-            var post = postService.GetPost(i => i.Title == title.Trim());
+            var post = postService.GetPost(i => i.Title == title.Trim(), false);
             post.IsDraft = true;
             postService.Update(post);
             return RedirectToAction("Index");

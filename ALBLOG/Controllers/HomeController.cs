@@ -60,9 +60,11 @@ namespace ALBLOG.Controllers
         public IActionResult Post(string title)
         {
             PostService postService = new PostService();
-            var post = postService.GetPost(i => i.Title == title);
+            HttpContext.Session.TryGetValue("username", out byte[] value);
+            var post = postService.GetPost(i => i.Title == title, value != null);
             if (post == null)
                 return RedirectToAction("Index", "Home");
+            //not admin=>pageview++
             string tags = "";
             post.Tags.ForEach(i => tags += i + " ");
             ViewData.Add("date", post.Date.AddHours(8).ToString("yyyy-MM-dd HH:mm"));
@@ -70,6 +72,7 @@ namespace ALBLOG.Controllers
             ViewData.Add("tags", tags);
             ViewData.Add("title", post.Title);
             ViewData.Add("context", post.Context);
+            ViewData.Add("pageviews", post.PageViews);
             return View();
         }
 
