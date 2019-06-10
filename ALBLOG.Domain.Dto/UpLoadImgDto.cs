@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ALBLOG.Domain.Dto
 {
-   public class UpLoadImgDto
+    public class UpLoadImgDto
     {
         public int Errno { get; set; }
 

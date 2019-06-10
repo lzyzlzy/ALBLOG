@@ -140,7 +140,8 @@ namespace ALBLOG.Web.Controllers
                 Tags = _tags,
                 Date = DateTime.Now,
                 Context = postDto.context,
-                IsDraft = false
+                IsDraft = false,
+                PageViews = 0
             };
             postService.AddPost(_post);
             return Json(new ReturnDto { Message = "ok" });
@@ -161,7 +162,8 @@ namespace ALBLOG.Web.Controllers
                 Tags = _tags,
                 Date = DateTime.Now,
                 Context = postDto.context,
-                IsDraft = true
+                IsDraft = true,
+                PageViews = 0
             };
             postService.AddPost(_post);
             return Json(new ReturnDto { Message = "ok" });

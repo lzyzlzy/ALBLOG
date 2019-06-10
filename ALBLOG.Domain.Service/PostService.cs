@@ -23,7 +23,7 @@ namespace ALBLOG.Domain.Service
 
         public bool Delete(string title)
         {
-            var post = GetPost(i => i.Title == title, false);
+            var post = GetPost(i => i.Title == title, true);
             if (post == null)
                 return false;
             this.repository.DeleteOne(post.Id);
