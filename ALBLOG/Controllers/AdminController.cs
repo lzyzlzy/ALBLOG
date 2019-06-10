@@ -180,7 +180,7 @@ namespace ALBLOG.Web.Controllers
         public IActionResult GoToDraftBox(string title)
         {
             PostService postService = new PostService();
-            var post = postService.GetPost(i => i.Title == title.Trim(), false);
+            var post = postService.GetPost(i => i.Title == title.Trim(), true);
             post.IsDraft = true;
             postService.Update(post);
             return RedirectToAction("Index");
