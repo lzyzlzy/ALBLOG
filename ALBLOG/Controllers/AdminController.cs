@@ -189,7 +189,7 @@ namespace ALBLOG.Web.Controllers
         public IActionResult UpLoad(UpLoadImgDto imgDto)
         {
             List<string> pathList = new List<string>();
-            var fileDir = Path.Combine(_hostingEnvironment.WebRootPath, "images") + $@"/{DateTime.Now.ToString("yyyy-MM-dd")}";
+            var fileDir = Path.Combine(_hostingEnvironment.WebRootPath, "images", DateTime.Now.ToString("yyyy-MM-dd"));
             var showDir = $@"/images/{DateTime.Now.ToString("yyyy-MM-dd")}/";
             if (!Directory.Exists(fileDir))
                 Directory.CreateDirectory(fileDir);
