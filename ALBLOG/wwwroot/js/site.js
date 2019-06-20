@@ -109,10 +109,6 @@ function IsEmpty() {
         return false;
     }
 }
-
-$('#btnPreviewPost').click(() => {
-    $('#previewBox').empty().append(editor.txt.html());
-});
 //-------END-------
 
 
