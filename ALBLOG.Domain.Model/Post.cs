@@ -14,6 +14,8 @@ namespace ALBLOG.Domain.Model
 
         public DateTime Date { get; set; }
 
+        public DateTime? EditDate { get; set; }
+
         public List<string> Tags { get; set; }
 
         public string UserName { get; set; }

@@ -63,7 +63,14 @@ $('#btnSubmitPost').click(() => {
             tags: tags,
             context: context
         };
-        $.post("/admin/createpost", dto, data => {
+        var actionName = "";
+        if ($('#pagetitle').text() == 'Create') {
+            actionName = "CreatePost";
+        }
+        else {
+            actionName = "EditPost";
+        }
+        $.post("/admin/" + actionName, dto, data => {
             if (data.message == "ok") {
                 alert("ok");
                 $(location).attr('href', '/admin/index');

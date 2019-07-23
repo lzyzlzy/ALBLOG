@@ -36,6 +36,15 @@ namespace ALBLOG.Domain.Service
             this.repository.Add(post);
         }
 
+        public void EditPost(string title, List<string> tags, string context)
+        {
+            var post = this.repository.GetOne(i => i.Title == title) ?? new Post() { Title = title, PageViews = 0, Date = DateTime.Now, UserName = "lzy", IsDraft = false, };
+            post.Tags = tags;
+            post.Context = context;
+            post.EditDate = DateTime.Now;
+            repository.Update(post);
+        }
+
         public Post AddPageViewNum(Expression<Func<Post, bool>> expression)
         {
             var post = this.repository.GetOne(expression);

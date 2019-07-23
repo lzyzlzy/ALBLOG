@@ -12,7 +12,11 @@ namespace ConsoleTest1
             UserService userService = new UserService();
             User user = new User
             {
+                UserName = "Lzy",
+                Password = "123"
             };
+            userService.AddUser(user);
+            Console.WriteLine("ok");
             Console.ReadLine();
         }
 

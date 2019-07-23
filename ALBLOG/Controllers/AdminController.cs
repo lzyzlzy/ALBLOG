@@ -125,6 +125,18 @@ namespace ALBLOG.Web.Controllers
         }
 
         [HttpPost]
+        public IActionResult EditPost(PostDto postDto)
+        {
+            HttpContext.Session.TryGetValue("username", out byte[] value);
+            if (value == null)
+                return Json(new ReturnDto { Message = "Login Timeout!" });
+            PostService postService = new PostService();
+            List<string> _tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
+            postService.EditPost(postDto.title.Trim(), _tags, postDto.context);
+            return Json(new ReturnDto { Message = "ok" });
+        }
+
+        [HttpPost]
         public IActionResult CreatePost(PostDto postDto)
         {
             HttpContext.Session.TryGetValue("username", out byte[] value);

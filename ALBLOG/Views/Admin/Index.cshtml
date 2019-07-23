@@ -34,7 +34,7 @@
                             </text>
                         </a>
                         <span>标签：</span>
-                        @foreach (var tag in item.Tags)
+                        @foreach (var tag in item.Tags ?? new List<string>())
                         {
                             <a class="post-tags btn-primary" href="~/home/tag?name=@tag">@tag </a>
                         }
