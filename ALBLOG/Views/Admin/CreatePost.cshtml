@@ -29,10 +29,15 @@
                     <label>Context</label>
                     <button class="btn btn-link float-right" style="text-align:right" id="btnSubmitPost">Submit</button>
                     <button class="btn btn-link float-right" style="text-align:right" id="btnDraftPost">To draft box</button>
+                    <button class="btn btn-link float-right" style="text-align:right" id="btnPreviewPost">Preview</button>
                 </span>
             </div>
             <div class="margin-top-10" id="editor">
                 @Html.Raw(ViewData["context"])
+            </div>
+        </div>
+        <div>
+            <div class="margin-top-10"id="previewBox">
             </div>
         </div>
     </div>
