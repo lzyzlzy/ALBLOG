@@ -66,7 +66,7 @@ namespace ALBLOG.Controllers
                 return RedirectToAction("Index", "Home");
             //not admin=>pageview++
             string tags = "";
-            post.Tags.ForEach(i => tags += i + " ");
+            post.Tags?.ForEach(i => tags += i + " ");
             ViewData.Add("date", post.Date.AddHours(8).ToString("yyyy-MM-dd HH:mm"));
             ViewData.Add("editdate", post.EditDate?.AddHours(8).ToString("yyyy-MM-dd HH:mm"));
             ViewData.Add("name", post.UserName);
