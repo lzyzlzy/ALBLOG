@@ -226,7 +226,7 @@ namespace ALBLOG.Web.Controllers
             var service = new IntroductionService();
             try
             {
-                service.ChangeIntroduction((IntroductionType)type, context);
+                service.ChangeIntroduction(type, context);
                 return Json(new ReturnDto { Message = "ok", State = "success" });
             }
             catch (Exception e)
