@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "ChangeCV";
+    Layout = "_ChangeIntroductionLayout";
+}
+
+<div>
+    <h4>CV</h4>
+    <div id="divCV"></div>
+    <hr />
+</div>
+<div>
+    <div>
+        <span class="form-group">
+            <label>ChangeCV</label>
+            <button class="btn btn-link float-right" style="text-align:right" id="btnSaveCV">Save</button>
+            <button class="btn btn-link float-right" style="text-align:right" id="btnPreviewAboutOrCV">Preview</button>
+        </span>
+    </div>
+    <div class="margin-top-10" id="editor">
+        @Html.Raw(ViewData["context"])  
+    </div>
+    <div>
+        <div class="margin-top-10" id="previewBox">
+        </div>
+    </div>
+</div>

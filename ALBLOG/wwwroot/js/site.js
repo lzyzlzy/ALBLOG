@@ -123,11 +123,45 @@ $('#btnPreviewPost').click(() => {
 //-------END-------
 
 
-//~/home/index
+//~/admin/changeintrodution
+$('#btnPreviewAboutOrCV').click(() => {
+    $('#previewBox').empty().append(editor.txt.html());
+});
+
+function SaveIntroduction(type) {
+    var dto = {
+        type: type,
+        context: editor.txt.html()
+    };
+    $.post("/admin/ChangeIntroduction", dto, data => {
+        alert(data.message);
+        if (type == 1) {
+            $.get("/admin/GetProfile", data => $('#Profile').empty().append(data.data));
+        }
+        else if (type == 2) {
+            $.get("/admin/GetCV", data => $('#divCV').empty().append(data.data));
+        }
+        else if (type == 3) {
+            $.get("/admin/Getabout", data => $('#divAbout').empty().append(data.data));
+        }
+    });
+}
+
+$('#btnSaveProfile').click(() => {
+    SaveIntroduction(1);
+});
+$('#btnSaveCV').click(() => SaveIntroduction(2))
+$('#btnSaveAbout').click(() => SaveIntroduction(3))
+
+//------END-------
+
+
+//~/home/cv
+$.get("/admin/getcv", data => $('#divCV').empty().append(data.data));
 //-------END-------
 
-
-//~/home/index
+//~/home/about
+$.get("/admin/getabout", data => $('#divAbout').empty().append(data.data));
 //-------END-------
 
 //COMMON FUNCTION

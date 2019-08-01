@@ -70,11 +70,7 @@
                 <section class="margin-top-25">
                     <img src="~/images/myPic1.jpg" width="300" alt="Alternate Text" />
                     <div>
-                        <div>
-                            <h3>刘震宇 <small>Andrew Liu</small></h3>
-                            <p>一个刚毕业的.net菜鸡码农。</p>
-                            <p>爱好打代码，摄影，健身，打游戏。</p>
-                        </div>
+                        <div class="margin-top-15" id="Profile" />
                         <div>
                             <a href="~/home/cv">我的简历</a>
                         </div>
@@ -119,6 +115,9 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false);
+    <script>
+        $.get("/admin/GetProfile", data => $('#Profile').empty().append(data.data));
+    </script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "ChangeProfile";
+    Layout = "_ChangeIntroductionLayout";
+}
+<div>
+    <div>
+        <span class="form-group">
+            <label>ChangeProfile</label>
+            <button class="btn btn-link float-right" style="text-align:right" id="btnSaveProfile">Save</button>
+            <button class="btn btn-link float-right" style="text-align:right" id="btnPreviewProfile">Preview</button>
+        </span>
+    </div>
+    <div class="margin-top-10" id="editor">
+        @Html.Raw(ViewData["context"])
+    </div>
+    <div>
+        <div class="margin-top-10" id="previewBox">
+        </div>
+    </div>
+</div>
+<style>
+    #Myself {
+        visibility: visible
+    }
+</style>
+
+

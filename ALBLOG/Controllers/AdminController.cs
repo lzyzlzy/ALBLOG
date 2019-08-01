@@ -189,6 +189,7 @@ namespace ALBLOG.Web.Controllers
             postService.Update(post);
             return RedirectToAction("Drafts");
         }
+
         public IActionResult GoToDraftBox(string title)
         {
             PostService postService = new PostService();
@@ -217,6 +218,63 @@ namespace ALBLOG.Web.Controllers
                 pathList.Add(showDir + fileName);
             }
             return Json(new UpLoadImgDto { Errno = 0, Data = pathList });
+        }
+
+        [HttpPost]
+        public IActionResult ChangeIntroduction(IntroductionType type, string context)
+        {
+            var service = new IntroductionService();
+            try
+            {
+                service.ChangeIntroduction((IntroductionType)type, context);
+                return Json(new ReturnDto { Message = "ok", State = "success" });
+            }
+            catch (Exception e)
+            {
+                return Json(new ReturnDto { Message = e.Message, State = "error" });
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetProfile()
+        {
+            var service = new IntroductionService();
+            return Json(new ReturnDto { Data = service.GetProfile(), Message = "ok", State = "sucess" });
+        }
+
+        [HttpGet]
+        public IActionResult GetCV()
+        {
+            var service = new IntroductionService();
+            return Json(new ReturnDto { Data = service.GetCV(), Message = "ok", State = "sucess" });
+        }
+
+        [HttpGet]
+        public IActionResult GetAbout()
+        {
+            var service = new IntroductionService();
+            return Json(new ReturnDto { Data = service.GetAbout(), Message = "ok", State = "success" });
+        }
+
+        public IActionResult ChangeProfile()
+        {
+            var service = new IntroductionService();
+            ViewData["context"] = service.GetProfile();
+            return View();
+        }
+
+        public IActionResult ChangeCV()
+        {
+            var service = new IntroductionService();
+            ViewData["context"] = service.GetCV();
+            return View();
+        }
+
+        public IActionResult ChangeAbout()
+        {
+            var service = new IntroductionService();
+            ViewData["context"] = service.GetAbout();
+            return View();
         }
     }
 }
