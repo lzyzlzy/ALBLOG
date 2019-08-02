@@ -229,15 +229,18 @@ namespace System
             var temp = currentValue.Remove(offset, oldValue.Length);
             return temp.Insert(offset, newValue);
         }
-     
+
         public static DateTime ToDateTime(this string value)
         {
             return DateTime.Parse(value);
         }
 
-        public static string InsertAtFirst(this string current,string addString)
+        public static string InsertAtFirst(this string current, string addString)
         {
             return addString + current;
         }
+
+        public static string Substring(this string current, string startString) => current.Substring(current.IndexOf(startString));
+
     }
 }

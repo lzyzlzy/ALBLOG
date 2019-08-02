@@ -28,7 +28,6 @@ namespace ALBLOG.Domain.Service
 
         public void ChangeProfile(string context) => ChangeIntroduction(IntroductionType.Profile, context);
 
-
         public void ChangeIntroduction(IntroductionType type, string context)
         {
             var introduction = repository.GetAll().Single();
@@ -54,6 +53,19 @@ namespace ALBLOG.Domain.Service
         public string GetAbout() => GetIntroduction().About;
 
         public string GetProfile() => GetIntroduction().Profile;
+
+        public void ChangeProfilePhoto(string photoPath)
+        {
+            var entity = repository.GetAll().SingleOrDefault();
+            entity.ProfilePhotoPath = photoPath;
+            repository.UpdateAsync(entity);
+        }
+
+        public (string ShowPath, string FullPath) GetProfilePhotoPath()
+        {
+            var fullPath = repository.GetAll().SingleOrDefault().ProfilePhotoPath ?? "";
+            return (fullPath.GetShowPath(), fullPath);
+        }
 
         private Introduction GetIntroduction() => repository.GetAll().Single();
     }

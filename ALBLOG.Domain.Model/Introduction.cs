@@ -13,5 +13,7 @@ namespace ALBLOG.Domain.Model
         public string CV { get; set; }
 
         public string About { get; set; }
+
+        public string ProfilePhotoPath { get; set; }
     }
 }

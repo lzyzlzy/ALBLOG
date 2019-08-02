@@ -288,7 +288,7 @@ namespace ALBLOG.Web.Controllers
             var extensions = GlobalConfig.ImgExtensions;
             var fileDir = Path.Combine(rootPath, "images");
             var files = PathHelper.FindFileByExtension(fileDir, extensions)
-                                  .Select(i => i.Substring(i.IndexOf(@"images")).InsertAtFirst("/"))
+                                  .Select(i => i.GetShowPath())
                                   .ToList();
             ViewData.Add("files", files);
             return View();
