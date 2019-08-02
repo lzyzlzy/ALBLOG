@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.Web;
 
 namespace ALBLOG.Constant
@@ -19,6 +20,7 @@ namespace ALBLOG.Constant
         public static readonly string RedisResponseMessageDictionaryName = "ResponseMessage";
         public static readonly int CognitiveGetResponseRetryCount = 6;
 
+        public static readonly List<string> ImgExtensions = new List<string> { "bmp", "jpg", "png", "gif", "PNG", "JPG", "GIF", "BMP" };
         static GlobalConfig()
         {
             MongoDbConfigFilePath = AppDomain.CurrentDomain.BaseDirectory + @"Config/mongodb.config";

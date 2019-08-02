@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "Image";
+    Layout = "_ChangeIntroductionLayout";
+}
+<h4>Image Manage</h4>
+<hr />
+@foreach (var img in ViewData["files"] as List<string>)
+{
+    <img src="@img" style="max-height:300px;max-width:300px" title="@img" />
+}
+

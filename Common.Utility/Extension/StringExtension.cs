@@ -230,21 +230,14 @@ namespace System
             return temp.Insert(offset, newValue);
         }
      
-        public static string ToJobNumberString(this string value)
-        {
-            var str = value.ToString();
-            if (value.Length < 5)
-            {
-                for (int i = 0; i < 5 - str.Length; i++)
-                {
-                    str = str.Insert(0, "0");
-                }
-            }
-            return str;
-        }
         public static DateTime ToDateTime(this string value)
         {
             return DateTime.Parse(value);
+        }
+
+        public static string InsertAtFirst(this string current,string addString)
+        {
+            return addString + current;
         }
     }
 }

@@ -10,6 +10,7 @@ using ALBLOG.Domain.Dto;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
+using ALBLOG.Constant;
 
 namespace ALBLOG.Web.Controllers
 {
@@ -277,6 +278,19 @@ namespace ALBLOG.Web.Controllers
         {
             var service = new IntroductionService();
             ViewData["context"] = service.GetAbout();
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Image()
+        {
+            var rootPath = _hostingEnvironment.WebRootPath;
+            var extensions = GlobalConfig.ImgExtensions;
+            var fileDir = Path.Combine(rootPath, "images");
+            var files = PathHelper.FindFileByExtension(fileDir, extensions)
+                                  .Select(i => i.Substring(i.IndexOf(@"images")).InsertAtFirst("/"))
+                                  .ToList();
+            ViewData.Add("files", files);
             return View();
         }
     }
