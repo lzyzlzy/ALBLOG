@@ -124,9 +124,7 @@ $('#btnPreviewPost').click(() => {
 
 
 //~/admin/changeintrodution
-$('#btnPreviewAboutOrCV').click(() => {
-    $('#previewBox').empty().append(editor.txt.html());
-});
+
 
 function SaveIntroduction(type) {
     var dto = {
@@ -136,13 +134,13 @@ function SaveIntroduction(type) {
     $.post("/admin/ChangeIntroduction", dto, data => {
         alert(data.message);
         if (type == 1) {
-            $.get("/admin/GetProfile", data => $('#Profile').empty().append(data.data));
+            GetProfile();
         }
         else if (type == 2) {
-            $.get("/admin/GetCV", data => $('#divCV').empty().append(data.data));
+            GetCV();
         }
         else if (type == 3) {
-            $.get("/admin/Getabout", data => $('#divAbout').empty().append(data.data));
+            GetAbout();
         }
     });
 }
@@ -150,9 +148,13 @@ function SaveIntroduction(type) {
 $('#btnSaveProfile').click(() => {
     SaveIntroduction(1);
 });
-$('#btnSaveCV').click(() => SaveIntroduction(2))
-$('#btnSaveAbout').click(() => SaveIntroduction(3))
+$('#btnSaveCV').click(() => SaveIntroduction(2));
+$('#btnSaveAbout').click(() => SaveIntroduction(3));
 $('#btnRecallProfile').click(() => GetProfile());
+$('#btnRecallCV').click(GetCV);
+$('#btnRecallAbout').click(GetAbout);
+$('#btnPreviewCV').click(() => $('#divCV').empty().append(editor.txt.html()));
+$('#btnPreviewAbout').click(() => $('#divAbout').empty().append(editor.txt.html()));
 $('#editor').keyup(ChangeProfile).mouseup(ChangeProfile);
 function ChangeProfile() {
     $('#Profile').empty().append(editor.txt.html());
@@ -161,16 +163,24 @@ function ChangeProfile() {
 
 
 //~/home/cv
-$.get("/admin/getcv", data => $('#divCV').empty().append(data.data));
+GetCV();
 //-------END-------
 
 //~/home/about
-$.get("/admin/getabout", data => $('#divAbout').empty().append(data.data));
+GetAbout();
 //-------END-------
 
 //COMMON FUNCTION
 function GetProfile() {
     $.get("/admin/GetProfile", data => $('#Profile').empty().append(data.data));
+}
+
+function GetCV() {
+    $.get("/admin/getcv", data => $('#divCV').empty().append(data.data));
+}
+
+function GetAbout() {
+    $.get("/admin/getabout", data => $('#divAbout').empty().append(data.data));
 }
 //-------END-------
 
