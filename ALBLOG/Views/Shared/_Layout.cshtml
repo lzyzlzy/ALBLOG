@@ -117,7 +117,7 @@
 
     @RenderSection("Scripts", required: false);
     <script>
-        $.get("/admin/GetProfile", data => $('#Profile').empty().append(data.data));
+        GetProfile()
     </script>
 </body>
 </html>

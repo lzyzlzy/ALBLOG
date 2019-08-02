@@ -152,7 +152,11 @@ $('#btnSaveProfile').click(() => {
 });
 $('#btnSaveCV').click(() => SaveIntroduction(2))
 $('#btnSaveAbout').click(() => SaveIntroduction(3))
-
+$('#btnRecallProfile').click(() => GetProfile());
+$('#editor').keyup(ChangeProfile).mouseup(ChangeProfile);
+function ChangeProfile() {
+    $('#Profile').empty().append(editor.txt.html());
+}
 //------END-------
 
 
@@ -165,6 +169,9 @@ $.get("/admin/getabout", data => $('#divAbout').empty().append(data.data));
 //-------END-------
 
 //COMMON FUNCTION
+function GetProfile() {
+    $.get("/admin/GetProfile", data => $('#Profile').empty().append(data.data));
+}
 //-------END-------
 
 

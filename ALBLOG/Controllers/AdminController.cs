@@ -22,6 +22,9 @@ namespace ALBLOG.Web.Controllers
         }
         public IActionResult Index(int index = 1)
         {
+#if DEBUG
+            HttpContext.Session.Set("username", Encoding.Default.GetBytes("Debuger"));
+#endif
             HttpContext.Session.TryGetValue("username", out byte[] value);
             if (value == null)
                 return View("Login");
