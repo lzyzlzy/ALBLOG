@@ -240,7 +240,7 @@ namespace System
             return addString + current;
         }
 
-        public static string Substring(this string current, string startString) => current.Substring(current.IndexOf(startString));
+        public static string Substring(this string current, string startString) => current.Substring(current.IndexOf(startString) >= 0 ? current.IndexOf(startString) : 0);
 
     }
 }

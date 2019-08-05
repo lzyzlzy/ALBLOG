@@ -205,6 +205,11 @@ namespace ALBLOG.Web.Controllers
 
         public IActionResult UpLoad(UpLoadImgDto imgDto)
         {
+            return UpLoadImg();
+        }
+
+        private IActionResult UpLoadImg()
+        {
             List<string> pathList = new List<string>();
             var fileDir = Path.Combine(_hostingEnvironment.WebRootPath, "images", DateTime.Now.ToString("yyyy-MM-dd"));
             var showDir = $@"/images/{DateTime.Now.ToString("yyyy-MM-dd")}/";
@@ -292,6 +297,20 @@ namespace ALBLOG.Web.Controllers
                                   .ToList();
             ViewData.Add("files", files);
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetProfilePhotoPath()
+        {
+            var service = new IntroductionService();
+            return Json(new ReturnDto { Data = service.GetProfilePhotoPath().ShowPath, State = "success" });
+        }
+
+        [HttpPost]
+        public IActionResult ChangeProfilePhoto()
+        {
+            var service = new IntroductionService();
+            return Json(new ReturnDto { Data = service.GetProfilePhotoPath().ShowPath, State = "success" });
         }
     }
 }

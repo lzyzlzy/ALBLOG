@@ -36,5 +36,7 @@ namespace System.IO
             }
             return false;
         }
+
+        public static string GetShowPath(this string fullPath) => fullPath.Substring("images").InsertAtFirst("/");
     }
 }

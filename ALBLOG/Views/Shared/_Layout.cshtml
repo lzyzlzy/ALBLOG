@@ -68,7 +68,7 @@
             </section>
             <aside class="col-md-3 hidden-xs" id="Myself">
                 <section class="margin-top-25">
-                    <img src="~/images/myPic1.jpg" width="300" alt="Alternate Text" />
+                    <img src="" width="300" alt="图片不存在" id="ProfilePhoto" />
                     <div>
                         <div class="margin-top-15" id="Profile" />
                         <div>
@@ -117,7 +117,8 @@
 
     @RenderSection("Scripts", required: false);
     <script>
-        GetProfile()
+        GetProfilePhoto();
+        GetProfile();
     </script>
 </body>
 </html>

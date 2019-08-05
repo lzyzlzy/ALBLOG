@@ -159,6 +159,25 @@ $('#editor').keyup(ChangeProfile).mouseup(ChangeProfile);
 function ChangeProfile() {
     $('#Profile').empty().append(editor.txt.html());
 }
+$('#btnSaveProfilePhoto').click(() => {
+    var _data = new Array();
+    _data.push($('#frmUpLoadProfileImg').serialize());
+    var dto = {
+        errno: 0,
+        data: _data
+    };
+    $('#frmUpLoadProfileImg').submit();
+    $.post("/admin/UpLoad", dto, data => {
+        if (data.errno == 0) {
+            alert("success!");
+            $('#ImgPreProfile').attr("src", data.data[0]);
+        }
+        else {
+            alert("fail");
+        }
+    });
+});
+
 //------END-------
 
 
@@ -181,6 +200,9 @@ function GetCV() {
 
 function GetAbout() {
     $.get("/admin/getabout", data => $('#divAbout').empty().append(data.data));
+}
+function GetProfilePhoto() {
+    $.get("/admin/GetProfilePhotoPath", dto => $('#ProfilePhoto').attr("src", dto.data));
 }
 //-------END-------
 
