@@ -168,7 +168,7 @@ namespace ALBLOG.Web.Controllers
             HttpContext.Session.TryGetValue("username", out byte[] value);
             if (value == null)
                 return Json(new ReturnDto { Message = "Login Timeout!" });
-            PostService postService = new PostService();
+            var postService = new PostService();
             postService.Delete(postDto.title.Trim());
             List<string> _tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
             var _post = new Post
@@ -187,7 +187,7 @@ namespace ALBLOG.Web.Controllers
 
         public IActionResult PostDraft(string title)
         {
-            PostService postService = new PostService();
+            var postService = new PostService();
             var post = postService.GetPost(i => i.Title == title.Trim(), false);
             post.IsDraft = false;
             postService.Update(post);
@@ -204,6 +204,11 @@ namespace ALBLOG.Web.Controllers
         }
 
         public IActionResult UpLoad(UpLoadImgDto imgDto)
+        {
+            return UpLoadImg();
+        }
+
+        public IActionResult UpLoadProfileImg()
         {
             return UpLoadImg();
         }
