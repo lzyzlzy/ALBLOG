@@ -47,12 +47,6 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">主页</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">关于</a></li>
-                    <li>
-                        <a id="gitlogo" href="https://github.com/AndrewLiuZY" target="_blank">
-                            <img src="~/images/GIthubLogo.png" />
-                            <text class="visible-xs-inline">My Github</text>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -82,11 +76,39 @@
             </aside>
         </div>
     </div>
-    <div class="container ">
-        <footer>
-            <p>&copy; 2019 - <a href="~/admin" style="color:black">ALBLOG</a>  Design by <a href="http://101.132.159.117/">Andrew Liu</a>  Powered by <a href="https://dotnet.microsoft.com/"> .net core 2.1 on Linux</a></p>
-        </footer>
-    </div>
+    <footer>
+        <div class="container" id="footer">
+            <div class="col-md-3">
+                <h2>COPY RIGHT</h2>
+                <div class="margin-top-25">
+                    <div class="margin-top-10"><a href="~/admin" style="color:white">ALBLOG</a> &copy; 2019 - 2019 </div>
+                    <div class="margin-top-10">Designed and Developed by Andrew Liu </div>
+                    <div class="margin-top-10"><small>Powered by <a target="_blank" style="color:white" href="https://dotnet.microsoft.com/"> .net core 2.1</a> on Linux</small></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h2>CONTACT</h2>
+                <div class="margin-top-25">
+                    <div class="margin-top-10">Github : <a target="_blank" style="color:white" href="https://github.com/AndrewLiuZY">github.com/AndrewLiuZY</a></div>
+                    <div class="margin-top-10">QQ : 317369453</div>
+                    <div class="margin-top-10">WeChat : 17649857833 </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h2>FRIEND LINKS</h2>
+                <div class="margin-top-25">
+                    <div><a style="color:white" target="_blank" href="https://i-tech.tech/">CALL HIM HUANGKEMENG</a></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h2>RSS</h2>
+                <div class="margin-top-25">
+                    <div>暂时没有</div>
+                </div>
+            </div>
+        </div>
+        <br />
+    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -115,7 +137,7 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("Scripts", required: false);
+    @RenderSection("Scripts", required: false)
     <script>
         GetProfilePhoto();
         GetProfile();
