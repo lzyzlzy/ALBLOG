@@ -17,6 +17,7 @@ namespace ALBLOG.Domain.Service
         }
 
         public IEnumerable<Post> GetAllPosts() => this.repository.GetAll().Reverse();
+
         public IEnumerable<Post> GetAllPosts(Expression<Func<Post, bool>> expression) => this.repository.GetAll(expression).Reverse();
 
         public Post GetPost(Expression<Func<Post, bool>> expression, bool isAdmin) => isAdmin ? this.repository.GetOne(expression) : AddPageViewNum(expression);
@@ -38,7 +39,8 @@ namespace ALBLOG.Domain.Service
 
         public void EditPost(string title, List<string> tags, string context)
         {
-            var post = this.repository.GetOne(i => i.Title == title) ?? new Post() { Title = title, PageViews = 0, Date = DateTime.Now, UserName = "lzy", IsDraft = false, };
+            var post = this.repository.GetOne(i => i.Title == title)
+                        ?? new Post() { Title = title, PageViews = 0, Date = DateTime.Now, UserName = "lzy", IsDraft = false, };
             post.Tags = tags;
             post.Context = context;
             post.EditDate = DateTime.Now;

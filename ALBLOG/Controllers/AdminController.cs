@@ -115,11 +115,11 @@ namespace ALBLOG.Web.Controllers
             ViewData.Add("postTitle", post.Title);
             ViewData.Add("tags", post.Tags);
             ViewData.Add("context", post.Context);
-            return View("CreatePost");
+            return View("Post");
         }
 
         [HttpGet]
-        public IActionResult CreatePost()
+        public IActionResult Post()
         {
             ViewData["Title"] = "Create";
             HttpContext.Session.TryGetValue("username", out byte[] value);
@@ -270,21 +270,21 @@ namespace ALBLOG.Web.Controllers
             return Json(new ReturnDto { Data = service.GetAbout(), Message = "ok", State = "success" });
         }
 
-        public IActionResult ChangeProfile()
+        public IActionResult Profile()
         {
             var service = new IntroductionService();
             ViewData["context"] = service.GetProfile();
             return View();
         }
 
-        public IActionResult ChangeCV()
+        public IActionResult CV()
         {
             var service = new IntroductionService();
             ViewData["context"] = service.GetCV();
             return View();
         }
 
-        public IActionResult ChangeAbout()
+        public IActionResult About()
         {
             var service = new IntroductionService();
             ViewData["context"] = service.GetAbout();

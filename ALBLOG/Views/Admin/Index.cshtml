@@ -1,5 +1,6 @@
 ﻿@using ALBLOG.Domain.Model
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = "Index";
     List<Post> posts = ViewData["posts"] as List<Post>;
     int page = Convert.ToInt32(ViewData["page"]);
@@ -12,9 +13,9 @@
     <div>
         <h3>Post Manage</h3>
         <div class="form-group row">
-            <a class="col-md-2" href="~/admin/CreatePost">Create a post</a>
+            <a class="col-md-2" href="~/admin/Post">Create a post</a>
             <a class="col-md-2" href="~/admin/Drafts">Drafts(@ViewData["draftCount"])</a>
-            <a class="col-md-3" href="~/admin/ChangeProfile">Change Introduction</a>
+            <a class="col-md-3" href="~/admin/Profile">Settings</a>
         </div>
     </div>
     <hr />
@@ -82,8 +83,3 @@
         </div>
     </div>
 </div>
-<style>
-    #Myself {
-        visibility: hidden
-    }
-</style>
