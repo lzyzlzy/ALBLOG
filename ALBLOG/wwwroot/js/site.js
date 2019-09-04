@@ -123,8 +123,11 @@ $('#btnPreviewPost').click(() => {
 //-------END-------
 
 
-//~/admin/changeintrodution
-
+//~/admin/settings
+function showModal(url) {
+    $('#imgModal').prop('src', url);
+    $('#modalImg').modal('show');
+}
 
 function SaveIntroduction(type) {
     var dto = {
@@ -160,22 +163,7 @@ function ChangeProfile() {
     $('#Profile').empty().append(editor.txt.html());
 }
 $('#btnSaveProfilePhoto').click(() => {
-    var _data = new Array();
-    _data.push($('#frmUpLoadProfileImg').serialize());
-    var dto = {
-        errno: 0,
-        data: _data
-    };
     $('#frmUpLoadProfileImg').submit();
-    $.post("/admin/UpLoad", dto, data => {
-        if (data.errno == 0) {
-            alert("success!");
-            $('#ImgPreProfile').attr("src", data.data[0]);
-        }
-        else {
-            alert("fail");
-        }
-    });
 });
 
 //------END-------
