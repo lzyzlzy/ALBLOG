@@ -170,11 +170,9 @@ $('#btnSaveProfilePhoto').click(() => {
 
 
 //~/home/cv
-GetCV();
 //-------END-------
 
 //~/home/about
-GetAbout();
 //-------END-------
 
 //COMMON FUNCTION
@@ -192,6 +190,10 @@ function GetAbout() {
 function GetProfilePhoto() {
     $.get("/admin/GetProfilePhotoPath", dto => $('#ProfilePhoto').attr("src", dto.data));
 }
+GetProfile();
+GetProfilePhoto();
+GetAbout();
+GetCV();
 //-------END-------
 
 
