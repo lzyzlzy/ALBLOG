@@ -56,49 +56,58 @@
 
     <div class="container body-content">
         <div class="row">
-            <section class="col-md-9">
+            <section id="main" class="col-md-9">
                 @RenderBody()
-                <hr />
+                <br />
             </section>
-            <aside class="col-md-3 hidden-xs" id="Myself">
-                <section class="margin-top-25">
-                    <img src="" width="300" alt="图片不存在" id="ProfilePhoto" />
-                    <div>
-                        <div class="margin-top-15" id="Profile" />
+            <aside class="col-md-3" id="Myself">
+                <div id="profile" class="margin-top-25 hidden-xs hidden-sm">
+                    <section>
+                        <img src="" width="300" alt="图片不存在" id="ProfilePhoto" />
                         <div>
-                            <a href="~/home/cv">我的简历</a>
+                            <div class="margin-top-15" id="Profile" />
+                            <div>
+                                <a href="~/home/cv">我的简历</a>
+                            </div>
+                            <div>
+                                <a href="~/home/about">关于本站</a>
+                            </div>
                         </div>
-                        <div>
-                            <a href="~/home/about">关于本站</a>
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
+                @*TODO:Tag列表,点击量前十*@
+                <section id="sectionEmpty" />
             </aside>
         </div>
     </div>
-    <footer>
+    <div class="modal fade text-center" id="modalImg" role="dialog">
+        <img id="imgModal" class="hidden" src="~/images/wechat.png" alt="图片获取失败" style="max-width:1000px" />
+    </div>
+    <footer class="footer" id="_footer">
         <div class="container" id="footer">
             <div class="row">
                 <div class="col-md-3">
                     <h4>COPY RIGHT</h4>
                     <div class="margin-top-25">
-                        <div class="margin-top-10"><a href="~/admin" style="color:white">ALBLOG</a> &copy; 2019 - 2019 </div>
-                        <div class="margin-top-10">Designed and Developed by Andrew Liu </div>
-                        <div class="margin-top-10"><small>Powered by <a target="_blank" style="color:white" href="https://dotnet.microsoft.com/"> .net core 2.1</a> on Linux</small></div>
+                        <div class="margin-top-10"><a href="~/admin">ALBLOG</a> &copy; 2019 - 2019 </div>
+                        <div class="margin-top-10">Designed and Developed by <a href="~/home/cv">Andrew Liu </a></div>
+                        <div class="margin-top-10"><small>Powered by <a target="_blank" href="https://dotnet.microsoft.com/"> .net core 2.1</a> on Linux</small></div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <h4>CONTACT</h4>
                     <div class="margin-top-25">
-                        <div class="margin-top-10">Github : <a target="_blank" style="color:white" href="https://github.com/AndrewLiuZY">github.com/AndrewLiuZY</a></div>
-                        <div class="margin-top-10">QQ : 317369453</div>
-                        <div class="margin-top-10">WeChat : 17649857833 </div>
+                        <div class="margin-top-10">Github : <a target="_blank" href="https://github.com/AndrewLiuZY">github.com/AndrewLiuZY</a></div>
+                        <div class="margin-top-10">QQ :<a href="tencent://message/?uin=317369453"> 317369453</a></div>
+                        <div class="margin-top-10">
+                            WeChat : <span class="glyphicon glyphicon-qrcode" onmousemove="showModal('/images/wechat.png')" style="font-size:large"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <h4>FRIEND LINKS</h4>
                     <div class="margin-top-25">
-                        <div><span class="glyphicon glyphicon-user" aria-hidden="true"> </span><a style="color:white" target="_blank" href="https://i-tech.tech/"> CALL HIM HUANGKEMENG</a></div>
+                        <div><span class="glyphicon glyphicon-user" aria-hidden="true"> </span><a target="_blank" href="https://i-tech.tech/"> CALL HIM HUANGKEMENG(黄可猛)</a></div>
                     </div>
                 </div>
                 <div class="col-md-3">

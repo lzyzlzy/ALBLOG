@@ -6,7 +6,7 @@
     int page = Convert.ToInt32(ViewData["page"]);
 }
 <h1>
-    Hi! @ViewBag.Name
+    Hi! @ViewBag.Name !
     <button class="btn btn-link" id="btnLogOut">log out</button>
 </h1>
 <div>
@@ -18,43 +18,49 @@
             <a class="col-md-3" href="~/admin/Profile">Settings</a>
         </div>
     </div>
-    <hr />
     <div>
         <div>
-            @foreach (var item in posts)
-            {
-                <div>
-                    <div>
-                        <a style="color:black" href="~/home/post?title=@item.Title">
-                            <text>
-                                <strong>
-                                    @item.Title
-                                </strong>
-                                <small>
-                                    @item.Date.AddHours(8)
-                                </small>
-                            </text>
-                        </a>
-                        <span>标签：</span>
-                        @foreach (var tag in item.Tags ?? new List<string>())
-                        {
-                            <a class="post-tags btn-primary" href="~/home/tag?name=@tag">@tag </a>
-                        }
-                    </div>
-                    <div>
-                        <span>
-                            <a href="~/admin/editpost?title= @item.Title">Edit</a>
-                        </span>
-                        <span>
-                            <a href="~/admin/deletepost?title= @item.Title" style="color:red">Delete</a>
-                        </span>
-                        <span>
-                            <a href="~/admin/GoToDraftBox?title= @item.Title" style="color:forestgreen">To Draft Box</a>
-                        </span>
-                    </div>
-                </div>
-                <br />
-            }
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Tags</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @foreach (var item in posts)
+                {
+                    <tbody>
+                        <tr>
+                            <td class="col-md-5">
+                                <a style="color:black" href="~/home/post?title=@item.Title">
+                                    <text>
+                                        <strong>
+                                            @item.Title
+                                        </strong>
+                                    </text>
+                                </a>
+                            </td>
+                            <td class="col-md-2">
+                                @item.Date.ToString("yyyy-MM-dd hh:mm:ss")
+                            </td>
+                            <td class="col-md-3">
+                                @foreach (var tag in item.Tags ?? new List<string>() { "-" })
+                                {
+                                    <a href="~/home/tag?name=@tag">@tag </a>
+                                }
+                            </td>
+
+                            <td class="col-md-2 text-right">
+                                <a href="~/admin/editpost?title= @item.Title"><span class="glyphicon glyphicon-pencil" />Edit </a>
+                                <a href="~/admin/deletepost?title= @item.Title" style="color:red"><sapn class="glyphicon glyphicon-remove" />Delete </a>
+                                <a href="~/admin/GoToDraftBox?title= @item.Title" style="color:forestgreen"><span class="glyphicon glyphicon-folder-open" />Draft</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
         </div>
         <div>
             <span>
@@ -67,7 +73,7 @@
             @if (ViewData["haveLast"] as string == "true")
             {
                 <span>
-                    <a href="~/admin/index?index= @(page-1)">
+                    <a href="~/admin/index?index=@(page-1)">
                         上一页
                     </a>
                 </span>
@@ -75,7 +81,7 @@
             @if (ViewData["haveNext"] as string == "true")
             {
                 <span>
-                    <a href="~/admin/index?index= @(page+1)">
+                    <a href="~/admin/index?index=@(page+1)">
                         下一页
                     </a>
                 </span>

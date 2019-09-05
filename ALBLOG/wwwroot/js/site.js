@@ -125,7 +125,7 @@ $('#btnPreviewPost').click(() => {
 
 //~/admin/settings
 function showModal(url) {
-    $('#imgModal').prop('src', url);
+    $('#imgModal').removeClass('hidden').prop('src', url);
     $('#modalImg').modal('show');
 }
 
@@ -176,6 +176,18 @@ $('#btnSaveProfilePhoto').click(() => {
 //-------END-------
 
 //COMMON FUNCTION
+function SetContent() {
+    if ($('#Myself').css('visibility') == "hidden") {
+        document.getElementById("main").removeAttribute("class");
+    }
+}
+
+function SetEmptySection() {
+    if ($('#Myself').css('visibility') != "hidden") {
+        $('#sectionEmpty').height(window.outerHeight - $('#profile').height() - $('#_footer').height());
+    }
+}
+
 function GetProfile() {
     $.get("/admin/GetProfile", data => $('#Profile').empty().append(data.data));
 }
@@ -194,6 +206,8 @@ GetProfile();
 GetProfilePhoto();
 GetAbout();
 GetCV();
+SetEmptySection();
+SetContent();
 //-------END-------
 
 

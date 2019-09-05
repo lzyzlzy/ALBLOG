@@ -1,5 +1,6 @@
 ﻿@using ALBLOG.Domain.Model
 @{
+    Layout = "_AdminLayout";
     ViewData["Title"] = "Draft Box";
     List<Post> posts = ViewData["posts"] as List<Post>;
     int page = Convert.ToInt32(ViewData["page"]);

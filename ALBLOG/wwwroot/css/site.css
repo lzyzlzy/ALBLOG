@@ -2,7 +2,6 @@
 for details on configuring this project to bundle and minify static web assets. */
 body {
     padding-top: 50px;
-    padding-bottom: 20px;
 }
 
 /* Wrapping element */
@@ -57,11 +56,20 @@ body {
         padding: 0;
     }
 
-footer{
-    background-color:black;
+footer {
+    background-color: black;
 }
-#footer{
-    color:white;
+
+a {
+    text-decoration: none !important;
+}
+
+footer a {
+    color: white;
+}
+
+#footer {
+    color: white;
 }
 
 .margin-top-5 {
