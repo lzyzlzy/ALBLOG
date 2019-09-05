@@ -1,5 +1,6 @@
 ﻿@using ALBLOG.Domain.Model
 @{
+    Layout = "_HomeLayout";
     ViewData["Title"] = "首页";
     List<Post> posts = ViewData["posts"] as List<Post>;
     int page = Convert.ToInt32(ViewData["page"]);
