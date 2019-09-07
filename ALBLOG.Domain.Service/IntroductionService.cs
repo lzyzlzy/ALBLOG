@@ -48,11 +48,11 @@ namespace ALBLOG.Domain.Service
             repository.UpdateAsync(introduction);
         }
 
-        public string GetCV() => GetIntroduction().CV;
+        public string GetCV() => GetIntroduction()?.CV ?? "";
 
-        public string GetAbout() => GetIntroduction().About;
+        public string GetAbout() => GetIntroduction()?.About ?? "";
 
-        public string GetProfile() => GetIntroduction().Profile;
+        public string GetProfile() => GetIntroduction()?.Profile ?? "";
 
         public void ChangeProfilePhoto(string photoPath)
         {
@@ -67,6 +67,6 @@ namespace ALBLOG.Domain.Service
             return (fullPath.GetShowPath(), fullPath);
         }
 
-        private Introduction GetIntroduction() => repository.GetAll().Single();
+        private Introduction GetIntroduction() => repository.GetAll().Single() ?? new Introduction();
     }
 }
