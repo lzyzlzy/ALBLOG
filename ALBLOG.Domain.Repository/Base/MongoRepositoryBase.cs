@@ -9,6 +9,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 #endregion using directives
 namespace ALBLOG.Domain.Repository
@@ -65,19 +66,32 @@ namespace ALBLOG.Domain.Repository
             return this.GetCollection().Count(filter);
         }
 
+        public async Task<long> GetCountAsync()
+        {
+            return await this.GetCollection().CountAsync(i => true);
+        }
+
         public IEnumerable<T> GetAll()
         {
             return this.GetCollection().Find(_ => true).ToList();
         }
+
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter)
         {
             return this.GetCollection().Find(filter).ToList();
         }
 
-        public T GetOne(string id)
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return this.GetCollection().Find(doc => doc.Id == id).FirstOrDefault();
+            var data = await this.GetCollection().FindAsync(_ => true);
+            return data.ToEnumerable();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter)
+        {
+            var data = await this.GetCollection().FindAsync(filter);
+            return data.ToEnumerable();
         }
 
         public T GetOne(Expression<Func<T, bool>> filter)
@@ -85,7 +99,12 @@ namespace ALBLOG.Domain.Repository
             return this.GetCollection().Find(filter).FirstOrDefault();
         }
 
-        public void BulkAdd(IEnumerable<T> models)
+        public async Task<T> GetOneAsync(Expression<Func<T, bool>> filter)
+        {
+            return await this.GetCollection().Find(filter).FirstOrDefaultAsync();
+        }
+
+        public void AddMany(IEnumerable<T> models)
         {
             foreach (var model in models)
             {
@@ -97,6 +116,18 @@ namespace ALBLOG.Domain.Repository
             this.GetCollection().InsertMany(models);
         }
 
+        public async Task AddManyAsnyc(IEnumerable<T> models)
+        {
+            foreach (var model in models)
+            {
+                if (string.IsNullOrEmpty(model.Id))
+                {
+                    model.Id = ObjectId.GenerateNewId().ToString();
+                }
+            }
+            await this.GetCollection().InsertManyAsync(models);
+        }
+
         public void Add(T model)
         {
             if (string.IsNullOrEmpty(model.Id))
@@ -106,13 +137,13 @@ namespace ALBLOG.Domain.Repository
             this.GetCollection().InsertOne(model);
         }
 
-        public void AddAsync(T model)
+        public async Task AddAsync(T model)
         {
             if (string.IsNullOrEmpty(model.Id))
             {
                 model.Id = ObjectId.GenerateNewId().ToString();
             }
-            this.GetCollection().InsertOneAsync(model);
+            await this.GetCollection().InsertOneAsync(model);
         }
 
         public long Update(T model)
@@ -125,14 +156,20 @@ namespace ALBLOG.Domain.Repository
             return -1;
         }
 
-        public void UpdateAsync(T model)
+        public async Task UpdateAsync(T model)
         {
-            this.GetCollection().ReplaceOneAsync(doc => doc.Id == model.Id, model);
+            await this.GetCollection().ReplaceOneAsync(doc => doc.Id == model.Id, model);
         }
 
-        public long DeleteOne(string id)
+        public long DeleteOne(Expression<Func<T, bool>> filter)
         {
-            return this.GetCollection().DeleteOne(doc => doc.Id == id).DeletedCount;
+            return this.GetCollection().DeleteOne(filter).DeletedCount;
+        }
+
+        public async Task<long> DeleteOneAsync(Expression<Func<T, bool>> filter)
+        {
+            var result = await this.GetCollection().DeleteOneAsync(filter);
+            return result.DeletedCount;
         }
 
         public long DeleteMany(Expression<Func<T, bool>> filter)
@@ -140,14 +177,10 @@ namespace ALBLOG.Domain.Repository
             return this.GetCollection().DeleteMany(filter).DeletedCount;
         }
 
-        public void DeleteOneAsync(string id)
+        public async Task<long> DeleteManyAsync(Expression<Func<T, bool>> filter)
         {
-            this.GetCollection().DeleteOneAsync(doc => doc.Id == id);
-        }
-
-        public void DeleteManyAsync(Expression<Func<T, bool>> filter)
-        {
-            this.GetCollection().DeleteOneAsync(filter);
+            var result = await this.GetCollection().DeleteOneAsync(filter);
+            return result.DeletedCount;
         }
 
         public void DropCollection(string collectionName)
