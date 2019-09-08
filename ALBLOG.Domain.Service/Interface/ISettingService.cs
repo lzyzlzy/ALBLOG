@@ -8,24 +8,24 @@ namespace ALBLOG.Domain.Service.Interface
 {
     interface ISettingService
     {
-        Task<Setting> GetSetting();
+        Task<Setting> GetSettingAsync();
 
-        Task<string> GetAbout();
+        Task<string> GetAboutAsync();
 
-        Task<string> GetProfile();
+        Task<string> GetProfileAsync();
 
-        Task<string> GetProfileImgPath();
+        Task<string> GetProfileImgPathAsync();
 
-        Task<string> GetCV();
+        Task<string> GetCVAsync();
 
-        Task<bool> ChangeSetting();
+        Task<bool> ChangeSettingAsync();
 
-        Task<bool> ChangeAbout();
+        Task<bool> ChangeAboutAsync();
 
-        Task<bool> ChangeCV();
+        Task<bool> ChangeCVAsync();
 
-        Task<bool> ChangeProfile();
+        Task<bool> ChangeProfileAsync();
 
-        Task<bool> ChangeProfileImgPath();
+        Task<bool> ChangeProfileImgPathAsync();
     }
 }

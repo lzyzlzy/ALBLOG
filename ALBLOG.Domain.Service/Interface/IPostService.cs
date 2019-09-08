@@ -11,18 +11,18 @@ namespace ALBLOG.Domain.Service.Interface
 {
     interface IPostService
     {
-        Task<IEnumerable<Post>> GetAll();
+        Task<IEnumerable<Post>> GetAllAsync();
 
-        Task<IEnumerable<Post>> GetAll(Expression<Func<Post, bool>> method);
+        Task<IEnumerable<Post>> GetAllAsync(Expression<Func<Post, bool>> method);
 
-        Task<Post> Get(Expression<Func<Post, bool>> method);
+        Task<Post> GetAsync(Expression<Func<Post, bool>> method);
 
-        Task<Post> GetAndAddPageViews(Expression<Func<Post, bool>> method);
+        Task<Post> GetAndAddPageViewsAsync(Expression<Func<Post, bool>> method);
 
-        Task<bool> Delete(Expression<Func<Post, bool>> method);
+        Task<bool> DeleteAsync(Expression<Func<Post, bool>> method);
 
-        Task<bool> Edit(Post post);
+        Task<bool> EditAsync(Post post);
 
-        Task<bool> Add(Post newPost);
+        Task<bool> AddAsync(Post newPost);
     }
 }
