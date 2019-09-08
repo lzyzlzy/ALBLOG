@@ -1,6 +1,6 @@
 ﻿namespace ALBLOG.Domain.Model
 {
-    public enum IntroductionType
+    public enum SettingType
     {
         Profile = 1,
         CV = 2,

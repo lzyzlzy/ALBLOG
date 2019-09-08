@@ -2,7 +2,7 @@
 
 namespace ALBLOG.Domain.Repository
 {
-    public class IntroductionRepository : MongoRepositoryBase<Introduction>
+    public class SettingRepository : MongoRepositoryBase<Setting>
     {
     }
 }

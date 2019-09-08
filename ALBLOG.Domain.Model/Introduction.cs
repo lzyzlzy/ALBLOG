@@ -6,7 +6,7 @@ using System.Text;
 namespace ALBLOG.Domain.Model
 {
     [Collection("ALBLOG_Introduction")]
-    public class Introduction : DomainModel
+    public class Setting : DomainModel
     {
         public string Profile { get; set; }
 
