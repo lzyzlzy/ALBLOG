@@ -9,37 +9,37 @@ using System.Text;
 
 namespace ALBLOG.Domain.Service
 {
-    public class IntroductionService
+    public class SettingService
     {
-        protected IntroductionRepository repository;
+        protected SettingRepository repository;
 
-        public IntroductionService()
+        public SettingService()
         {
-            this.repository = new IntroductionRepository();
+            this.repository = new SettingRepository();
             if (repository.GetAll().Count() == 0)
             {
-                repository.AddAsync(new Introduction());
+                repository.AddAsync(new Setting() { CV = "", Profile = "", ProfilePhotoPath = "", About = "" });
             }
         }
 
-        public void ChangeCV(string context) => ChangeIntroduction(IntroductionType.CV, context);
+        public void ChangeCV(string context) => ChangeSettings(SettingType.CV, context);
 
-        public void ChangeAbout(string context) => ChangeIntroduction(IntroductionType.About, context);
+        public void ChangeAbout(string context) => ChangeSettings(SettingType.About, context);
 
-        public void ChangeProfile(string context) => ChangeIntroduction(IntroductionType.Profile, context);
+        public void ChangeProfile(string context) => ChangeSettings(SettingType.Profile, context);
 
-        public void ChangeIntroduction(IntroductionType type, string context)
+        public void ChangeSettings(SettingType type, string context)
         {
             var introduction = repository.GetAll().Single();
             switch (type)
             {
-                case IntroductionType.Profile:
+                case SettingType.Profile:
                     introduction.Profile = context;
                     break;
-                case IntroductionType.CV:
+                case SettingType.CV:
                     introduction.CV = context;
                     break;
-                case IntroductionType.About:
+                case SettingType.About:
                     introduction.About = context;
                     break;
                 default:
@@ -48,11 +48,11 @@ namespace ALBLOG.Domain.Service
             repository.UpdateAsync(introduction);
         }
 
-        public string GetCV() => GetIntroduction()?.CV ?? "";
+        public string GetCV() => GetSettings().CV;
 
-        public string GetAbout() => GetIntroduction()?.About ?? "";
+        public string GetAbout() => GetSettings().About;
 
-        public string GetProfile() => GetIntroduction()?.Profile ?? "";
+        public string GetProfile() => GetSettings().Profile;
 
         public void ChangeProfilePhoto(string photoPath)
         {
@@ -63,10 +63,10 @@ namespace ALBLOG.Domain.Service
 
         public (string ShowPath, string FullPath) GetProfilePhotoPath()
         {
-            var fullPath = repository.GetAll().SingleOrDefault().ProfilePhotoPath ?? "";
+            var fullPath = repository.GetAll().SingleOrDefault().ProfilePhotoPath;
             return (fullPath.GetShowPath(), fullPath);
         }
 
-        private Introduction GetIntroduction() => repository.GetAll().Single() ?? new Introduction();
+        private Setting GetSettings() => repository.GetAll().Single();
     }
 }
