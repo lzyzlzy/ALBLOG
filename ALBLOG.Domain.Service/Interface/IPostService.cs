@@ -5,23 +5,24 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ALBLOG.Domain.Service.Interface
 {
     interface IPostService
     {
-        IEnumerable<Post> GetAll();
+        Task<IEnumerable<Post>> GetAll();
 
-        IEnumerable<Post> GetAll(Expression<Func<Post, bool>> method);
+        Task<IEnumerable<Post>> GetAll(Expression<Func<Post, bool>> method);
 
-        Post Get(Expression<Func<Post, bool>> method);
+        Task<Post> Get(Expression<Func<Post, bool>> method);
 
-        Post GetAndAddPageViews(Expression<Func<Post, bool>> method);
+        Task<Post> GetAndAddPageViews(Expression<Func<Post, bool>> method);
 
-        bool Delete(Expression<Func<Post, bool>> method);
+        Task<bool> Delete(Expression<Func<Post, bool>> method);
 
-        bool Edit(Post post);
+        Task<bool> Edit(Post post);
 
-        bool Add(Post newPost);
+        Task<bool> Add(Post newPost);
     }
 }

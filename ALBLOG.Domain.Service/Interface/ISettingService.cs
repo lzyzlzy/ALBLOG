@@ -2,29 +2,30 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ALBLOG.Domain.Service.Interface
 {
     interface ISettingService
     {
-        Setting GetSetting();
+        Task<Setting> GetSetting();
 
-        string GetAbout();
+        Task<string> GetAbout();
 
-        string GetProfile();
+        Task<string> GetProfile();
 
-        string GetProfileImgPath();
+        Task<string> GetProfileImgPath();
 
-        string GetCV();
+        Task<string> GetCV();
 
-        bool ChangeSetting();
+        Task<bool> ChangeSetting();
 
-        bool ChangeAbout();
+        Task<bool> ChangeAbout();
 
-        bool ChangeCV();
+        Task<bool> ChangeCV();
 
-        bool ChangeProfile();
+        Task<bool> ChangeProfile();
 
-        bool ChangeProfileImgPath();
+        Task<bool> ChangeProfileImgPath();
     }
 }
