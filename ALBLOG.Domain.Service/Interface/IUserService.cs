@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace ALBLOG.Domain.Service.Interface
 {
-    interface IUserService
+    public interface IUserService
     {
-        Task<bool> LoginAsync(string userName, string password);
+        Task<ReturnModel> LoginAsync(string userName, string password);
 
-        Task<bool> AddAsync(User newUser);
+        Task AddAsync(User newUser);
 
-        Task<bool> DeleteAsync(Expression<Func<User, bool>> user);
+        Task<long> DeleteAsync(Expression<Func<User, bool>> filter);
 
-        Task<bool> ChangePasswordAsync(string userName, string oldPassword, string newPassword);
+        Task<ReturnModel> ChangePasswordAsync(string userName, string oldPassword, string newPassword);
 
-        Task<bool> ChangeUserNameAsync(string oldUserName, string newUserName, string password);
+        Task<ReturnModel> ChangeUserNameAsync(string oldUserName, string newUserName, string password);
     }
 }

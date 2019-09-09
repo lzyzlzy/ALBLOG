@@ -9,20 +9,32 @@ using System.Threading.Tasks;
 
 namespace ALBLOG.Domain.Service.Interface
 {
-    interface IPostService
+    public interface IPostService
     {
+        Task<IEnumerable<Post>> GetPageAsync(int pageSize, int pageIndex);
+
+        Task<IEnumerable<Post>> GetPageAsync(Expression<Func<Post, bool>> filter, int pageSize, int pageIndex);
+
+        Task<int> GetPageCountAsync(int pageSize);
+
+        Task<int> GetPageCountAsync(Expression<Func<Post, bool>> filter, int pageSize);
+
         Task<IEnumerable<Post>> GetAllAsync();
 
-        Task<IEnumerable<Post>> GetAllAsync(Expression<Func<Post, bool>> method);
+        Task<IEnumerable<Post>> GetAllAsync(Expression<Func<Post, bool>> filter);
 
-        Task<Post> GetAsync(Expression<Func<Post, bool>> method);
+        Task<Post> GetOneAsync(Expression<Func<Post, bool>> filter);
 
-        Task<Post> GetAndAddPageViewsAsync(Expression<Func<Post, bool>> method);
+        Task<Post> GetOneAndAddPageViewsAsync(Expression<Func<Post, bool>> filter);
 
-        Task<bool> DeleteAsync(Expression<Func<Post, bool>> method);
+        Task<long> DeleteAsync(Expression<Func<Post, bool>> filter);
 
-        Task<bool> EditAsync(Post post);
+        Task EditAsync(Post post);
 
-        Task<bool> AddAsync(Post newPost);
+        Task AddAsync(string title, List<string> tags, string content, bool isDraft);
+
+        Task ChangePostToDraftAsync(Expression<Func<Post, bool>> filter);
+
+        Task ChangeDraftToPostAsync(Expression<Func<Post, bool>> filter);
     }
 }

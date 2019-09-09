@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ALBLOG.Domain.Service.Interface
 {
-    interface ISettingService
+    public interface ISettingService
     {
         Task<Setting> GetSettingAsync();
 
@@ -14,18 +14,18 @@ namespace ALBLOG.Domain.Service.Interface
 
         Task<string> GetProfileAsync();
 
-        Task<string> GetProfileImgPathAsync();
+        Task<(string ShowPath,string FullPath)> GetProfileImgPathAsync();
 
         Task<string> GetCVAsync();
 
-        Task<bool> ChangeSettingAsync();
+        Task ChangeSettingAsync(Setting setting);
 
-        Task<bool> ChangeAboutAsync();
+        Task ChangeAboutAsync(string content);
 
-        Task<bool> ChangeCVAsync();
+        Task ChangeCVAsync(string content);
 
-        Task<bool> ChangeProfileAsync();
+        Task ChangeProfileAsync(string content);
 
-        Task<bool> ChangeProfileImgPathAsync();
+        Task ChangeProfileImgPathAsync(string content);
     }
 }
