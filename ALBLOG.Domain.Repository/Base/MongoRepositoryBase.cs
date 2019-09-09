@@ -71,6 +71,11 @@ namespace ALBLOG.Domain.Repository
             return await this.GetCollection().CountAsync(i => true);
         }
 
+        public async Task<long> GetCountAsync(Expression<Func<T, bool>> filter)
+        {
+            return await this.GetCollection().CountAsync(filter);
+        }
+
         public IEnumerable<T> GetAll()
         {
             return this.GetCollection().Find(_ => true).ToList();
@@ -85,13 +90,13 @@ namespace ALBLOG.Domain.Repository
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             var data = await this.GetCollection().FindAsync(_ => true);
-            return data.ToEnumerable();
+            return await data.ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter)
         {
             var data = await this.GetCollection().FindAsync(filter);
-            return data.ToEnumerable();
+            return await data.ToListAsync();
         }
 
         public T GetOne(Expression<Func<T, bool>> filter)
@@ -102,6 +107,15 @@ namespace ALBLOG.Domain.Repository
         public async Task<T> GetOneAsync(Expression<Func<T, bool>> filter)
         {
             return await this.GetCollection().Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<T> GetOneAndUpdateAsync(Expression<Func<T, bool>> filter, Func<T, T> UpdateMethod)
+        {
+            var collection = this.GetCollection();
+            var element = await (await collection.FindAsync(filter)).FirstOrDefaultAsync();
+            var replacedElement = UpdateMethod(element);
+            await collection.ReplaceOneAsync(filter, replacedElement);
+            return replacedElement;
         }
 
         public void AddMany(IEnumerable<T> models)
