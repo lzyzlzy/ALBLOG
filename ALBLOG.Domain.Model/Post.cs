@@ -23,5 +23,15 @@ namespace ALBLOG.Domain.Model
         public bool IsDraft { get; set; }
 
         public int? PageViews { get; set; }
+
+        public static Post CreateEmptyPost()
+        {
+            return new Post
+            {
+                Title = "",
+                Context = "",
+                Tags = new List<string> { }
+            };
+        }
     }
 }

@@ -6,8 +6,12 @@ namespace ALBLOG.Domain.Dto
 {
     public class PostDto
     {
+        public string id { get; set; }
+
         public string title { get; set; }
+
         public string tags { get; set; }
+
         public string context { get; set; }
     }
 }

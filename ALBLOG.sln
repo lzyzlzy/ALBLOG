@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ALBLOG.Api", "ALBLOG.Api\AL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.MongoDBClient", "Common.MongoDBClient\Common.MongoDBClient.csproj", "{C8D42675-7CA9-46CE-8A0E-2CB106D52C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ALBLOG.Domain.Dto", "ALBLOG.Domain.Dto\ALBLOG.Domain.Dto.csproj", "{5976BF20-8492-4330-AE79-1BFA49323F5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ALBLOG.Domain.Dto", "ALBLOG.Domain.Dto\ALBLOG.Domain.Dto.csproj", "{5976BF20-8492-4330-AE79-1BFA49323F5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,7 +8,7 @@
 //~/home/index
 $('#btnLogOut').click(() => {
     $.post("/admin/LogOut", () => {
-        $(location).attr('href', '/admin/login');
+        $(location).attr('href', '/home/login');
     })
 });
 //-------END-------
@@ -18,7 +18,7 @@ $('#btnLogOut').click(() => {
 //-------END-------
 
 
-//~/admin/login
+//~/home/login
 $('#btnLogin').click(() => {
     username = $('#txtUserName').val();
     password = $('#txtPassword').val();
@@ -30,7 +30,7 @@ $('#btnLogin').click(() => {
             userName: username,
             password: password
         }
-        $.post("/admin/login", dto, data => {
+        $.post("/home/login", dto, data => {
             if (data.message == "ok") {
                 $(location).attr('href', '/admin/index');
             }
@@ -58,25 +58,21 @@ $('#btnSubmitPost').click(() => {
         var title = $('#txtTitle').val();
         var tags = $('#txtTags').val();
         var context = editor.txt.html();
+        var id = $('#postId').text();
         var dto = {
+            id: id,
             title: title,
             tags: tags,
             context: context
         };
-        var actionName = "";
-        if ($('#pagetitle').text() == 'Create') {
-            actionName = "CreatePost";
-        }
-        else {
-            actionName = "EditPost";
-        }
+        var actionName = $('#pagetitle').text() == 'Create' ? "CreatePost" : "EditPost";
         $.post("/admin/" + actionName, dto, data => {
             if (data.message == "ok") {
                 alert("ok");
                 $(location).attr('href', '/admin/index');
             }
             else {
-                alert(dto.message);
+                alert(data.message);
             }
         });
     }
@@ -87,18 +83,22 @@ $('#btnDraftPost').click(() => {
         var title = $('#txtTitle').val();
         var tags = $('#txtTags').val();
         var context = editor.txt.html();
-        var dto = {
+        var post = {
             title: title,
             tags: tags,
             context: context
         };
-        $.post("/admin/CreateDraft", dto, data => {
+        var dto = {
+            postDto: post,
+            isDraft: true
+        }
+        $.post("/admin/CreatePost", dto, data => {
             if (data.message == "ok") {
                 alert("ok");
                 $(location).attr('href', '/admin/index');
             }
             else {
-                alert(dto.message);
+                alert(data.message);
             }
         });
     }
@@ -124,6 +124,31 @@ $('#btnPreviewPost').click(() => {
 
 
 //~/admin/settings
+
+$('#btnUpLoadPhoto').click(() => {
+    $('#inputProfilePhoto').trigger('click')
+        .on('change', () => upLoadImg());
+});
+
+
+function upLoadImg() {
+    $.ajax({
+        url: "/admin/UpLoad",
+        type: "post",
+        dataType: "json",
+        cache: false,
+        data: new FormData($("#frmUpLoadProfileImg")[0]),
+        processData: false,// 不处理数据
+        contentType: false, // 不设置内容类型
+        success: function (data) {
+            $('#ImgPreProfile').prop('src', data.data[0]);
+            $('#btnSavePhoto').removeClass('hidden');
+            $('#btnPreviewPhoto').removeClass('hidden');
+        }
+    })
+}
+
+
 function showModal(url) {
     $('#imgModal').removeClass('hidden').prop('src', url);
     $('#modalImg').modal('show');
@@ -148,9 +173,16 @@ function SaveIntroduction(type) {
     });
 }
 
-$('#btnSaveProfile').click(() => {
-    SaveIntroduction(1);
+$('#btnSavePhoto').click(() => {
+    $.post('/admin/UpLoadProfileImg', { url: $('#ImgPreProfile').attr('src') }, (data) => {
+        if (data.state == "success") {
+            GetProfilePhoto();
+        }
+        alert(data.message);
+    })
 });
+$('#btnPreviewPhoto').click(() => $('#ProfilePhoto').attr("src", $('#ImgPreProfile').prop('src')));
+$('#btnSaveProfile').click(() => SaveIntroduction(1));
 $('#btnSaveCV').click(() => SaveIntroduction(2));
 $('#btnSaveAbout').click(() => SaveIntroduction(3));
 $('#btnRecallProfile').click(() => GetProfile());

@@ -124,6 +124,10 @@ footer a {
     padding: 25px;
 }
 
+.padding-8 {
+    padding: 8px;
+}
+
 .font-normal {
     color: #333333;
     font-family: Segoe UI;

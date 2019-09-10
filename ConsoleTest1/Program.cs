@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using ALBLOG.Domain.Model;
 using ALBLOG.Domain.Service;
+using ALBLOG.Domain.Repository;
 
 namespace ConsoleTest1
 {
@@ -9,13 +10,7 @@ namespace ConsoleTest1
     {
         static void Main(string[] args)
         {
-            UserService userService = new UserService();
-            User user = new User
-            {
-                UserName = "Lzy",
-                Password = "123"
-            };
-            userService.AddUser(user);
+          
             Console.WriteLine("ok");
             Console.ReadLine();
         }

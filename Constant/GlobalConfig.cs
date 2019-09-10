@@ -20,6 +20,9 @@ namespace ALBLOG.Constant
         public static readonly string RedisResponseMessageDictionaryName = "ResponseMessage";
         public static readonly int CognitiveGetResponseRetryCount = 6;
 
+        public static readonly int AdminPageSize = 20;
+        public static readonly int PostPageSize = 10;
+
         public static readonly List<string> ImgExtensions = new List<string> { "bmp", "jpg", "png", "gif", "PNG", "JPG", "GIF", "BMP" };
         static GlobalConfig()
         {

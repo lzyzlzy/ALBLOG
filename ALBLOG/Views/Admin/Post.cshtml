@@ -1,12 +1,6 @@
-﻿
+﻿@model ALBLOG.Domain.Model.Post
 @{
     Layout = "_AdminLayout";
-    string tags = "";
-    if (ViewData["tags"] != null)
-    {
-        (ViewData["tags"] as List<string>).ForEach(i => tags += i + ",");
-    }
-    string title = ViewData["postTitle"] as string ?? "";
     ViewBag.isEdit = ViewData["Title"] as string == "Edit" ? true : false;
 }
 
@@ -17,11 +11,11 @@
         <div>
             <div>
                 <label for="txtTitle">Title</label>
-                <input type="text" class="form-control" id="txtTitle" value="@title" />
+                <input type="text" class="form-control" id="txtTitle" value="@Model.Title" />
             </div>
             <div class="margin-top-10">
                 <label for="txtTags">Tags(',')</label>
-                <input type="text" class="form-control" id="txtTags" value="@tags" />
+                <input type="text" class="form-control" id="txtTags" value="@string.Join(',',Model.Tags)" />
             </div>
         </div>
         <div class="margin-top-10">
@@ -29,18 +23,22 @@
                 <span class="form-group">
                     <label>Context</label>
                     <button class="btn btn-link float-right" style="text-align:right" id="btnSubmitPost">Submit</button>
-                    <button class="btn btn-link float-right" style="text-align:right" id="btnDraftPost">To draft box</button>
+                    @if (!(bool)ViewBag.isEdit)
+                    {
+                        <button class="btn btn-link float-right" style="text-align:right" id="btnDraftPost">To draft box</button>
+                    }
                     <button class="btn btn-link float-right" style="text-align:right" id="btnPreviewPost">Preview</button>
                 </span>
             </div>
             <div class="margin-top-10" id="editor">
-                @Html.Raw(ViewData["context"])
+                @Html.Raw(Model.Context)
             </div>
         </div>
         <div>
             <div class="margin-top-10" id="previewBox">
             </div>
         </div>
+        <div class="hidden" id="postId">@Model.Id</div>
     </div>
 </div>
 

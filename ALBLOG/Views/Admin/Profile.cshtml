@@ -6,10 +6,12 @@
 <div>
     <strong>ChangeProfilePhoto</strong>
     <div>
-        <img src="http://pic40.nipic.com/20140424/18085978_175633400193_2.jpg" width="300" class="margin-top-15" id="ImgPreProfile" alt="Alternate Text" />
-        <form action="/admin/UpLoadProfileImg" class="form-inline row margin-top-15" id="frmUpLoadProfileImg">
-            <input type="file" name="GetProfilePhoto" style="top:5px" class="col-md-3" />
-            <button type="button" class="btn btn-link col-md-1 " id="btnSaveProfilePhoto">Save</button>
+        <img src="~/images/defaultProfile.png" width="300" class="margin-top-15" id="ImgPreProfile" alt="Please upload a image file" />
+        <form action="/admin/UpLoad" enctype="multipart/form-data" class="form-inline row margin-top-15" id="frmUpLoadProfileImg" method="post">
+            <input type="file" name="img" id="inputProfilePhoto" class="hidden" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" />
+            <button type="button" class="btn-link col-md-1 " id="btnUpLoadPhoto">upload</button>
+            <button type="button" class="hidden btn-link col-md-1 " id="btnPreviewPhoto">Preview</button>
+            <button type="button" class="hidden btn-link col-md-1 " id="btnSavePhoto">Save</button>
         </form>
     </div>
 </div>
