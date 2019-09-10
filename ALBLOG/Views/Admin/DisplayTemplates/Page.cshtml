@@ -52,28 +52,4 @@
             </tbody>
         </table>
     </div>
-    <div class="padding-8">
-        <span>
-            第 @Model.Index 页，
-        </span>
-        <span>
-            共 @Model.PageCount 页
-        </span>
-        @if (Model.HaveLast)
-        {
-            <span>
-                <a href="~/admin/index?index=@(Model.Index-1)">
-                    上一页
-                </a>
-            </span>
-        }
-        @if (Model.HaveNext)
-        {
-            <span>
-                <a href="~/admin/index?index=@(Model.Index+1)">
-                    下一页
-                </a>
-            </span>
-        }
-    </div>
 </div>
