@@ -41,7 +41,7 @@ namespace ALBLOG
 
             services.AddSession(i =>
             {
-                i.IdleTimeout = TimeSpan.FromHours(4);
+                i.IdleTimeout = TimeSpan.FromHours(2);
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IPostService, PostService>();
