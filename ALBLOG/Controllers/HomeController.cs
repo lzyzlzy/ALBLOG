@@ -8,28 +8,27 @@ using ALBLOG.Models;
 using ALBLOG.Domain.Service;
 using System.Text;
 using ALBLOG.Domain.Model;
+using ALBLOG.Domain.Service.Interface;
+using ALBLOG.Constant;
+using ALBLOG.Domain.Dto;
 
 namespace ALBLOG.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index(int index = 1)
+        private readonly IPostService _postService;
+        private readonly IUserService _userService;
+
+        public HomeController(IPostService postService, IUserService userService)
         {
-            int postNumOfOnePage = 10;
-            PostService postService = new PostService();
-            var allPosts = postService.GetAllPosts(i => i.IsDraft == false);
-            var posts = allPosts.Skip((index - 1) * 10).Take(postNumOfOnePage).ToList();
-            if (posts.Count == 0)
-            {
-                posts = allPosts.Take(10).ToList();
-                index = 1;
-            }
-            ViewData.Add("haveNext", allPosts.Count() > index * postNumOfOnePage ? "true" : "false");
-            ViewData.Add("haveLast", index > 1 ? "true" : "false");
-            ViewData.Add("posts", posts);
-            ViewData.Add("sum", allPosts.Count() % postNumOfOnePage != 0 ? allPosts.Count() / postNumOfOnePage + 1 : allPosts.Count() / postNumOfOnePage);
-            ViewData.Add("page", index);
-            return View();
+            this._postService = postService;
+            this._userService = userService;
+        }
+
+        public async Task<IActionResult> Index(int index = 1)
+        {
+            var page = await _postService.GetPageAsync(i => i.IsDraft == false, GlobalConfig.PostPageSize, index);
+            return View(page);
         }
 
         public IActionResult CV()
@@ -57,45 +56,43 @@ namespace ALBLOG.Controllers
         }
 
         [HttpGet]
-        public IActionResult Post(string title)
+        public async Task<IActionResult> Post(string Id)
         {
-            PostService postService = new PostService();
             HttpContext.Session.TryGetValue("username", out byte[] value);
-            var post = postService.GetPost(i => i.Title == title, value != null);
+            var post = value != null ? await _postService.GetOneAsync(i => i.Id == Id)
+                                     : await _postService.GetOneAndAddPageViewsAsync(i => i.Id == Id);
             if (post == null)
                 return RedirectToAction("Index", "Home");
-            //not admin=>pageview++
-            string tags = "";
-            post.Tags?.ForEach(i => tags += i + " ");
-            ViewData.Add("date", post.Date.AddHours(8).ToString("yyyy-MM-dd HH:mm"));
-            ViewData.Add("editdate", post.EditDate?.AddHours(8).ToString("yyyy-MM-dd HH:mm"));
-            ViewData.Add("name", post.UserName);
-            ViewData.Add("tags", tags);
-            ViewData.Add("title", post.Title);
-            ViewData.Add("context", post.Context);
-            ViewData.Add("pageviews", post.PageViews);
-            return View();
+            return View(post);
         }
 
         [HttpGet]
-        public IActionResult Tag(string name, int index = 1)
+        public async Task<IActionResult> Tag(string name, int index = 1)
         {
-            int postNumOfOnePage = 10;
-            PostService postService = new PostService();
-            var allPosts = postService.GetAllPosts(i => i.IsDraft == false && i.Tags.Contains(name));
-            var posts = allPosts.Skip((index - 1) * 10).Take(postNumOfOnePage).ToList();
-            if (posts.Count == 0)
-            {
-                posts = allPosts.Take(10).ToList();
-                index = 1;
-            }
+            var page = await _postService.GetPageAsync(i => i.IsDraft == false && i.Tags.Contains(name), GlobalConfig.PostPageSize, index);
             ViewData.Add("Title", name);
-            ViewData.Add("haveNext", allPosts.Count() > index * postNumOfOnePage ? "true" : "false");
-            ViewData.Add("haveLast", index > 1 ? "true" : "false");
-            ViewData.Add("posts", posts);
-            ViewData.Add("sum", allPosts.Count() % postNumOfOnePage != 0 ? allPosts.Count() / postNumOfOnePage + 1 : allPosts.Count() / postNumOfOnePage);
-            ViewData.Add("page", index);
+            return View(page);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(UserDto userDto)
+        {
+            var returnModel = await _userService.LoginAsync(userDto.userName, userDto.password);
+            if (returnModel.IsSuccess)
+            {
+                HttpContext.Session.Set("username", Encoding.Default.GetBytes(userDto.userName));
+                return Json(new ReturnDto { Message = "ok" });
+            }
+            else
+            {
+                return Json(new ReturnDto { State = "fail", Message = returnModel.Message });
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -103,7 +100,5 @@ namespace ALBLOG.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
     }
 }

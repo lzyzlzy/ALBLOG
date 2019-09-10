@@ -11,93 +11,53 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
 using ALBLOG.Constant;
+using ALBLOG.Domain.Service.Interface;
+using System.Linq.Expressions;
+using ALBLOG.Web.Attributes;
 
 namespace ALBLOG.Web.Controllers
 {
+    [Logout]
     public class AdminController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
-        public AdminController(IHostingEnvironment hostingEnvironment)
+        private readonly IPostService _postService;
+        private readonly IUserService _userService;
+        private readonly ISettingService _settingService;
+
+        public AdminController(IHostingEnvironment hostingEnvironment, IPostService postService, IUserService userService, ISettingService settingService)
         {
             _hostingEnvironment = hostingEnvironment;
+            _postService = postService;
+            _userService = userService;
+            _settingService = settingService;
         }
-        public IActionResult Index(int index = 1)
+
+        public async Task<IActionResult> Index(int index = 1)
         {
 #if DEBUG
             HttpContext.Session.Set("username", Encoding.Default.GetBytes("Debuger"));
 #endif
             HttpContext.Session.TryGetValue("username", out byte[] value);
-            if (value == null)
-                return View("Login");
-            else
-                ViewBag.Name = Encoding.Default.GetString(value);
-            int postNumOfOnePage = 10;
-            PostService postService = new PostService();
-            var allPosts = postService.GetAllPosts(i => i.IsDraft == false);
-            var posts = allPosts.Skip((index - 1) * 10).Take(postNumOfOnePage).ToList();
-            var draftCount = postService.GetAllPosts(i => i.IsDraft == true).Count();
-            if (posts.Count == 0)
-            {
-                posts = allPosts.Take(10).ToList();
-                index = 1;
-            }
-            ViewData.Add("haveNext", allPosts.Count() > index * postNumOfOnePage ? "true" : "false");
-            ViewData.Add("haveLast", index > 1 ? "true" : "false");
-            ViewData.Add("posts", posts);
-            ViewData.Add("sum", allPosts.Count() % postNumOfOnePage != 0 ? allPosts.Count() / postNumOfOnePage + 1 : allPosts.Count() / postNumOfOnePage);
-            ViewData.Add("page", index);
+            ViewBag.Name = Encoding.Default.GetString(value ?? new byte[] { }) ?? "";
+            var page = await _postService.GetPageAsync(i => i.IsDraft == false, GlobalConfig.AdminPageSize, index);
+            var draftCount = (await _postService.GetAllAsync(i => i.IsDraft == true)).Count();
             ViewData.Add("draftCount", draftCount);
-            return View();
-        }
-
-        public IActionResult Drafts(int index = 1)
-        {
-            HttpContext.Session.TryGetValue("username", out byte[] value);
-            if (value == null)
-                return View("Login");
-            else
-                ViewBag.Name = Encoding.Default.GetString(value);
-            int postNumOfOnePage = 10;
-            PostService postService = new PostService();
-            var allPosts = postService.GetAllPosts(i => i.IsDraft == true);
-            var posts = allPosts.Skip((index - 1) * 10).Take(postNumOfOnePage).ToList();
-            if (posts.Count == 0)
-            {
-                posts = allPosts.Take(10).ToList();
-                index = 1;
-            }
-            ViewData.Add("haveNext", allPosts.Count() > index * postNumOfOnePage ? "true" : "false");
-            ViewData.Add("haveLast", index > 1 ? "true" : "false");
-            ViewData.Add("posts", posts);
-            ViewData.Add("sum", allPosts.Count() % postNumOfOnePage != 0 ? allPosts.Count() / postNumOfOnePage + 1 : allPosts.Count() / postNumOfOnePage);
-            ViewData.Add("page", index);
-            return View();
+            return View(page);
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public async Task<IActionResult> Drafts(int index = 1)
         {
-            return View();
+            var page = await _postService.GetPageAsync(i => i.IsDraft == true, GlobalConfig.AdminPageSize, index);
+            return View(page);
         }
 
-        public IActionResult DeletePost(string title)
+        [HttpGet]
+        public async Task<IActionResult> DeletePost(string id)
         {
-            PostService postService = new PostService();
-            postService.Delete(title.Trim());
+            await _postService.DeleteAsync(i => i.Id == id);
             return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public IActionResult Login(UserDto userDto)
-        {
-            UserService userService = new UserService();
-            var user = userService.GetOne(i => i.UserName == userDto.userName.Trim());
-            if (user == null)
-                return Json(new ReturnDto { Message = "Invalid username." });
-            if (user.Password != userDto.password.Trim())
-                return Json(new ReturnDto { Message = "Invalid password." });
-            HttpContext.Session.Set("username", Encoding.Default.GetBytes(userDto.userName));
-            return Json(new ReturnDto { Message = "ok" });
         }
 
         [HttpPost]
@@ -107,140 +67,111 @@ namespace ALBLOG.Web.Controllers
             return Json(new ReturnDto { Message = "ok" });
         }
 
-        public IActionResult EditPost(string title)
+        [HttpGet]
+        public async Task<IActionResult> EditPost(string id)
         {
             ViewData["Title"] = "Edit";
-            PostService postService = new PostService();
-            var post = postService.GetPost(i => i.Title == title.Trim(), false);
-            ViewData.Add("postTitle", post.Title);
-            ViewData.Add("tags", post.Tags);
-            ViewData.Add("context", post.Context);
-            return View("Post");
+            var post = await _postService.GetOneAsync(i => i.Id == id);
+            return View("Post", post);
         }
 
         [HttpGet]
         public IActionResult Post()
         {
             ViewData["Title"] = "Create";
-            HttpContext.Session.TryGetValue("username", out byte[] value);
-            if (value == null)
-                return View("Login");
-            return View();
+            return View(ALBLOG.Domain.Model.Post.CreateEmptyPost());
         }
 
         [HttpPost]
-        public IActionResult EditPost(PostDto postDto)
+        public async Task<IActionResult> EditPost(PostDto post)
         {
-            HttpContext.Session.TryGetValue("username", out byte[] value);
-            if (value == null)
-                return Json(new ReturnDto { Message = "Login Timeout!" });
-            PostService postService = new PostService();
-            List<string> _tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
-            postService.EditPost(postDto.title.Trim(), _tags, postDto.context);
+            var isExist = (await _postService.GetOneAsync(i => i.Title == post.title)) != null;
+            if (isExist)
+                return Json(new ReturnDto { State = "fail", Message = "存在相同标题的文章，请更改标题后重试" });
+            var tags = post.tags.Split(',').ToList();
+            await _postService.EditAsync(post.id, post.title, post.context, tags);
             return Json(new ReturnDto { Message = "ok" });
         }
 
         [HttpPost]
-        public IActionResult CreatePost(PostDto postDto)
+        public async Task<IActionResult> CreatePost(PostDto postDto, bool isDraft = false)
         {
-            HttpContext.Session.TryGetValue("username", out byte[] value);
-            if (value == null)
-                return Json(new ReturnDto { Message = "Login Timeout!" });
-            PostService postService = new PostService();
-            postService.Delete(postDto.title.Trim());
-            List<string> _tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
-            var _post = new Post
-            {
-                Title = postDto.title,
-                UserName = Encoding.Default.GetString(value),
-                Tags = _tags,
-                Date = DateTime.Now,
-                Context = postDto.context,
-                IsDraft = false,
-                PageViews = 0
-            };
-            postService.AddPost(_post);
-            return Json(new ReturnDto { Message = "ok" });
-        }
-        [HttpPost]
-        public IActionResult CreateDraft(PostDto postDto)
-        {
-            HttpContext.Session.TryGetValue("username", out byte[] value);
-            if (value == null)
-                return Json(new ReturnDto { Message = "Login Timeout!" });
-            var postService = new PostService();
-            postService.Delete(postDto.title.Trim());
-            List<string> _tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
-            var _post = new Post
-            {
-                Title = postDto.title,
-                UserName = Encoding.Default.GetString(value),
-                Tags = _tags,
-                Date = DateTime.Now,
-                Context = postDto.context,
-                IsDraft = true,
-                PageViews = 0
-            };
-            postService.AddPost(_post);
+            var isExist = (await _postService.GetOneAsync(i => i.Title == postDto.title)) != null;
+            if (isExist)
+                return Json(new ReturnDto { State = "fail", Message = "存在相同标题的文章，请更改标题后重试" });
+            List<string> tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
+            await _postService.AddAsync(postDto.title, tags, postDto.context, isDraft);
             return Json(new ReturnDto { Message = "ok" });
         }
 
-        public IActionResult PostDraft(string title)
+
+        [HttpGet]
+        public async Task<IActionResult> PostDraft(string id)
         {
-            var postService = new PostService();
-            var post = postService.GetPost(i => i.Title == title.Trim(), false);
-            post.IsDraft = false;
-            postService.Update(post);
+            await _postService.ChangeDraftToPostAsync(i => i.Id == id);
             return RedirectToAction("Drafts");
         }
 
-        public IActionResult GoToDraftBox(string title)
+        [HttpGet]
+        public async Task<IActionResult> GoToDraftBox(string id)
         {
-            PostService postService = new PostService();
-            var post = postService.GetPost(i => i.Title == title.Trim(), true);
-            post.IsDraft = true;
-            postService.Update(post);
+            await _postService.ChangePostToDraftAsync(i => i.Id == id);
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpLoad(UpLoadImgDto imgDto)
+        [HttpPost]
+        public async Task<IActionResult> UpLoad(UpLoadImgDto imgDto)
         {
-            return UpLoadImg();
+            return Json(new UpLoadImgDto { Errno = 0, Data = (await UpLoadImg(_hostingEnvironment)) });
         }
 
-        public IActionResult UpLoadProfileImg()
+        [HttpPost]
+        public async Task<IActionResult> UpLoadProfileImg(string url)
         {
-            return UpLoadImg();
+            await _settingService.ChangeProfileImgPathAsync(url);
+            return Json(new ReturnDto { State = "success", Message = "success", Data = url });
         }
 
-        private IActionResult UpLoadImg()
+        private async Task<List<string>> UpLoadImg(IHostingEnvironment environment)
         {
             List<string> pathList = new List<string>();
-            var fileDir = Path.Combine(_hostingEnvironment.WebRootPath, "images", DateTime.Now.ToString("yyyy-MM-dd"));
+            var fileDir = Path.Combine(environment.WebRootPath, "images", DateTime.Now.ToString("yyyy-MM-dd"));
             var showDir = $@"/images/{DateTime.Now.ToString("yyyy-MM-dd")}/";
             if (!Directory.Exists(fileDir))
                 Directory.CreateDirectory(fileDir);
             foreach (var file in Request.Form.Files)
             {
-                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).Name.Trim('"');
-                var filePath = fileDir + "/" + fileName;
+                //var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).Name.Trim('"');
+                var filePath = fileDir + "/" + file.FileName;
                 using (FileStream fileStream = System.IO.File.Create(filePath))
                 {
-                    file.CopyTo(fileStream);
+                    await file.CopyToAsync(fileStream);
                     fileStream.Flush();
                 }
-                pathList.Add(showDir + fileName);
+                pathList.Add(showDir + file.FileName);
             }
-            return Json(new UpLoadImgDto { Errno = 0, Data = pathList });
+            return pathList;
         }
 
         [HttpPost]
-        public IActionResult ChangeIntroduction(IntroductionType type, string context)
+        public async Task<IActionResult> ChangeIntroduction(SettingType type, string context)
         {
-            var service = new IntroductionService();
             try
             {
-                service.ChangeIntroduction(type, context);
+                switch (type)
+                {
+                    case SettingType.Profile:
+                        await _settingService.ChangeProfileAsync(context);
+                        break;
+                    case SettingType.CV:
+                        await _settingService.ChangeCVAsync(context);
+                        break;
+                    case SettingType.About:
+                        await _settingService.ChangeAboutAsync(context);
+                        break;
+                    default:
+                        break;
+                }
                 return Json(new ReturnDto { Message = "ok", State = "success" });
             }
             catch (Exception e)
@@ -250,44 +181,43 @@ namespace ALBLOG.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProfile()
+        public async Task<IActionResult> GetProfile()
         {
-            var service = new IntroductionService();
-            return Json(new ReturnDto { Data = service.GetProfile(), Message = "ok", State = "sucess" });
+            return Json(new ReturnDto { Data = await _settingService.GetProfileAsync(), Message = "ok", State = "sucess" });
         }
 
         [HttpGet]
-        public IActionResult GetCV()
+        public async Task<IActionResult> GetCV()
         {
-            var service = new IntroductionService();
-            return Json(new ReturnDto { Data = service.GetCV(), Message = "ok", State = "sucess" });
+            var service = new SettingService();
+            return Json(new ReturnDto { Data = await _settingService.GetCVAsync(), Message = "ok", State = "sucess" });
         }
 
         [HttpGet]
-        public IActionResult GetAbout()
+        public async Task<IActionResult> GetAbout()
         {
-            var service = new IntroductionService();
-            return Json(new ReturnDto { Data = service.GetAbout(), Message = "ok", State = "success" });
+            var service = new SettingService();
+            return Json(new ReturnDto { Data = await _settingService.GetAboutAsync(), Message = "ok", State = "success" });
         }
 
-        public IActionResult Profile()
+        [HttpGet]
+        public async Task<IActionResult> Profile()
         {
-            var service = new IntroductionService();
-            ViewData["context"] = service.GetProfile();
+            ViewData["context"] = await _settingService.GetProfileAsync();
             return View();
         }
 
-        public IActionResult CV()
+        [HttpGet]
+        public async Task<IActionResult> CV()
         {
-            var service = new IntroductionService();
-            ViewData["context"] = service.GetCV();
+            ViewData["context"] = await _settingService.GetCVAsync();
             return View();
         }
 
-        public IActionResult About()
+        [HttpGet]
+        public async Task<IActionResult> About()
         {
-            var service = new IntroductionService();
-            ViewData["context"] = service.GetAbout();
+            ViewData["context"] = await _settingService.GetAboutAsync();
             return View();
         }
 
@@ -305,17 +235,15 @@ namespace ALBLOG.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetProfilePhotoPath()
+        public async Task<IActionResult> GetProfilePhotoPath()
         {
-            var service = new IntroductionService();
-            return Json(new ReturnDto { Data = service.GetProfilePhotoPath().ShowPath, State = "success" });
+            return Json(new ReturnDto { Data = (await _settingService.GetProfileImgPathAsync()).ShowPath, State = "success" });
         }
 
         [HttpPost]
-        public IActionResult ChangeProfilePhoto()
+        public async Task<IActionResult> ChangeProfilePhoto()
         {
-            var service = new IntroductionService();
-            return Json(new ReturnDto { Data = service.GetProfilePhotoPath().ShowPath, State = "success" });
+            return Json(new ReturnDto { Data = (await _settingService.GetProfileImgPathAsync()).ShowPath, State = "success" });
         }
     }
 }
