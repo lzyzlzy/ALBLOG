@@ -1,91 +1,20 @@
-﻿@using ALBLOG.Domain.Model
+﻿@model ALBLOG.Domain.Model.Page
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Index";
-    List<Post> posts = ViewData["posts"] as List<Post>;
-    int page = Convert.ToInt32(ViewData["page"]);
 }
-<h1>
+<h1 class="padding-8">
     Hi! @ViewBag.Name !
     <button class="btn btn-link" id="btnLogOut">log out</button>
 </h1>
 <div>
-    <div>
+    <div class="padding-8">
         <h3>Post Manage</h3>
-        <div class="form-group row">
+        <div class="row">
             <a class="col-md-2" href="~/admin/Post">Create a post</a>
             <a class="col-md-2" href="~/admin/Drafts">Drafts(@ViewData["draftCount"])</a>
             <a class="col-md-3" href="~/admin/Profile">Settings</a>
         </div>
     </div>
-    <div>
-        <div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Date</th>
-                        <th>Tags</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                @foreach (var item in posts)
-                {
-                    <tbody>
-                        <tr>
-                            <td class="col-md-5">
-                                <a style="color:black" href="~/home/post?title=@item.Title">
-                                    <text>
-                                        <strong>
-                                            @item.Title
-                                        </strong>
-                                    </text>
-                                </a>
-                            </td>
-                            <td class="col-md-2">
-                                @item.Date.ToString("yyyy-MM-dd hh:mm:ss")
-                            </td>
-                            <td class="col-md-3">
-                                @foreach (var tag in item.Tags ?? new List<string>() { "-" })
-                                {
-                                    <a href="~/home/tag?name=@tag">@tag </a>
-                                }
-                            </td>
-
-                            <td class="col-md-2 text-right">
-                                <a href="~/admin/editpost?title= @item.Title"><span class="glyphicon glyphicon-pencil" />Edit </a>
-                                <a href="~/admin/deletepost?title= @item.Title" style="color:red"><sapn class="glyphicon glyphicon-remove" />Delete </a>
-                                <a href="~/admin/GoToDraftBox?title= @item.Title" style="color:forestgreen"><span class="glyphicon glyphicon-folder-open" />Draft</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                }
-            </table>
-        </div>
-        <div>
-            <span>
-                第 @ViewData["page"] 页，
-            </span>
-            <span>
-                共 @ViewData["sum"] 页
-            </span>
-
-            @if (ViewData["haveLast"] as string == "true")
-            {
-                <span>
-                    <a href="~/admin/index?index=@(page-1)">
-                        上一页
-                    </a>
-                </span>
-            }
-            @if (ViewData["haveNext"] as string == "true")
-            {
-                <span>
-                    <a href="~/admin/index?index=@(page+1)">
-                        下一页
-                    </a>
-                </span>
-            }
-        </div>
-    </div>
+    @Html.DisplayForModel()
 </div>

@@ -1,74 +1,10 @@
-﻿@using ALBLOG.Domain.Model
+﻿@model ALBLOG.Domain.Model.Page
 @{
     Layout = "_AdminLayout";
     ViewData["Title"] = "Draft Box";
-    List<Post> posts = ViewData["posts"] as List<Post>;
-    int page = Convert.ToInt32(ViewData["page"]);
 }
 
 <h2>Drafts</h2>
 <a href="~/admin/">Go back</a>
 <hr />
-<div>
-    <div>
-        @foreach (var item in posts)
-        {
-            <div>
-                <div>
-                    <a style="color:black" href="~/home/post?title=@item.Title">
-                        <text>
-                            <strong>
-                                @item.Title
-                            </strong>
-                            <small>
-                                @item.Date.AddHours(8)
-                            </small>
-                        </text>
-                    </a>
-                    <span>标签：</span>
-                    @foreach (var tag in item.Tags ?? new List<string>())
-                    {
-                        <span>@tag</span>
-                    }
-                </div>
-                <div>
-                    <span>
-                        <a href="~/admin/editpost?title= @item.Title">Edit</a>
-                    </span>
-                    <span>
-                        <a href="~/admin/deletepost?title= @item.Title" style="color:red">Delete</a>
-                    </span>
-                    <span>
-                        <a href="~/admin/PostDraft?title= @item.Title" style="color:forestgreen">Post</a>
-                    </span>
-                </div>
-            </div>
-            <br />
-        }
-    </div>
-    <div>
-        <span>
-            第 @ViewData["page"] 页，
-        </span>
-        <span>
-            共 @ViewData["sum"] 页
-        </span>
-
-        @if (ViewData["haveLast"] as string == "true")
-        {
-            <span>
-                <a href="~/admin/index?index= @(page-1)">
-                    上一页
-                </a>
-            </span>
-        }
-        @if (ViewData["haveNext"] as string == "true")
-        {
-            <span>
-                <a href="~/admin/index?index= @(page+1)">
-                    下一页
-                </a>
-            </span>
-        }
-    </div>
-</div>
+@Html.DisplayForModel()

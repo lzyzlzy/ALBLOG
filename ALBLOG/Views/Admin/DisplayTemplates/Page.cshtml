@@ -1,0 +1,79 @@
+﻿@model ALBLOG.Domain.Model.Page
+
+
+<div>
+    <div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Tags</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Posts)
+                {
+                    <tr>
+                        <td class="col-md-5">
+                            <a style="color:black" href="~/home/post?id=@item.Id">
+                                <text>
+                                    <strong>
+                                        @item.Title
+                                    </strong>
+                                </text>
+                            </a>
+                        </td>
+                        <td class="col-md-2">
+                            @item.Date.AddHours(8).ToString("yyyy-MM-dd HH:mm:ss")
+                        </td>
+                        <td class="col-md-3">
+                            @foreach (var tag in item.Tags ?? new List<string>() { "-" })
+                            {
+                                <a href="~/home/tag?name=@tag">@tag </a>
+                            }
+                        </td>
+                        <td class="col-md-2 text-right">
+                            <a href="~/admin/editpost?id=@item.Id"><span class="glyphicon glyphicon-pencil" />Edit </a>
+                            <a href="~/admin/deletepost?id=@item.Id" style="color:red"><sapn class="glyphicon glyphicon-remove" />Delete </a>
+                            @if (item.IsDraft)
+                            {
+                                <a href="~/admin/PostDraft?id=@item.Id" style="color:forestgreen"><span class="glyphicon glyphicon-folder-open" />Post</a>
+                            }
+                            else
+                            {
+                                <a href="~/admin/GoToDraftBox?id=@item.Id" style="color:forestgreen"><span class="glyphicon glyphicon-folder-open" />Draft</a>
+                            }
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="padding-8">
+        <span>
+            第 @Model.Index 页，
+        </span>
+        <span>
+            共 @Model.PageCount 页
+        </span>
+        @if (Model.HaveLast)
+        {
+            <span>
+                <a href="~/admin/index?index=@(Model.Index-1)">
+                    上一页
+                </a>
+            </span>
+        }
+        @if (Model.HaveNext)
+        {
+            <span>
+                <a href="~/admin/index?index=@(Model.Index+1)">
+                    下一页
+                </a>
+            </span>
+        }
+    </div>
+</div>
