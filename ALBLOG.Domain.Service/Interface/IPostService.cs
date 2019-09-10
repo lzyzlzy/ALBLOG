@@ -11,9 +11,9 @@ namespace ALBLOG.Domain.Service.Interface
 {
     public interface IPostService
     {
-        Task<IEnumerable<Post>> GetPageAsync(int pageSize, int pageIndex);
+        Task<Page> GetPageAsync(int pageSize, int pageIndex);
 
-        Task<IEnumerable<Post>> GetPageAsync(Expression<Func<Post, bool>> filter, int pageSize, int pageIndex);
+        Task<Page> GetPageAsync(Expression<Func<Post, bool>> filter, int pageSize, int pageIndex);
 
         Task<int> GetPageCountAsync(int pageSize);
 
@@ -29,7 +29,7 @@ namespace ALBLOG.Domain.Service.Interface
 
         Task<long> DeleteAsync(Expression<Func<Post, bool>> filter);
 
-        Task EditAsync(Post post);
+        Task EditAsync(string id, string title, string content, List<string> tags);
 
         Task AddAsync(string title, List<string> tags, string content, bool isDraft);
 

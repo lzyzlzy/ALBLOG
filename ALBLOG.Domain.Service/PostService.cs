@@ -47,10 +47,16 @@ namespace ALBLOG.Domain.Service
             return await _repository.DeleteOneAsync(filter);
         }
 
-        public async Task EditAsync(Post post)
+        public async Task EditAsync(string id, string title, string content, List<string> tags)
         {
-            post.EditDate = DateTime.Now;
-            await _repository.UpdateAsync(post);
+            await _repository.GetOneAndUpdateAsync(i => i.Id == id, j =>
+            {
+                j.Title = title;
+                j.Context = content;
+                j.EditDate = DateTime.Now;
+                j.Tags = tags;
+                return j;
+            });
         }
 
         public async Task ChangePostToDraftAsync(Expression<Func<Post, bool>> filter)
@@ -87,19 +93,31 @@ namespace ALBLOG.Domain.Service
             await _repository.AddAsync(post);
         }
 
-        public async Task<IEnumerable<Post>> GetPageAsync(int pageSize, int pageIndex)
+        public async Task<Page> GetPageAsync(int pageSize, int pageIndex)
         {
             return await GetPageAsync(_ => true, pageSize, pageIndex);
         }
 
-        public async Task<IEnumerable<Post>> GetPageAsync(Expression<Func<Post, bool>> filter, int pageSize, int pageIndex)
+        public async Task<Page> GetPageAsync(Expression<Func<Post, bool>> filter, int pageSize, int pageIndex)
         {
             var pageCount = await GetPageCountAsync(filter, pageSize);
-            pageIndex = pageIndex <= 0 ? 1 : pageIndex;
-            pageIndex = pageIndex > pageCount ? pageCount : pageIndex;
             var allPost = await _repository.GetAllAsync(filter);
-            return allPost.Skip(pageSize * (pageIndex - 1))
-                          .Take(pageSize);
+            pageIndex = pageIndex <= 0 ? 1
+                                       : pageIndex > pageCount ? pageCount
+                                                               : pageIndex;
+            var result = allPost.Reverse()
+                                .Skip(pageSize * (pageIndex - 1))
+                                .Take(pageSize);
+            var page = new Page
+            {
+                HaveLast = pageIndex > 1,
+                HaveNext = pageIndex < pageCount,
+                PageCount = pageCount,
+                Index = pageIndex,
+                Posts = result,
+                Size = pageSize
+            };
+            return page;
         }
 
         public async Task<int> GetPageCountAsync(int pageSize)
