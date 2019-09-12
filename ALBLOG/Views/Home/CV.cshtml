@@ -2,96 +2,13 @@
     ViewBag.Title = "关于我";
     Layout = "_HomeLayout";
 }
-<hr />
-<div id="divCV"></div>
+<div class="panel panel-default margin-top-20">
+    <div class="panel-heading">
+        <h4 class="panel-title">我的简历</h4>
+    </div>
+    <div class="panel-body" id="divCV"></div>
+</div>
 
-@*<div>
-        <div class="row form-group">
-            <div class="col-xs-10">
-                <h3><strong>刘震宇 <small>Andrew Liu </small> </strong></h3>
-                <hr />
-                <div>
-                    <p>
-                        出生日期：1997.7.14
-                    </p>
-                    <p> 毕业时间：2019.7</p>
-                    <p>学历：本科</p>
-                    <p>专业：信息与计算科学</p>
-                    <p>毕业学校：吉林农业大学</p>
-                    <p>联系电话＆微信：17649857833</p>
-                    <p>邮箱：<a href="mailto:andrewliuzy@outlook.com">andrewliuzy@outlook.com</a> </p>
-                    <p>个人网站：<a href="http:\\101.132.159.117" target="_blank">www.andrewliu.fun</a><small>(正在备案中)</small></p>
-                    <p>Github：<a href="https:\\www.github.com/andrewliuzy" target="_blank">www.github.com/andrewliuzy</a></p>
-                </div>
-            </div>
-            <div class="col-xs-2">
-                <img src="~/images/IdPhoto.jpg" height="190" width="130" />
-            </div>
-        </div>
-        <hr />
-        <div>
-            <h4 class="lead"> <strong>关于我</strong></h4>
-            <p>对<code>.net</code>平台有一定的理解，可以熟练使用<code>C#</code>，熟悉<code>OOP</code>，了解<code>FP</code>，数据库使用过<code>mssql</code>,<code>mongoDb</code>,前端了解<code>html</code>,<code>javascript</code>,<code>css</code>,<code>jQuery</code>,<code>bootstrap</code>，有<code>.net core</code>开发经验，有独立开发小型项目的能力，爱好健身、编程、摄影、电子游戏、电子产品。</p>
-        </div>
-        <hr />
-        <div>
-            <h4 class="lead"> <strong>我的项目经验</strong></h4>
-            <p>2019.5-~ <strong>ALBLOG</strong></p>
-            <ul>
-                <li><strong>开发环境：</strong><code>.Net Core 2.1.1</code>、<code>MongoDB</code></li>
-                <li><strong>使用技术：</strong><code>asp.net core mvc</code>、<code>bootstrap、rozar、css+div</code></li>
-                <li>
-                    <strong>项目描述：</strong><p>一个开源的个人博客系统，已上线，目前部署在阿里云的linux服务器上</p>
-                    <p>url:<a href="http://101.132.159.117">http://101.132.159.117</a><small>(域名正在备案中)</small></p>
-                    <p>github:<a href="https://github.com/AndrewLiuZY/ALBLOG">github.com/AndrewLiuZY/ALBLOG</a></p>
-                </li>
-            </ul>
-            <hr />
-            <p class="lead">
-                2018.12-2019.6 在长春径点科技实习
-            </p>
-            <p>2019.4-2019.6 <strong>Compliance Guardian Online</strong></p>
-            <ul>
-                <li><strong>开发环境：</strong><code>.Net Framework 4.6.1</code>、<code>MSSQL</code></li>
-                <li><strong>使用技术：</strong><code>asp.net web api</code>、<code>Entity Framework 6</code></li>
-                <li>
-                    <strong>项目描述：</strong><p>公司的产品，主要功能是数据管理、合规和保护；此项目为此公司原产品Compliance Guardia移植到Azure的版本</p>
-                </li>
-                <li><strong>主要任务：</strong><p>主要负责编写后台权限管理接口</p></li>
-            </ul>
-            <p>2019.1-2019.3 <strong>公司内部考勤系统</strong></p>
-            <ul>
-                <li><strong>开发环境：</strong><code>.Net Framework 4.6.1</code>、<code>MongoDB</code></li>
-                <li><strong>使用技术：</strong><code>asp.net mvc5</code>、<code>bootstrap</code>、<code>jQuery</code>、<code>css</code>+<code>div</code> </li>
-                <li><strong>项目描述：</strong><p>主要功能为公司长春、大连两地office的考勤计算、展示、管理以及相关的申报</p></li>
-                <li><strong>主要任务：</strong><p>负责事假、病假、餐补的计算，使用NPOI进行excel导入导出，白名单功能的前后端实现，以及上线后的维护。</p></li>
-            </ul>
-            <hr />
-            <p class="lead">
-                2018.9-2018.11 在长春三京科技实习
-            </p>
-            <p>2018.9-2018.11 <strong>参与上位机程序开发</strong></p>
-            <ul>
-                <li><strong>开发环境：</strong><code>.Net Framework 3.0</code>、<code>MSSQL</code></li>
-                <li><strong>使用技术：</strong><code>winform</code> </li>
-                <li><strong>项目描述：</strong><p>外包项目，为一硬件公司的硬件产品做的配套软件系统</p></li>
-                <li><strong>主要任务：</strong><p>主要负责编写部分与硬件对接的api。</p></li>
-            </ul>
-            <hr />
-            <p class="lead">
-                2015.9-2018.9 在校期间
-            </p>
-            <p>2016.11-2017.1 <strong>参与科研管理系统开发</strong></p>
-            <ul>
-                <li><strong>开发环境：</strong><code>.Net Framework 3.0</code>、<code>MSSQL</code></li>
-                <li><strong>使用技术：</strong><code>winform</code> </li>
-                <li><strong>项目描述：</strong><p>老师接的吉林省电网公司的外包项目，主要功能是负责科研项目的申报和相关的管理</p></li>
-                <li><strong>主要任务：</strong><p>负责部分申报功能的实现</p></li>
-            </ul>
-            <hr />
-        </div>
-        <hr />
-    </div>*@
 
 <style>
     #Myself {

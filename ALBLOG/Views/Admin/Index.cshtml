@@ -10,11 +10,11 @@
 <div>
     <div class="padding-8">
         <h3>Post Manage</h3>
-        <div class="row">
-            <a class="col-md-2" href="~/admin/Post">Create a post</a>
-            <a class="col-md-2" href="~/admin/Drafts">Drafts(@ViewData["draftCount"])</a>
-            <a class="col-md-3" href="~/admin/Profile">Settings</a>
-        </div>
+        <ul class="nav nav-pills">
+            <li> <a href="~/admin/Post">Create a post</a></li>
+            <li> <a href="~/admin/Drafts">Drafts (@ViewData["draftCount"])</a></li>
+            <li> <a href="~/admin/Profile">Settings</a></li>
+        </ul>
     </div>
     @Html.DisplayForModel()
     <div class="padding-8">

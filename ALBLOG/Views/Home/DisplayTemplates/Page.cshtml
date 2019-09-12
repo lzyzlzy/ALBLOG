@@ -1,26 +1,28 @@
 ﻿@model ALBLOG.Domain.Model.Page
 
 <div>
-    <div>
-        @foreach (var item in Model.Posts)
-        {
-            <div>
+    @foreach (var item in Model.Posts)
+    {
+        <div>
+            <div style="font-size:25px">
                 <a style="color:black" href="~/home/post?id=@item.Id">
-                    <h3>
+                    <h3 style="margin-top:10px;margin-bottom:10px">
                         @item.Title
-                        <br />
-                        <small>
-                            @item.Date.AddHours(8)
-                        </small>
                     </h3>
                 </a>
-                <span>标签：</span>
+            </div>
+            <div>
+                <h4 style="margin-bottom:5px"><small>@item.Date.AddHours(8).ToString("yyyy/M/d H:mm:ss")</small></h4>
+            </div>
+            <div>
                 @foreach (var tag in item.Tags ?? new List<string>())
                 {
-                    <a class="post-tags btn-primary" href="~/home/tag?name=@tag">@tag </a>
+                    <span class="label label-default" style="display:inline-block">
+                        <a style="color:white" href="~/home/tag?name=@tag">@tag </a>
+                    </span>
                 }
             </div>
-            <hr />
-        }
-    </div>
+        </div>
+        <hr style="margin-top:10px;margin-bottom:10px;height:1px">
+    }
 </div>

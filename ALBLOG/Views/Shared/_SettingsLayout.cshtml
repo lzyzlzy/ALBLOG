@@ -4,13 +4,12 @@
 }
 <div>
     <h2 class="">Settings  <button class="btn btn-link"><a href="~/admin/index">go back</a></button></h2>
-    <div class="row">
-        <a href="~/admin/Profile" class="col-md-1">Profile</a>
-        <a href="~/admin/About" class="col-md-1">About</a>
-        <a href="~/admin/Image" class="col-md-1">Image</a>
-        <a href="~/admin/CV" class="col-md-1">CV</a>
-    </div>
-    <hr />
+    <ul class="nav nav-tabs">
+        <li id="navProfile"><a href="~/admin/Profile">Profile</a></li>
+        <li id="navAbout"><a href="~/admin/About">About</a></li>
+        <li id="navImage"><a href="~/admin/Image">Image</a></li>
+        <li id="navCV"><a href="~/admin/CV">CV</a></li>
+    </ul>
 </div>
 
 @RenderBody()

@@ -231,9 +231,15 @@ function GetCV() {
 function GetAbout() {
     $.get("/admin/getabout", data => $('#divAbout').empty().append(data.data));
 }
+
 function GetProfilePhoto() {
     $.get("/admin/GetProfilePhotoPath", dto => $('#ProfilePhoto').attr("src", dto.data));
 }
+
+function AddActive(id) {
+    document.getElementById(id).classList.add("active");
+}
+
 GetProfile();
 GetProfilePhoto();
 GetAbout();
