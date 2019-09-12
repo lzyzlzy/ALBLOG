@@ -35,6 +35,11 @@ body {
     }
 }
 
+::selection {
+    background-color: gainsboro;
+    color: black;
+}
+
 .post-tags {
     background-color: dimgrey;
     color: white;
