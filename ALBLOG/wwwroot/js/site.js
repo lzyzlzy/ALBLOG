@@ -221,19 +221,19 @@ function SetEmptySection() {
 }
 
 function GetProfile() {
-    $.get("/admin/GetProfile", data => $('#Profile').empty().append(data.data));
+    $.get("/home/GetProfile", data => $('#Profile').empty().append(data.data));
 }
 
 function GetCV() {
-    $.get("/admin/getcv", data => $('#divCV').empty().append(data.data));
+    $.get("/home/getcv", data => $('#divCV').empty().append(data.data));
 }
 
 function GetAbout() {
-    $.get("/admin/getabout", data => $('#divAbout').empty().append(data.data));
+    $.get("/home/getabout", data => $('#divAbout').empty().append(data.data));
 }
 
 function GetProfilePhoto() {
-    $.get("/admin/GetProfilePhotoPath", dto => $('#ProfilePhoto').attr("src", dto.data));
+    $.get("/home/GetProfilePhotoPath", dto => $('#ProfilePhoto').attr("src", dto.data));
 }
 
 function AddActive(id) {

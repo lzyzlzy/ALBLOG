@@ -18,11 +18,13 @@ namespace ALBLOG.Controllers
     {
         private readonly IPostService _postService;
         private readonly IUserService _userService;
+        private readonly ISettingService _settingService;
 
-        public HomeController(IPostService postService, IUserService userService)
+        public HomeController(IPostService postService, IUserService userService, ISettingService settingService )
         {
             this._postService = postService;
             this._userService = userService;
+            this._settingService = settingService;
         }
 
         public async Task<IActionResult> Index(int index = 1)
@@ -72,6 +74,32 @@ namespace ALBLOG.Controllers
             var page = await _postService.GetPageAsync(i => i.IsDraft == false && i.Tags.Contains(name), GlobalConfig.PostPageSize, index);
             ViewData.Add("Title", name);
             return View(page);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProfilePhotoPath()
+        {
+            return Json(new ReturnDto { Data = (await _settingService.GetProfileImgPathAsync()).ShowPath, State = "success" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetProfile()
+        {
+            return Json(new ReturnDto { Data = await _settingService.GetProfileAsync(), Message = "ok", State = "sucess" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetCV()
+        {
+            var service = new SettingService();
+            return Json(new ReturnDto { Data = await _settingService.GetCVAsync(), Message = "ok", State = "sucess" });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAbout()
+        {
+            var service = new SettingService();
+            return Json(new ReturnDto { Data = await _settingService.GetAboutAsync(), Message = "ok", State = "success" });
         }
 
         [HttpGet]

@@ -181,26 +181,6 @@ namespace ALBLOG.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProfile()
-        {
-            return Json(new ReturnDto { Data = await _settingService.GetProfileAsync(), Message = "ok", State = "sucess" });
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetCV()
-        {
-            var service = new SettingService();
-            return Json(new ReturnDto { Data = await _settingService.GetCVAsync(), Message = "ok", State = "sucess" });
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAbout()
-        {
-            var service = new SettingService();
-            return Json(new ReturnDto { Data = await _settingService.GetAboutAsync(), Message = "ok", State = "success" });
-        }
-
-        [HttpGet]
         public async Task<IActionResult> Profile()
         {
             ViewData["context"] = await _settingService.GetProfileAsync();
@@ -232,12 +212,6 @@ namespace ALBLOG.Web.Controllers
                                   .ToList();
             ViewData.Add("files", files);
             return View();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetProfilePhotoPath()
-        {
-            return Json(new ReturnDto { Data = (await _settingService.GetProfileImgPathAsync()).ShowPath, State = "success" });
         }
 
         [HttpPost]
