@@ -6,13 +6,13 @@
         <div>
             <div style="font-size:25px">
                 <a style="color:black" href="~/home/post?id=@item.Id">
-                    <h3 style="margin-top:10px;margin-bottom:10px">
+                    <h3 style="margin-top:10px;margin-bottom:5px">
                         @item.Title
                     </h3>
                 </a>
             </div>
             <div>
-                <h4 style="margin-bottom:5px"><small>@item.Date.AddHours(8).ToString("yyyy/M/d H:mm:ss")</small></h4>
+                <h4 style="margin-bottom:5px;margin-top:5px"><small>@item.Date.AddHours(8).ToString("yyyy/M/d H:mm:ss")</small></h4>
             </div>
             <div>
                 @(item.Context.ReplaceLabel("").TakeString(100)+"... ") 
