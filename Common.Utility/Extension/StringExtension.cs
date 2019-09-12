@@ -250,7 +250,11 @@ namespace System
         /// <returns></returns>
         public static string ReplaceLabel(this string current, string replacement) => new Regex("<[^>]+>").Replace(current, replacement);
 
-        public static string TakeString(this string current, int length) => current.Substring(0, current.Length < length ? current.Length - 1 : length);
+        public static string TakeString(this string current, int length)
+        {
+            var curLength = current.Length;
+            return current.Substring(0, curLength < length ? curLength == 0 ? 0 : curLength - 1 : length);
+        }
 
     }
 }
