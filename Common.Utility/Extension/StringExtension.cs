@@ -242,5 +242,15 @@ namespace System
 
         public static string Substring(this string current, string startString) => current.Substring(current.IndexOf(startString) >= 0 ? current.IndexOf(startString) : 0);
 
+        /// <summary>
+        /// 不能匹配属性中带有< >的标签
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="replacement"></param>
+        /// <returns></returns>
+        public static string ReplaceLabel(this string current, string replacement) => new Regex("<[^>]+>").Replace(current, replacement);
+
+        public static string TakeString(this string current, int length) => current.Substring(0, current.Length < length ? current.Length - 1 : length);
+
     }
 }
