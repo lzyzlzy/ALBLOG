@@ -79,6 +79,8 @@ namespace ALBLOG.Controllers
         [HttpGet]
         public async Task<IActionResult> Search(string key)
         {
+            if (key.IsNullOrEmpty())
+                return RedirectToAction("index");
             var page = await _postService.GetPageAsync(i => i.Title.Contains(key) || i.Tags.Contains(key), 100, 1);
             ViewData.Add("Title", key);
             return View(page);
