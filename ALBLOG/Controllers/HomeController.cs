@@ -82,7 +82,7 @@ namespace ALBLOG.Controllers
             if (key.IsNullOrEmpty())
                 return RedirectToAction("index");
             ViewData.Add("Title", key);
-            //key = key.ToLower();
+            key = key.ToLower();
             var page = await _postService.GetPageAsync(i => (i.Title.ToLower().Contains(key) || i.Tags.Contains(key) || i.Context.ToLower().Contains(key)) && i.IsDraft == false, 100, 1);
             return View(page);
         }

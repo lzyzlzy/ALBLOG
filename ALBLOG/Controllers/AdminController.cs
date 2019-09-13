@@ -35,11 +35,8 @@ namespace ALBLOG.Web.Controllers
 
         public async Task<IActionResult> Index(int index = 1)
         {
-#if DEBUG
-            HttpContext.Session.Set("username", Encoding.Default.GetBytes("Debuger"));
-#endif
             HttpContext.Session.TryGetValue("username", out byte[] value);
-            ViewBag.Name = Encoding.Default.GetString(value ?? new byte[] { }) ?? "";
+            ViewBag.Name = Encoding.Default.GetString(value);
             var page = await _postService.GetPageAsync(i => i.IsDraft == false, GlobalConfig.AdminPageSize, index);
             var draftCount = (await _postService.GetAllAsync(i => i.IsDraft == true)).Count();
             ViewData.Add("draftCount", draftCount);
