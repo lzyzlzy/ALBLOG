@@ -20,7 +20,7 @@ namespace ALBLOG.Controllers
         private readonly IUserService _userService;
         private readonly ISettingService _settingService;
 
-        public HomeController(IPostService postService, IUserService userService, ISettingService settingService )
+        public HomeController(IPostService postService, IUserService userService, ISettingService settingService)
         {
             this._postService = postService;
             this._userService = userService;
@@ -73,6 +73,14 @@ namespace ALBLOG.Controllers
         {
             var page = await _postService.GetPageAsync(i => i.IsDraft == false && i.Tags.Contains(name), GlobalConfig.PostPageSize, index);
             ViewData.Add("Title", name);
+            return View(page);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string key)
+        {
+            var page = await _postService.GetPageAsync(i => i.Title.Contains(key) || i.Tags.Contains(key), 100, 1);
+            ViewData.Add("Title", key);
             return View(page);
         }
 

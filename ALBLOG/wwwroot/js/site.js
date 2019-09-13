@@ -5,6 +5,11 @@
 
 // Write your JavaScript code.
 
+
+//globel
+$('#spanSearch').click(() => $('#btnSearch').click());
+//-------END-------
+
 //~/home/index
 $('#btnLogOut').click(() => {
     $.post("/admin/LogOut", () => {
