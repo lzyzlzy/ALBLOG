@@ -20,6 +20,7 @@ namespace ALBLOG.Constant
         public static readonly string RedisResponseMessageDictionaryName = "ResponseMessage";
         public static readonly int CognitiveGetResponseRetryCount = 6;
 
+        public static readonly int LogPageSize = 50;
         public static readonly int AdminPageSize = 20;
         public static readonly int PostPageSize = 10;
 
