@@ -19,8 +19,22 @@ namespace ALBLOG.Domain.Service.Interface
 
         Task Warning(string sessionId, string controllerName, string actionName, string IPAddress, string content, bool isAdmin = false);
 
-        Task<Log> GetOne(Expression<Func<Log, bool>> expression);
+        Task<Log> GetOneAsync(Expression<Func<Log, bool>> expression);
 
-        Task<IEnumerable<Log>> GetAll(Expression<Func<Log, bool>> expression);
+        Task<IEnumerable<Log>> GetAllAsync(Expression<Func<Log, bool>> expression);
+
+        Task<LogPage> GetPageAsync(int pageSize, int pageIndex);
+
+        Task<LogPage> GetPageAsync(Expression<Func<Log, bool>> filter, int pageSize, int pageIndex);
+
+        Task<int> GetPageCountAsync(int pageSize);
+
+        Task<int> GetPageCountAsync(Expression<Func<Log, bool>> filter, int pageSize);
+
+        Task<int> GetPageViewNum(DateTime date);
+
+        Task<int> GetPageViewNum(Expression<Func<Log, bool>> filter);
+
+        Task<int> GetIpCount(DateTime date);
     }
 }

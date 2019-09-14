@@ -17,7 +17,8 @@ using ALBLOG.Web.Attributes;
 
 namespace ALBLOG.Web.Controllers
 {
-    [Logout]
+    [Auth]
+    [TypeFilter(typeof(LogAttribute))]
     public class AdminController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;

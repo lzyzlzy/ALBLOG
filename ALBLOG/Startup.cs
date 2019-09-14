@@ -47,6 +47,7 @@ namespace ALBLOG
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ISettingService, SettingService>();
+            services.AddSingleton<ILogService, LogService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

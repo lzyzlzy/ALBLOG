@@ -8,9 +8,9 @@ using System.Text;
 
 namespace ALBLOG.Web.Attributes
 {
-    public class LogoutAttribute : ActionFilterAttribute, IActionFilter
+    public class AuthAttribute : Attribute, IAuthorizationFilter
     {
-        public override void OnActionExecuting(ActionExecutingContext context)
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
 #if DEBUG
             context.HttpContext.Session.Set("username", Encoding.Default.GetBytes("Debuger"));
@@ -18,10 +18,6 @@ namespace ALBLOG.Web.Attributes
             context.HttpContext.Session.TryGetValue("username", out byte[] value);
             if (value == null)
                 context.Result = new RedirectToActionResult("login", "Home", null);
-        }
-
-        public override void OnActionExecuted(ActionExecutedContext context)
-        {
         }
     }
 }

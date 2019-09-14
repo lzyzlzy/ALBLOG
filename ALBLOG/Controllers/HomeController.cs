@@ -11,6 +11,7 @@ using ALBLOG.Domain.Model;
 using ALBLOG.Domain.Service.Interface;
 using ALBLOG.Constant;
 using ALBLOG.Domain.Dto;
+using ALBLOG.Web.Attributes;
 
 namespace ALBLOG.Controllers
 {
@@ -19,25 +20,33 @@ namespace ALBLOG.Controllers
         private readonly IPostService _postService;
         private readonly IUserService _userService;
         private readonly ISettingService _settingService;
+        private readonly ILogService _logService;
 
-        public HomeController(IPostService postService, IUserService userService, ISettingService settingService)
+        public HomeController(IPostService postService,
+                              IUserService userService,
+                              ISettingService settingService,
+                              ILogService logService)
         {
             this._postService = postService;
             this._userService = userService;
             this._settingService = settingService;
+            this._logService = logService;
         }
 
+        [TypeFilter(typeof(LogAttribute))]
         public async Task<IActionResult> Index(int index = 1)
         {
             var page = await _postService.GetPageAsync(i => i.IsDraft == false, GlobalConfig.PostPageSize, index);
             return View(page);
         }
 
+        [TypeFilter(typeof(LogAttribute))]
         public IActionResult CV()
         {
             return View();
         }
 
+        [TypeFilter(typeof(LogAttribute))]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -45,6 +54,7 @@ namespace ALBLOG.Controllers
             return View();
         }
 
+        [TypeFilter(typeof(LogAttribute))]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -52,12 +62,14 @@ namespace ALBLOG.Controllers
             return View();
         }
 
+        [TypeFilter(typeof(LogAttribute))]
         public IActionResult Privacy()
         {
             return View();
         }
 
         [HttpGet]
+        [TypeFilter(typeof(LogAttribute))]
         public async Task<IActionResult> Post(string Id)
         {
             HttpContext.Session.TryGetValue("username", out byte[] value);
@@ -69,6 +81,7 @@ namespace ALBLOG.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(LogAttribute))]
         public async Task<IActionResult> Tag(string name, int index = 1)
         {
             var page = await _postService.GetPageAsync(i => i.IsDraft == false && i.Tags.Contains(name), GlobalConfig.PostPageSize, index);
@@ -77,6 +90,7 @@ namespace ALBLOG.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(LogAttribute))]
         public async Task<IActionResult> Search(string key)
         {
             if (key.IsNullOrEmpty())
@@ -114,6 +128,7 @@ namespace ALBLOG.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(LogAttribute))]
         public IActionResult Login()
         {
             return View();
@@ -135,6 +150,7 @@ namespace ALBLOG.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [TypeFilter(typeof(LogAttribute))]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
