@@ -24,5 +24,17 @@ namespace ALBLOG.Web.Controllers
             var page = await _logService.GetPageAsync(GlobalConfig.LogPageSize, index);
             return View(page);
         }
+
+        public async Task<IActionResult> Admin(int index = 1)
+        {
+            var page = await _logService.GetPageAsync(i => i.IsAdmin, GlobalConfig.LogPageSize, index);
+            return View(page);
+        }
+
+        public async Task<IActionResult> Visitor(int index = 1)
+        {
+            var page = await _logService.GetPageAsync(i => i.IsAdmin == false, GlobalConfig.LogPageSize, index);
+            return View(page);
+        }
     }
 }
