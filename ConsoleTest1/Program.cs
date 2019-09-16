@@ -10,7 +10,8 @@ namespace ConsoleTest1
     {
         static void Main(string[] args)
         {
-          
+            LogService logService = new LogService();
+            var logs = logService.GetAllAsync(i => true).Result;
             Console.WriteLine("ok");
             Console.ReadLine();
         }
