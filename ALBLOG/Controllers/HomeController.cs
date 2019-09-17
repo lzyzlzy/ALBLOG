@@ -72,6 +72,8 @@ namespace ALBLOG.Controllers
         [TypeFilter(typeof(LogAttribute))]
         public async Task<IActionResult> Post(string Id)
         {
+            if (Id.IsNullOrEmpty())
+                return RedirectToAction("Index");
             HttpContext.Session.TryGetValue("username", out byte[] value);
             var post = value != null ? await _postService.GetOneAsync(i => i.Id == Id)
                                      : await _postService.GetOneAndAddPageViewsAsync(i => i.Id == Id);

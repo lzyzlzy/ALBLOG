@@ -54,8 +54,7 @@ namespace ALBLOG
             services.AddMvc(options =>
             {
                 options.Filters.AddService<GlobelExceptionFilter>();
-            }
-                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
         }
 

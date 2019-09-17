@@ -27,16 +27,16 @@ namespace ALBLOG.Web.Attributes
             var remoteIpAddress = context.HttpContext.Connection.RemoteIpAddress;
             var sessionId = context.HttpContext.Session.Id;
             var routeData = context.RouteData;
-            var controllerName = context.RouteData.Values["controller"];
-            var actionName = context.RouteData.Values["action"];
+            var controllerName = context.RouteData.Values["controller"] as string;
+            var actionName = context.RouteData.Values["action"] as string;
             var ipAddress = context.HttpContext.Connection.RemoteIpAddress.ToString();
             var content = context.HttpContext.Request.QueryString.Value;
-            bool isAdmin = value != null;
+            var isAdmin = value != null;
             if (context.HttpContext.Request.Headers.TryGetValue("X-Real-IP", out StringValues ipValue))
             {
                 ipAddress = StringValues.IsNullOrEmpty(ipValue) == false ? ipValue.ToString() : ipAddress;
             }
-            _logService.Log(sessionId, controllerName as string, actionName as string, ipAddress, content.TrimEnd(']'), isAdmin);
+            _logService.Log(sessionId, controllerName, actionName, ipAddress, content.TrimEnd(']'), isAdmin);
         }
     }
 }
