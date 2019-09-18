@@ -115,19 +115,37 @@ namespace ALBLOG.Domain.Service
             return pageCount;
         }
 
-        public Task<int> GetPageViewNum(DateTime date)
+        public async Task<int> GetPageViewNum(DateTime date)
         {
-            throw new NotImplementedException();
+            var logs = await _repository.GetAllAsync(i => i.IsAdmin == false);
+            return logs.Count(i => i.Date.DayOfYear == date.AddHours(-8).DayOfYear && i.Date.Year == date.Year);
         }
 
-        public Task<int> GetPageViewNum(Expression<Func<Log, bool>> filter)
+        public async Task<int> GetPageViewNum()
         {
-            throw new NotImplementedException();
+            return (await _repository.GetAllAsync(i => i.IsAdmin == false)).Count();
         }
 
-        public Task<int> GetIpCount(DateTime date)
+        public async Task<int> GetIpCount(DateTime date)
         {
-            throw new NotImplementedException();
+            return await this.GetIpCount(i => i.IsAdmin == false
+                                              && i.Date.DayOfYear == date.AddHours(-8).DayOfYear
+                                              && i.Date.Year == date.Year);
         }
+
+        public async Task<int> GetIpCount()
+        {
+            return await this.GetIpCount(i => i.IsAdmin == false);
+        }
+
+        private async Task<int> GetIpCount(Func<Log, bool> filter)
+        {
+            var logs = await _repository.GetAllAsync();
+            return logs.Where(filter)
+                       .Select(j => j.IPAddress)
+                       .Distinct()
+                       .Count();
+        }
+
     }
 }

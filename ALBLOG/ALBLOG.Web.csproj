@@ -28,4 +28,8 @@
     <ProjectReference Include="..\Constant\ALBLOG.Constant.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Timers\" />
+  </ItemGroup>
+
 </Project>

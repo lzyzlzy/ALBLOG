@@ -33,8 +33,10 @@ namespace ALBLOG.Domain.Service.Interface
 
         Task<int> GetPageViewNum(DateTime date);
 
-        Task<int> GetPageViewNum(Expression<Func<Log, bool>> filter);
+        Task<int> GetPageViewNum();
 
         Task<int> GetIpCount(DateTime date);
+
+        Task<int> GetIpCount();
     }
 }
