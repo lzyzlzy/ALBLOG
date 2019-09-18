@@ -27,15 +27,12 @@
                     {
                         <button class="btn btn-link float-right" style="text-align:right" id="btnDraftPost">To draft box</button>
                     }
-                    <button class="btn btn-link float-right" style="text-align:right" id="btnPreviewPost">Preview</button>
                 </span>
             </div>
-            <div class="margin-top-10" id="editor">
-                @Html.Raw(Model.Context)
-            </div>
-        </div>
-        <div>
-            <div class="margin-top-10" id="previewBox">
+            <div class="margin-top-10">
+                <div id="editor">
+                    @Html.Raw(Model.Context)
+                </div>
             </div>
         </div>
         <div class="hidden" id="postId">@Model.Id</div>

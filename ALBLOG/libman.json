@@ -1,5 +1,25 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": []
+  "libraries": [
+    {
+      "library": "summernote@0.8.12",
+      "files": [
+        "lang/summernote-zh-CN.min.js",
+        "summernote.min.js",
+        "summernote.css",
+        "font/summernote.ttf",
+        "font/summernote.woff"
+      ],
+      "destination": "wwwroot/lib/summernote/"
+    },
+    {
+      "destination": "wwwroot/lib/highlight/",
+      "files": [
+        "highlight.min.js",
+        "styles/atom-one-dark.min.css"
+      ],
+      "library": "highlight.js@9.15.10"
+    }
+  ]
 }

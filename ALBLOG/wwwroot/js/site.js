@@ -48,21 +48,23 @@ $('#btnLogin').click(() => {
 //-------END-------
 
 
-//~/admin/CreatePost
-var E = window.wangEditor;
-var editor = new E('#editor');
-editor.customConfig.uploadImgServer = '/admin/upload';
-editor.create();
+$(document).ready(function () {
+    $('#editor').summernote({
+        height: 200,
+        focus: true,
+        lang:"zh-CN"
+    });
+});
+
 $('pre code').each(function (i, block) {
     hljs.highlightBlock(block)
 });
-
 
 $('#btnSubmitPost').click(() => {
     if (!IsEmpty()) {
         var title = $('#txtTitle').val();
         var tags = $('#txtTags').val();
-        var context = editor.txt.html();
+        var context = $('#editor').summernote('code');
         var id = $('#postId').text();
         var dto = {
             id: id,
@@ -87,7 +89,7 @@ $('#btnDraftPost').click(() => {
     if (!IsEmpty()) {
         var title = $('#txtTitle').val();
         var tags = $('#txtTags').val();
-        var context = editor.txt.html();
+        var context = $('#editor').summernote('code');
         var post = {
             title: title,
             tags: tags,
@@ -112,7 +114,7 @@ $('#btnDraftPost').click(() => {
 function IsEmpty() {
     var title = $('#txtTitle').val();
     var tags = $('#txtTags').val();
-    var context = editor.txt.html();
+    var context = $('#editor').summernote('code');
     if (title == "" || tags == "" || context == "") {
         alert("title,tags can't be empty!");
         return true;
@@ -121,10 +123,6 @@ function IsEmpty() {
         return false;
     }
 }
-
-$('#btnPreviewPost').click(() => {
-    $('#previewBox').empty().append(editor.txt.html());
-});
 //-------END-------
 
 
@@ -132,9 +130,8 @@ $('#btnPreviewPost').click(() => {
 
 $('#btnUpLoadPhoto').click(() => {
     $('#inputProfilePhoto').trigger('click')
-        .on('change', () => upLoadImg());
+                           .on('change', () => upLoadImg());
 });
-
 
 function upLoadImg() {
     $.ajax({
@@ -153,7 +150,6 @@ function upLoadImg() {
     })
 }
 
-
 function showModal(url) {
     $('#imgModal').removeClass('hidden').prop('src', url);
     $('#modalImg').modal('show');
@@ -162,7 +158,7 @@ function showModal(url) {
 function SaveIntroduction(type) {
     var dto = {
         type: type,
-        context: editor.txt.html()
+        context: $('#editor').summernote('code')
     };
     $.post("/admin/ChangeIntroduction", dto, data => {
         alert(data.message);
