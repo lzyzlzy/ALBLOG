@@ -39,50 +39,34 @@ namespace ALBLOG
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
             services.AddSession(i =>
             {
                 i.IdleTimeout = TimeSpan.FromHours(2);
             });
-
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ISettingService, SettingService>();
-            services.AddSingleton<ILogService, LogService>();
-            services.AddSingleton<GlobelExceptionFilter>();
-
+            services.AddScoped<ILogService, LogService>();
+            services.AddScoped<GlobelExceptionFilter>();
             services.AddMvc(options =>
             {
                 options.Filters.AddService<GlobelExceptionFilter>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //if (env.IsDevelopment())
-            //{
             app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //app.UseExceptionHandler("/Home/Error");
-            //    app.UseHsts();
-            //}
-
-            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
         }
     }
 }
