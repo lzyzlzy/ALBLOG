@@ -52,7 +52,7 @@ $(document).ready(function () {
     $('#editor').summernote({
         height: 200,
         focus: true,
-        lang:"zh-CN"
+        lang: "zh-CN"
     });
 });
 
@@ -130,7 +130,7 @@ function IsEmpty() {
 
 $('#btnUpLoadPhoto').click(() => {
     $('#inputProfilePhoto').trigger('click')
-                           .on('change', () => upLoadImg());
+        .on('change', () => upLoadImg());
 });
 
 function upLoadImg() {
@@ -209,6 +209,15 @@ $('#btnSaveProfilePhoto').click(() => {
 //-------END-------
 
 //COMMON FUNCTION
+function DeleteImage(path) {
+    $.post("/admin/deleteimage", { path: path }, (data) => {
+        alert(data.message);
+        if (data.state == "success") {
+            location.reload();
+        }
+    })
+}
+
 function SetContent() {
     if ($('#Myself').css('visibility') == "hidden") {
         document.getElementById("main").removeAttribute("class");

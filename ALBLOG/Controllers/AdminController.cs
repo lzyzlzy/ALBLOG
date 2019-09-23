@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ALBLOG.Domain.Service;
 using ALBLOG.Domain.Model;
 using ALBLOG.Domain.Dto;
 using System.IO;
@@ -18,7 +17,7 @@ using ALBLOG.Web.Attributes;
 namespace ALBLOG.Web.Controllers
 {
     [Auth]
-    [TypeFilter(typeof(LogAttribute))]
+    [TypeFilter(typeof(LogFilter))]
     public class AdminController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -198,10 +197,8 @@ namespace ALBLOG.Web.Controllers
         [HttpGet]
         public IActionResult Image()
         {
-            var rootPath = _hostingEnvironment.WebRootPath;
-            var extensions = GlobalConfig.ImgExtensions;
-            var fileDir = Path.Combine(rootPath, "images");
-            var files = PathHelper.FindFileByExtension(fileDir, extensions)
+            var fileDir = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+            var files = PathHelper.FindFileByExtension(fileDir, GlobalConfig.ImgExtensions)
                                   .Select(i => i.GetShowPath())
                                   .ToList();
             ViewData.Add("files", files);
@@ -212,6 +209,17 @@ namespace ALBLOG.Web.Controllers
         public async Task<IActionResult> ChangeProfilePhoto()
         {
             return Json(new ReturnDto { Data = (await _settingService.GetProfileImgPathAsync()).ShowPath, State = "success" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteImage(string path)
+        {
+            return await Task.Run<IActionResult>(() =>
+            {
+                var fullPath = _hostingEnvironment.WebRootPath + path.Replace(" ", "/");
+                System.IO.File.Delete(fullPath);
+                return Json(new ReturnDto { State = "success", Message = "delete image success" });
+            });
         }
     }
 }
