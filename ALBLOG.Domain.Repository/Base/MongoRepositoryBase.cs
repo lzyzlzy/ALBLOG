@@ -76,6 +76,18 @@ namespace ALBLOG.Domain.Repository
             return await this.GetCollection().CountAsync(filter);
         }
 
+        public async Task<IEnumerable<T>> GetManyByPage(Expression<Func<T, bool>> filter, int offset, int limit)
+        {
+            return await Task.Run<IEnumerable<T>>(() =>
+         {
+             return this.GetCollection()
+                              .Find(filter)
+                              .Skip(offset)
+                              .Limit(limit)
+                              .ToList();
+         });
+        }
+
         public IEnumerable<T> GetAll()
         {
             return this.GetCollection().Find(_ => true).ToList();

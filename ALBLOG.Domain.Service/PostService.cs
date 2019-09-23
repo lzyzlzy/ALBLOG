@@ -101,13 +101,10 @@ namespace ALBLOG.Domain.Service
         public async Task<Page> GetPageAsync(Expression<Func<Post, bool>> filter, int pageSize, int pageIndex)
         {
             var pageCount = await GetPageCountAsync(filter, pageSize);
-            var allPost = await _repository.GetAllAsync(filter);
             pageIndex = pageIndex <= 0 ? 1
                                        : pageIndex > pageCount ? pageCount
                                                                : pageIndex;
-            var result = allPost.Reverse()
-                                .Skip(pageSize * (pageIndex - 1))
-                                .Take(pageSize);
+            var result = await _repository.GetManyByPage(filter, pageSize * (pageIndex - 1), pageSize);
             var page = new Page
             {
                 HaveLast = pageIndex > 1,
