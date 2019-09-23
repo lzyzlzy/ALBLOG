@@ -104,7 +104,9 @@ namespace ALBLOG.Domain.Service
             pageIndex = pageIndex <= 0 ? 1
                                        : pageIndex > pageCount ? pageCount
                                                                : pageIndex;
-            var result = await _repository.GetManyByPage(filter, pageSize * (pageIndex - 1), pageSize);
+            var offset = pageSize * (pageIndex - 1);
+            offset = offset < 0 ? 0 : offset;
+            var result = await _repository.GetManyByPage(filter, i => i.Date, offset, pageSize);
             var page = new Page
             {
                 HaveLast = pageIndex > 1,

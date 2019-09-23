@@ -15,7 +15,7 @@
                 <h4 style="margin-bottom:5px;margin-top:5px"><small>@item.Date.AddHours(8).ToString("yyyy/M/d H:mm:ss")</small></h4>
             </div>
             <div>
-                @(item.Context.ReplaceLabel("").TakeString(100)+"... ") 
+                @(item.Context.ReplaceLabel("").TakeString(150)+"... ") 
                 <a class="btn-default" style="color:grey" href="~/home/post?id=@item.Id"> 阅读全文</a>
             </div>
             <div>
