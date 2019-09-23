@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ALBLOG.Web.Attributes
 {
-    public class LogAttribute : IActionFilter
+    public class LogFilter : IActionFilter
     {
         private readonly ILogService _logService;
 
-        public LogAttribute(ILogService logService)
+        public LogFilter(ILogService logService)
         {
             this._logService = logService;
         }
