@@ -1,0 +1,48 @@
+﻿@model ALBLOG.Domain.Model.LogPage
+@{
+    Layout = "_LogLayout";
+}
+<div>
+    <div class="margin-top-5 text-right">
+        <strong>PV:</strong>
+        Today:
+        <strong>@ViewData["pv"]</strong>
+        Total :
+        <strong>@ViewData["totalPv"] </strong>
+        &nbsp;
+        &nbsp;
+        <strong>IP:</strong>
+        Today:
+        <strong>@ViewData["ip"]</strong>
+        Total :
+        <strong>@ViewData["totalIp"]</strong>
+    </div>
+    @Html.DisplayForModel()
+    <div class="padding-8">
+        <span>
+            第 @Model.Index 页，
+        </span>
+        <span>
+            共 @Model.PageCount 页
+        </span>
+        @if (Model.HaveLast)
+        {
+            <span>
+                <a href="~/log/index?index=@(Model.Index-1)">
+                    上一页
+                </a>
+            </span>
+        }
+        @if (Model.HaveNext)
+        {
+            <span>
+                <a href="~/log/index?index=@(Model.Index+1)">
+                    下一页
+                </a>
+            </span>
+        }
+    </div>
+</div>
+<script>
+    document.getElementById("nav0").classList.add("active");
+</script>
