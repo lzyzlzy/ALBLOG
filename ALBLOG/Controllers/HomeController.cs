@@ -32,9 +32,9 @@ namespace ALBLOG.Controllers
         }
 
         [TypeFilter(typeof(LogFilter))]
-        public async Task<IActionResult> Index(int index = 1)
+        public async Task<IActionResult> Index(int id = 1)
         {
-            var page = await _postService.GetPageAsync(i => i.IsDraft == false, GlobalConfig.PostPageSize, index);
+            var page = await _postService.GetPageAsync(i => i.IsDraft == false, GlobalConfig.PostPageSize, id);
             return View(page);
         }
 
@@ -82,6 +82,7 @@ namespace ALBLOG.Controllers
 
         [HttpGet]
         [TypeFilter(typeof(LogFilter))]
+        [Route("/home/tag/{name}/{index?}")]
         public async Task<IActionResult> Tag(string name, int index = 1)
         {
             var page = await _postService.GetPageAsync(i => i.IsDraft == false && i.Tags.Contains(name), GlobalConfig.PostPageSize, index);

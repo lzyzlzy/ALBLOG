@@ -5,7 +5,7 @@
     {
         <div>
             <div style="font-size:25px">
-                <a style="color:black" href="~/home/post?id=@item.Id">
+                <a style="color:black" href="~/home/post/@item.Id">
                     <h3 style="margin-top:10px;margin-bottom:5px">
                         @item.Title
                     </h3>
@@ -16,13 +16,13 @@
             </div>
             <div>
                 @(item.Context.ReplaceLabel("").TakeString(150)+"... ") 
-                <a class="btn-default" style="color:grey" href="~/home/post?id=@item.Id"> 阅读全文</a>
+                <a class="btn-default" style="color:grey" href="~/home/post/@item.Id"> 阅读全文</a>
             </div>
             <div>
                 @foreach (var tag in item.Tags ?? new List<string>())
                 {
                     <span class="label label-default" style="display:inline-block">
-                        <a style="color:white" href="~/home/tag?name=@tag">@tag </a>
+                        <a style="color:white" href="~/home/tag/@tag">@tag </a>
                     </span>
                 }
             </div>

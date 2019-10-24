@@ -19,13 +19,13 @@ namespace ALBLOG.Web.Controllers
             this._logService = logService;
         }
 
-        public async Task<IActionResult> Index(int index = 1)
+        public async Task<IActionResult> Index(int id = 1)
         {
             var ip = await _logService.GetIpCount(DateTime.Now);
             var totalIp = await _logService.GetIpCount();
             var pv = await _logService.GetPageViewNum(DateTime.Now);
             var totalPv = await _logService.GetPageViewNum();
-            var page = await _logService.GetPageAsync(GlobalConfig.LogPageSize, index);
+            var page = await _logService.GetPageAsync(GlobalConfig.LogPageSize, id);
             ViewData.Add("ip", ip);
             ViewData.Add("totalIp", totalIp);
             ViewData.Add("pv", pv);

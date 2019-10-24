@@ -28,7 +28,7 @@
         @if (Model.HaveLast)
         {
             <span>
-                <a href="~/log/index?index=@(Model.Index-1)">
+                <a href="~/log/index/@(Model.Index-1)">
                     上一页
                 </a>
             </span>
@@ -36,7 +36,7 @@
         @if (Model.HaveNext)
         {
             <span>
-                <a href="~/log/index?index=@(Model.Index+1)">
+                <a href="~/log/index/@(Model.Index+1)">
                     下一页
                 </a>
             </span>
