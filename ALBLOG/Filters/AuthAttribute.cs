@@ -12,9 +12,6 @@ namespace ALBLOG.Web.Attributes
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-#if DEBUG
-            context.HttpContext.Session.Set("username", Encoding.Default.GetBytes("Debuger"));
-#endif
             context.HttpContext.Session.TryGetValue("username", out byte[] value);
             if (value == null)
                 context.Result = new RedirectToActionResult("login", "Home", null);
