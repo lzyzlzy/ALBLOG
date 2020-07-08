@@ -12,6 +12,8 @@ namespace ALBLOG.Domain.Model
 
         public string Context { get; set; }
 
+        public string MarkDown { get; set; }
+
         public DateTime Date { get; set; }
 
         public DateTime? EditDate { get; set; }
@@ -30,6 +32,7 @@ namespace ALBLOG.Domain.Model
             {
                 Title = "",
                 Context = "",
+                MarkDown="",
                 Tags = new List<string> { }
             };
         }

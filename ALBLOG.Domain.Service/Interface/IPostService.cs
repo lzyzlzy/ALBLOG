@@ -26,12 +26,12 @@ namespace ALBLOG.Domain.Service.Interface
 
         Task<long> DeleteAsync(Expression<Func<Post, bool>> filter);
 
-        Task EditAsync(string id, string title, string content, List<string> tags);
-
-        Task AddAsync(string title, List<string> tags, string content, bool isDraft);
-
         Task ChangePostToDraftAsync(Expression<Func<Post, bool>> filter);
 
         Task ChangeDraftToPostAsync(Expression<Func<Post, bool>> filter);
+
+        Task AddAsync(string title, List<string> tags, string content, string markDown, bool isDraft);
+
+        Task EditAsync(string id, string title, string content, string markDown, List<string> tags);
     }
 }

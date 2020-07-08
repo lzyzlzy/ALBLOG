@@ -13,5 +13,7 @@ namespace ALBLOG.Domain.Dto
         public string tags { get; set; }
 
         public string context { get; set; }
+
+        public string MarkDown { get; set; }
     }
 }

@@ -3,23 +3,17 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "summernote@0.8.12",
-      "files": [
-        "lang/summernote-zh-CN.min.js",
-        "summernote.min.js",
-        "summernote.css",
-        "font/summernote.ttf",
-        "font/summernote.woff"
-      ],
-      "destination": "wwwroot/lib/summernote/"
-    },
-    {
+      "library": "highlight.js@9.15.10",
       "destination": "wwwroot/lib/highlight/",
       "files": [
         "highlight.min.js",
         "styles/atom-one-dark.min.css"
-      ],
-      "library": "highlight.js@9.15.10"
+      ]
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "editor.md@1.5.0",
+      "destination": "wwwroot/lib/editor.md/"
     }
   ]
 }

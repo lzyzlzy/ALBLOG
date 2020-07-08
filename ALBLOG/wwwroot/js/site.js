@@ -8,6 +8,7 @@
 
 //globel
 $('#spanSearch').click(() => $('#btnSearch').click());
+
 //-------END-------
 
 //~/home/index
@@ -46,14 +47,18 @@ $('#btnLogin').click(() => {
     }
 });
 //-------END-------
-
-
-$(document).ready(function () {
-    $('#editor').summernote({
-        height: 200,
-        focus: true,
-        lang: "zh-CN"
-    });
+var editor = editormd("editor", {
+    width: "100%",
+    height: "500px",
+    path: "/lib/editor.md/lib/",
+    saveHTMLToTextarea: true,
+    emoji: true,
+    taskList: true,
+    tocm: true,         // Using [TOCM]
+    tex: true,                   // 开启科学公式TeX语言支持，默认关闭
+    flowChart: true,             // 开启流程图支持，默认关闭
+    sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+    toolbarIcons: () => editormd.toolbarModes['simple']  //自定义工具栏，后面有详细介绍 full, simple, mini
 });
 
 $('pre code').each(function (i, block) {
@@ -64,7 +69,7 @@ $('#btnSubmitPost').click(() => {
     if (!IsEmpty()) {
         var title = $('#txtTitle').val();
         var tags = $('#txtTags').val();
-        var context = $('#editor').summernote('code');
+        var context = editor.getHTML();
         var id = $('#postId').text();
         var dto = {
             id: id,
@@ -89,7 +94,7 @@ $('#btnDraftPost').click(() => {
     if (!IsEmpty()) {
         var title = $('#txtTitle').val();
         var tags = $('#txtTags').val();
-        var context = $('#editor').summernote('code');
+        var context = editor.getHTML();
         var post = {
             title: title,
             tags: tags,
@@ -114,7 +119,7 @@ $('#btnDraftPost').click(() => {
 function IsEmpty() {
     var title = $('#txtTitle').val();
     var tags = $('#txtTags').val();
-    var context = $('#editor').summernote('code');
+    var context = this.editor.getHTML();
     if (title == "" || tags == "" || context == "") {
         alert("title,tags can't be empty!");
         return true;
@@ -130,7 +135,7 @@ function IsEmpty() {
 
 $('#btnUpLoadPhoto').click(() => {
     $('#inputProfilePhoto').trigger('click')
-        .on('change', () => upLoadImg());
+                           .on('change', () => upLoadImg());
 });
 
 function upLoadImg() {
@@ -158,7 +163,7 @@ function showModal(url) {
 function SaveIntroduction(type) {
     var dto = {
         type: type,
-        context: $('#editor').summernote('code')
+        context: editor.getHTML()
     };
     $.post("/admin/ChangeIntroduction", dto, data => {
         alert(data.message);
@@ -189,11 +194,11 @@ $('#btnSaveAbout').click(() => SaveIntroduction(3));
 $('#btnRecallProfile').click(() => GetProfile());
 $('#btnRecallCV').click(GetCV);
 $('#btnRecallAbout').click(GetAbout);
-$('#btnPreviewCV').click(() => $('#divCV').empty().append(editor.txt.html()));
-$('#btnPreviewAbout').click(() => $('#divAbout').empty().append(editor.txt.html()));
+$('#btnPreviewCV').click(() => $('#divCV').empty().append(editor.getHTML()));
+$('#btnPreviewAbout').click(() => $('#divAbout').empty().append(editor.getHTML()));
 $('#editor').keyup(ChangeProfile).mouseup(ChangeProfile);
 function ChangeProfile() {
-    $('#Profile').empty().append(editor.txt.html());
+    $('#Profile').empty().append(editor.getHTML());
 }
 $('#btnSaveProfilePhoto').click(() => {
     $('#frmUpLoadProfileImg').submit();

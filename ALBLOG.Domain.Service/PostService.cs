@@ -47,12 +47,13 @@ namespace ALBLOG.Domain.Service
             return await _repository.DeleteOneAsync(filter);
         }
 
-        public async Task EditAsync(string id, string title, string content, List<string> tags)
+        public async Task EditAsync(string id, string title, string content, string markDown, List<string> tags)
         {
             await _repository.GetOneAndUpdateAsync(i => i.Id == id, j =>
             {
                 j.Title = title;
                 j.Context = content;
+                j.MarkDown = markDown;
                 j.EditDate = DateTime.Now;
                 j.Tags = tags;
                 return j;
@@ -77,13 +78,14 @@ namespace ALBLOG.Domain.Service
             });
         }
 
-        public async Task AddAsync(string title, List<string> tags, string content, bool isDraft)
+        public async Task AddAsync(string title, List<string> tags, string content, string markDown, bool isDraft)
         {
             var post = new Post
             {
                 Title = title,
                 Tags = tags,
                 Context = content,
+                MarkDown = markDown,
                 Date = DateTime.Now,
                 EditDate = DateTime.Now,
                 IsDraft = isDraft,

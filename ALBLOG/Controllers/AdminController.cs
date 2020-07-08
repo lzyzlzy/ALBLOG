@@ -83,7 +83,7 @@ namespace ALBLOG.Web.Controllers
         public async Task<IActionResult> EditPost(PostDto post)
         {
             var tags = post.tags.Split(',').ToList();
-            await _postService.EditAsync(post.id, post.title, post.context, tags);
+            await _postService.EditAsync(post.id, post.title, content: post.context, markDown: post.MarkDown, tags);
             return Json(new ReturnDto { Message = "ok" });
         }
 
@@ -94,7 +94,7 @@ namespace ALBLOG.Web.Controllers
             if (isExist)
                 return Json(new ReturnDto { State = "fail", Message = "存在相同标题的文章，请更改标题后重试" });
             var tags = postDto.tags.Split(',', '，').Where(i => i != "").ToList();
-            await _postService.AddAsync(postDto.title, tags, postDto.context, isDraft);
+            await _postService.AddAsync(postDto.title, tags, postDto.context, postDto.MarkDown, isDraft);
             return Json(new ReturnDto { Message = "ok" });
         }
 

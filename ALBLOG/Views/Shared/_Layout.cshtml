@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/font-awesome.css" />
         <link rel="stylesheet" href="~/lib/highlight/styles/atom-one-dark.min.css" />
-        <link rel="stylesheet" href="~/lib/summernote/summernote.css" />
+        <link rel="stylesheet" href="~/lib/editor.md/css/editormd.min.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -18,7 +18,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/lib/font-awesome/font-awesome.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/highlight/styles/atom-one-dark.min.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/lib/summernote/summernote.css" />
+        <link rel="stylesheet" href="~/lib/editor.md/css/editormd.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -145,8 +145,13 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/lib/highlight/highlight.min.js"></script>
-        <script src="~/lib/summernote/summernote.min.js"></script>
-        <script src="~/lib/summernote/lang/summernote-zh-CN.min.js"></script>
+        <script src="~/lib/editor.md/lib/marked.min.js"></script>
+        <script src="~/lib/editor.md/lib/prettify.min.js"></script>
+        <script src="~/lib/editor.md/lib/raphael.min.js"></script>
+        <script src="~/lib/editor.md/lib/underscore.min.js"></script>
+        <script src="~/lib/editor.md/lib/sequence-diagram.min.js"></script>
+        <script src="~/lib/editor.md/lib/flowchart.min.js"></script>
+        <script src="~/lib/editor.md/editormd.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -163,8 +168,13 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/lib/highlight/highlight.min.js"></script>
-        <script src="~/lib/summernote/summernote.min.js"></script>
-        <script src="~/lib/summernote/lang/summernote-zh-CN.min.js"></script>
+        <script src="~/lib/editor.md/lib/marked.min.js"></script>
+        <script src="~/lib/editor.md/lib/prettify.min.js"></script>
+        <script src="~/lib/editor.md/lib/raphael.min.js"></script>
+        <script src="~/lib/editor.md/lib/underscore.min.js"></script>
+        <script src="~/lib/editor.md/lib/sequence-diagram.min.js"></script>
+        <script src="~/lib/editor.md/lib/flowchart.min.js"></script>
+        <script src="~/lib/editor.md/editormd.min.js" asp-append-version="true"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
