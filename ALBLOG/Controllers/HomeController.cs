@@ -66,6 +66,12 @@ namespace ALBLOG.Controllers
             return View();
         }
 
+        [TypeFilter(typeof(LogFilter))]
+        public IActionResult Bot()
+        {
+            return View();
+        }
+
         [HttpGet("/post/{id?}")]
         [TypeFilter(typeof(LogFilter))]
         public async Task<IActionResult> Post(string Id)
